@@ -1,4 +1,3 @@
-
 <?php
 $page = (isset($_GET['page'])) ? $_GET['page'] : '';
 
@@ -53,13 +52,22 @@ if (isset($_SESSION['username'])) {
 			case 'ViewKurir':
 				include 'detail_kurir.php';
 				break;
-
 			default:
 				include "pages-404.php";
 				break;
 		}
-	}if ($_SESSION['role'] == 'admin') {
+	}
+	if ($_SESSION['role'] == 'admin') {
 		switch ($page) {
+
+			case 'AccessAdministrator':
+				include 'akses_admin.php';
+				break;
+
+			case 'MenuAdministrator':
+				include 'menu_admin.php';
+				break;
+
 			case 'AddSupport':
 				include 'add_support.php';
 				break;
@@ -67,5 +75,4 @@ if (isset($_SESSION['username'])) {
 	}
 } else
 	include "login.php";
-
 ?>

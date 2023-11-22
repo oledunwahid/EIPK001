@@ -30,16 +30,16 @@
             <div id="two-column-menu">
             </div>
             <?php if ($_SESSION['role'] == 'admin' || $_SESSION['role'] == 'user') { ?>
-                <ul class="navbar-nav" id="navbar-nav"> 
+                <ul class="navbar-nav" id="navbar-nav">
                     <li class="menu-title"><span data-key="t-menu">Menu</span></li>
                     <li class="nav-item">
                         <a class="nav-link menu-link<?php if ($page == 'Dashboard') echo 'active'; ?>" href="index.php?page=Dashboard" aria-expanded="false">
-                            <i class="ri-dashboard-2-line"></i> <span>  Dashboard </span>
+                            <i class="ri-dashboard-2-line"></i> <span> Dashboard </span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link menu-link <?php if ($page == 'ITSupport') echo 'active'; ?>" href="index.php?page=ITSupport" aria-expanded="false">
-                            <i class=" ri-mac-line"></i> <span > IT-Support </span>
+                            <i class=" ri-mac-line"></i> <span> IT-Support </span>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -68,6 +68,26 @@
                             <i class="mdi mdi-truck-fast-outline"></i> <span> Delivery </span>
                         </a>
                     </li>
+
+                    <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin') : ?>
+                        <li class="menu-title"><span data-key="t-menu">Admin Access</span></li>
+                        <li class="nav-item">
+                            <a class="nav-link menu-link<?= ($page == 'Administrator') ? ' active' : ''; ?>" href="#admin" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="admin">
+                                <i class="ri-admin-fill"></i> <span>Administrator</span>
+                            </a>
+                            <div class="collapse menu-dropdown" id="admin">
+                                <ul class="nav nav-sm flex-column">
+                                    <li class="nav-item">
+                                        <a href="index.php?page=AccessAdministrator" class="nav-link"> Access Admin </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="index.php?page=MenuAdministrator" class="nav-link"> Menu Admin </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    <?php endif; ?>
+
                 </ul>
             <?php    } ?>
 
