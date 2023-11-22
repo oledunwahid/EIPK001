@@ -1,0 +1,15 @@
+RewriteEngine On
+
+RewriteRule ^([a-z0-9-]+)$ index.php?page=$1
+
+RewriteRule ^([a-z0-9-]+)/([a-z0-9-]+)$ index.php?page=$1&id=$2 [L]
+
+RewriteRule ^$ index.php?page=Dashboard
+
+
+
+
+
+
+
+
