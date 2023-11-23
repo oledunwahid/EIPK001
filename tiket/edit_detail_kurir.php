@@ -56,6 +56,7 @@ $timestamp = $dateTime->format('Y-m-d H:i:s');
                                                     $statusOptions = [
                                                         0 => 'Closed',
                                                         1 => 'On Process',
+                                                        2 => 'Canceled',
                                                     ];
 
                                                     $lastUpdatedStatus = $row['status_kurir'];

@@ -1,103 +1,95 @@
-<?php
-$sql = mysqli_query($koneksi, "SELECT ticketing.*,user.divisi,user.lokasi,user1.nama AS nama_request,
-user2.nama AS nama_pic, login.username
-FROM
-ticketing
-LEFT JOIN USER AS user1 ON ticketing.id_nik_request = user1.idnik
-LEFT JOIN USER AS user2 ON ticketing.nik_pic = user2.idnik
-INNER JOIN
-	user
-	ON 
-		ticketing.id_nik_request = user.idnik
-        INNER JOIN
-	login
-	ON 
-		user.idnik = login.idnik
-where id_tiket ='" . $_GET['id'] . "' ");
-$row = mysqli_fetch_assoc($sql);
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" />
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap.min.css" />
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
 
-$id_tiket1 = $_GET['id'];
+<form action="function/insert_it_tiket.php" method="POST" enctype="multipart/form-data">
+    <div class="modal-body">
+        <?php $start_date = date('Y-m-d H:i:s'); ?>
+        <div class="row g-3">
+            <div class="col-lg-6">
+                <input class="form-control" value="<?= $start_date ?>" name="kodok" hidden />
+                <input type="text" class="form-control" value="<?= $niklogin ?>" hidden name="id_nik_request" />
+                <div class="col-lg-12">
 
-?>
-<div class="row">
-    <form action="function/update_it_tiket.php" method="POST">
-
-        <div class="row">
-            <div class="col-lg-8">
-                <div class="card">
-
-                    <div class="card-body">
-                        <h6 class="fw-semibold text-uppercase mb-3">Ticket Description</h6>
-                        <label for="tasksTitle-field" class="form-label"><?= $row["disc_keluhan"]; ?></label>
-                        <h6 class="fw-semibold text-uppercase mb-3">Justification IT</h6>
-                        <textarea id="ckeditor-classic" name="justification"><?= $row["justification"] ?></textarea>
-                        <h6 class="fw-semibold text-uppercase mb-3 pt-4">Progress / Action Notes</h6>
-                        <textarea id="ckeditor-classic1" name="action_note"><?= $row["action_note"] ?></textarea>
-
-
+                    <div class="mb-3">
+                        <label for="lampiran1" class="form-label">Material Request Form (if any)</label>
+                        <input type="file" class="form-control" name="lampiran1" />
                     </div>
-                    <div class="card-body">
-                        <button type="submit" class="btn btn-primary col-md-3" name="updateIT">Update</button>
-                        <a href="#" class="btn btn-danger col-md-3" name="delete" id="delete-form">Delete</a>
+
+                    <div>
+                        <label for="wa" class="form-label">No.Whatsapp</label>
+                        <input type="number" class="form-control" placeholder="Insert your active number +(62) " name="wa" />
+                    </div>
+
+                    <!-- Select User -->
+                    <div>
+                        <?php if (isset($row7['access_type']) && ($row7['access_type'] == 'Admin' || $row7['access_type'] == 'IT')) { ?>
+                            <div class="mb-3 mt-3">
+                                <label for="tasksTitle-field" class="form-label"><span> Request User</span></label>
+                                <select class="form-control" data-choices name="id_nik_request">
+                                    <option value="">All Users</option>
+                                    <?php
+                                    $sql5 = mysqli_query($koneksi, 'SELECT idnik, nama, lokasi FROM user');
+                                    while ($row5 = mysqli_fetch_assoc($sql5)) {
+                                    ?>
+                                        <option value="<?= $row5['idnik'] ?>"><?= $row5['nama'] ?> | <?= $row5['lokasi'] ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                        <?php } else { ?>
+                            <input type="text" class="form-control" hidden name="id_nik_request" value="<?= $niklogin ?>" />
+                        <?php } ?>
+                    </div>
+
+
+
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="col-lg-12">
+                    <div>
+                        <?php
+                        $sql3 = mysqli_query($koneksi, "SELECT * FROM ticketing");
+                        $row3 = mysqli_fetch_assoc($sql3);
+                        ?>
+                        <div class="card-body">
+                            <h6 class="fw-semibold text-uppercase mb-3">Description</h6>
+                            <textarea class="ckeditor-classic" name="description"></textarea>
+                        </div>
                     </div>
                 </div>
-    </form>
-    <!--end col-->
+            </div>
 
-    <!--end col-->
-</div>
-<!--end row-->
-<div class="col-xl-4">
 
-    <div class="card">
-        <div class="card-header">
-            <h6 class="card-title fw-semibold mb-0">Files Attachment</h6>
         </div>
-        <div class="card-body">
-            <?php if ($row['lampiran1']) : ?>
-                <a href="file/it/<?= $row['lampiran1'] ?>" class="download-link">
-                    <i class="bx bx-download"></i> Download File
-                </a>
-            <?php else : ?>
-                <div class="alert alert-info" role="alert">
-                    <i class="fa fa-info-circle me-2"></i>
-                    No files uploaded.
-                </div>
-            <?php endif; ?>
+    </div>
+    <div class="modal-footer mt-3">
+        <div class="hstack gap-2 justify-content-end">
+            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" name="add-tiket">Add Ticket</button>
         </div>
     </div>
 
+</form>
 
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
-</div>
+<!--datatable js-->
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 
-
+<script src="../assets/js/pages/datatables.init.js"></script>
 
 <script src="../assets/libs/@ckeditor/ckeditor5-build-classic/build/ckeditor.js"></script>
-<script src="../assets/js/pages/project-create.init.js"></script>
-<script src="../assets/js/pages/ticketdetail.init.js"></script>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const deleteButton = document.getElementById('delete-form');
-
-        deleteButton.addEventListener('click', function(event) {
-            event.preventDefault();
-
-            Swal.fire({
-                title: 'Are you sure?',
-                text: 'You are about to delete this item!',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Yes, delete it!',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = 'function/delete_it_tiket.php?aksi=delete&id=<?= $_GET['id'] ?>';
-                }
-            });
-        });
-    });
-</script>
+<script src="../assets/libs/@ckeditor/ckeditor5-build-classic/build/ckeditor.js"></script>
+<script src="../assets/libs/@ckeditor/ckeditor5-build-classic/build/ckeditor.js"></script>
+<script src="../assets/js/pages/form-editor.init.js"></script>

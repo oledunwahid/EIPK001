@@ -16,6 +16,10 @@ if (isset($_POST["updateKurir"])) {
             session_start();
             $_SESSION["Messages"] = 'Update Data Active';
             $_SESSION["Icon"] = 'success';
+        } else if ($status_kurir === '2') {
+            session_start();
+            $_SESSION["Messages"] = 'Update Data Canceled';
+            $_SESSION["Icon"] = 'success';
         } else if ($status_kurir === '0') {
             session_start();
             $_SESSION["Messages"] = 'Update Data Closed';
@@ -23,7 +27,6 @@ if (isset($_POST["updateKurir"])) {
         }
     }
     header("Location: ../index.php?page=EditKurir&id=" . urlencode($id_kurir));
-    
 } elseif (isset($_POST["updateRiwayat"])) {
     $id_kurir = $_POST["id_kurir"];
     $timestamp =  $_POST["timestamp"];

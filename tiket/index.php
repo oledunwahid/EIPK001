@@ -18,6 +18,7 @@ $namalogin                 = $rowlogin['nama'];
 $foto_profile              = $rowlogin['file_foto'];
 $divisilogin                = $rowlogin['divisi'];
 $menulogin                  = $rowlogin['menu'];
+$lokasilogin              = $rowlogin['lokasi'];
 
 
 
