@@ -52,10 +52,10 @@
                     <div class="d-flex justify-content-between">
                         <div>
                             <p class="fw-medium text-muted mb-0">Pending Tickets</p>
-                            <?php if (isset($row7['access_type']) && ($row7['access_type'] == 'Admin')) {
+                            <?php if (isset($row7['admin']) && ($row7['admin'] == '1')) {
                                 $sql1 = mysqli_query($koneksi, "SELECT id_tiket FROM ticketing WHERE status_tiket = 'Pending' ");
                                 $PendingTiket = mysqli_num_rows($sql1);
-                            } elseif (isset($row7['access_type']) &&  $row7['access_type'] == 'IT') {
+                            } elseif(isset($row7['it']) && ($row7['it'] == '1')) {
                                 $sql1 = mysqli_query($koneksi, "SELECT ticketing.id_tiket, user.lokasi FROM ticketing INNER JOIN USER ON ticketing.id_nik_request = user.idnik  WHERE status_tiket = 'Pending' AND user.lokasi = '$lokasilogin' ");
                                 $PendingTiket = mysqli_num_rows($sql1);
                             } else {
@@ -83,10 +83,10 @@
                     <div class="d-flex justify-content-between">
                         <div>
                             <p class="fw-medium text-muted mb-0">Closed Tickets</p>
-                            <?php if (isset($row7['access_type']) && ($row7['access_type'] == 'Admin')) {
+                            <?php if (isset($row7['admin']) && ($row7['admin'] == '1')) {
                                 $sql2 = mysqli_query($koneksi, "SELECT id_tiket FROM ticketing WHERE status_tiket = 'Closed' ");
                                 $ClosedTiket = mysqli_num_rows($sql2);
-                            } elseif (isset($row7['access_type']) &&  $row7['access_type'] == 'IT') {
+                            } elseif (isset($row7['it']) && ($row7['it'] == '1')) {
                                 $sql2 = mysqli_query($koneksi, "SELECT ticketing.id_tiket, user.lokasi FROM ticketing INNER JOIN USER ON ticketing.id_nik_request = user.idnik  WHERE status_tiket = 'Closed' AND user.lokasi = '$lokasilogin' ");
                                 $ClosedTiket = mysqli_num_rows($sql2);
                             } else {
@@ -113,10 +113,10 @@
                     <div class="d-flex justify-content-between">
                         <div>
                             <p class="fw-medium text-muted mb-0">Process Tickets</p>
-                            <?php if (isset($row7['access_type']) && ($row7['access_type'] == 'Admin')) {
+                            <?php if (isset($row7['admin']) && ($row7['admin'] == '1')) {
                                 $sql3 = mysqli_query($koneksi, "SELECT id_tiket FROM ticketing WHERE status_tiket = 'Process' ");
                                 $ProcessTiket = mysqli_num_rows($sql3);
-                            } elseif (isset($row7['access_type']) && ($row7['access_type'] == 'IT')) {
+                            } elseif (isset($row7['it']) && ($row7['it'] == '1')) {
                                 $sql3 = mysqli_query($koneksi, "SELECT ticketing.id_tiket, user.lokasi FROM ticketing INNER JOIN USER ON ticketing.id_nik_request = user.idnik  WHERE status_tiket = 'Process' AND user.lokasi = '$lokasilogin' ");
                                 $ProcessTiket = mysqli_num_rows($sql3);
                             } else {
@@ -170,7 +170,7 @@
 
 
                             <div class="col-xxl-2 col-sm-2">
-                                <input value="<?= date('Y-m-01', strtotime("-2 months")) ?>" type="text" class="form-control input-light" name="tanggal1" data-provider="flatpickr" data-date-format="Y-m-d">
+                                <input value="<?= date('Y-m-01', strtotime("-2 months")) ?>" type="date" class="form-control input-light" name="tanggal1" data-provider="flatpickr" data-date-format="Y-m-d">
                             </div>
 
                             <div class="col-xxl-2 col-sm-3">
@@ -180,7 +180,7 @@
 
                             <div class="col-xxl-3 col-sm-4">
                                 <div class="input-light mb-6">
-                                    <select class="form-control" data-choices name="kategorFilter">
+                                    <select class="form-control" data-choices name="kategoriFilter">
                                         <option value="FALSE">All Category</option>
                                         <option value="'Email'">Email</option>
                                         <option value="'Cloud Storage'">Cloud Storage</option>
@@ -248,10 +248,9 @@
                                             <?php
                                             if (isset($_POST["filter"])) 
                                             {
-
                                                 $daritanggal = $_POST['tanggal1'];
                                                 $ketanggal = $_POST['tanggal2'];
-                                                $kategorFilter = $_POST['kategorFilter'];
+                                                $kategoriFilter = $_POST['kategoriFilter'];
                                                 $statusFilter = $_POST['statusFilter'];
 
                                                 $sql7 = mysqli_query($koneksi, "SELECT * FROM access_level WHERE idnik =$niklogin ");
@@ -268,7 +267,7 @@
                                                     LEFT JOIN USER AS user2 ON ticketing.nik_pic = user2.idnik
                                                     INNER JOIN USER ON ticketing.id_nik_request = user.idnik 
                                                     WHERE ticketing.start_date BETWEEN '$daritanggal' AND '$ketanggal' 
-                                                    AND ticketing.kategori_tiket = $kategorFilter AND ticketing.status_tiket = $statusFilter ");
+                                                    AND ticketing.kategori_tiket = $kategoriFilter AND ticketing.status_tiket = $statusFilter ");
                                                     while ($row = mysqli_fetch_assoc($sql4)) { ?>
                                                         <tr>
                                                             <td><a href="index.php?page=EditTicketIT&id=<?= $row['id_tiket']; ?>"><?= $row['id_tiket'] ?></a></td>
@@ -316,12 +315,12 @@
                                                     LEFT JOIN USER AS user2 ON ticketing.nik_pic = user2.idnik
                                                     INNER JOIN USER ON ticketing.id_nik_request = user.idnik 
                                                     WHERE user.lokasi = '$lokasilogin' AND ticketing.start_date BETWEEN '$daritanggal' AND '$ketanggal' 
-                                                    AND ticketing.kategori_tiket = $kategorFilter AND ticketing.status_tiket = $statusFilter ");
+                                                    AND ticketing.kategori_tiket = $kategoriFilter AND ticketing.status_tiket = $statusFilter ");
                                                     while ($row = mysqli_fetch_assoc($sql4)) {
 
                                                     ?>
                                                         <tr>
-                                                            <td><a href="index.php?page=ViewTicketIT&id=<?= $row['id_tiket']; ?>"><?= $row['id_tiket'] ?></a></td>
+                                                            <td><a href="index.php?page=EditTicketIT&id=<?= $row['id_tiket']; ?>"><?= $row['id_tiket'] ?></a></td>
                                                             <td><?= $row['start_date'] ?></td>
                                                             <td><?= $row['end_date'] ?></td>
                                                             <td><?php $waktuawal = New DateTime($row['start_date']);
@@ -354,7 +353,6 @@
                                                         </tr>
                                                     <?php }
                                                 } else {
-
                                                     $sql4 = mysqli_query($koneksi, "SELECT
                                                     ticketing.*, user.lokasi,
                                                     user1.nama AS nama_request,
@@ -365,7 +363,7 @@
                                                     LEFT JOIN USER AS user2 ON ticketing.nik_pic = user2.idnik
                                                     INNER JOIN USER ON ticketing.id_nik_request = user.idnik
                                                     WHERE ticketing.start_date BETWEEN '$daritanggal' AND '$ketanggal' 
-                                                    AND ticketing.kategori_tiket = $kategorFilter AND ticketing.status_tiket = $statusFilter 
+                                                    AND ticketing.kategori_tiket = $kategoriFilter AND ticketing.status_tiket = $statusFilter 
                                                     AND user.idnik = $niklogin  ");
 
                                                     while ($row = mysqli_fetch_assoc($sql4)) {
@@ -407,7 +405,6 @@
                                                 <?php }
                                                 }
                                             } else {
-
                                                 $sql7 = mysqli_query($koneksi, "SELECT * FROM access_level WHERE idnik =$niklogin ");
                                                 $row7 = mysqli_fetch_assoc($sql7);
 
@@ -429,7 +426,6 @@
                                                     WHERE ticketing.start_date BETWEEN '$tgl1' AND '$tgl2' ");
                                                     while ($row = mysqli_fetch_assoc($sql4)) { ?>
                                                         <tr>
-
                                                             <td><a href="index.php?page=EditTicketIT&id=<?= $row['id_tiket']; ?>"><?= $row['id_tiket'] ?></a></td>
                                                             <td><?= $row['start_date'] ?></td>
                                                             <td><?= $row['end_date'] ?></td>
@@ -479,7 +475,7 @@
 
                                                     ?>
                                                         <tr>
-                                                            <td><a href="index.php?page=ViewTicketIT&id=<?= $row['id_tiket']; ?>"><?= $row['id_tiket'] ?></a></td>
+                                                            <td><a href="index.php?page=EditTicketIT&id=<?= $row['id_tiket']; ?>"><?= $row['id_tiket'] ?></a></td>
                                                             <td><?= $row['start_date'] ?></td>
                                                             <td><?= $row['end_date'] ?></td>
                                                             <td><?php $waktuawal = New DateTime($row['start_date']);
@@ -512,7 +508,6 @@
                                                         </tr>
                                                     <?php }
                                                 } else {
-
                                                     $sql4 = mysqli_query($koneksi, "SELECT
                                                     ticketing.*, user.lokasi,
                                                     user1.nama AS nama_request,
@@ -524,9 +519,7 @@
                                                     INNER JOIN USER ON ticketing.id_nik_request = user.idnik 
                                                     WHERE ticketing.start_date BETWEEN '$tgl1' AND '$tgl2' AND
                                                     user.idnik = $niklogin  ");
-
-                                                    while ($row = mysqli_fetch_assoc($sql4)) {
-
+                                                    while($row = mysqli_fetch_assoc($sql4)) {
                                                     ?>
                                                         <tr>
                                                             <td><a href="index.php?page=ViewTicketIT&id=<?= $row['id_tiket']; ?>"><?= $row['id_tiket'] ?></a></td>
