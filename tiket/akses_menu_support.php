@@ -34,6 +34,9 @@ if (isset($_SESSION['username'])) {
 			case 'ViewATK/Stationary':
 				include 'facilities/view-stationary-facilities.php';
 				break;
+			case 'ATKList':
+				include 'facilities/atk.php';
+				break;
 			case 'Maintenance':
 				include '';
 				break;

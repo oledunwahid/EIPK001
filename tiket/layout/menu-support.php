@@ -86,6 +86,11 @@
                                 </ul>
                             </div>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link menu-link <?php if ($page == 'ATKList') echo 'active'; ?>" href="index.php?page=ATKList" aria-expanded="false">
+                                <i class="ri-scissors-fill"></i> <span> ATK List </span>
+                            </a>
+                        </li>
                     <?php endif; ?>
 
                 </ul>
