@@ -5,23 +5,29 @@ if ($_GET["aksi"] == 'delete') {
 
     $id_tiket = $_GET['id'];
 
+    $sql = mysqli_query($koneksi, "SELECT * FROM ticketing WHERE id_tiket = '$id_tiket'");
+    $data = mysqli_fetch_array($sql);
+
+    
+    unlink("../file/it/".$data['lampiran1']);
     $query= "DELETE FROM ticketing WHERE id_tiket='$id_tiket'";
     $querydelete = mysqli_query($koneksi, $query);
+    
+
+    
 
     if ($querydelete) {
         session_start();
-        $_SESSION["DeleteMessages"] = 'Are you sure?';
-        $_SESSION["IconWarn"] = 'warning';
-        $_SESSION["TextDelete"] = 'You are about to delete this item!';
+        $_SESSION["Messages"] = 'Data Berhasil Di Delete';
+        $_SESSION["Icon"] = 'success';
         header('Location: ../index.php?page=ITSupport');
-        exit;
+        exit();
     } else {
         session_start();
-        $_SESSION["DeleteMessages"] = 'Failed to delete item.';
-        $_SESSION["IconWarn"] = 'error';
-        $_SESSION["TextDelete"] = 'There was an error while deleting this item.';
+        $_SESSION["Messages"] = 'Data gagal Di Input';
+        $_SESSION["Icon"] = 'success';
         header('Location: ../index.php?page=ITSupport');
-        exit;
+        exit();
     }
 } else {
     die("akses dilarang ");

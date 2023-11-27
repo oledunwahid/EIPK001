@@ -59,7 +59,7 @@
                                 $sql1 = mysqli_query($koneksi, "SELECT ticketing.id_tiket, user.lokasi FROM ticketing INNER JOIN USER ON ticketing.id_nik_request = user.idnik  WHERE status_tiket = 'Pending' AND user.lokasi = '$lokasilogin' ");
                                 $PendingTiket = mysqli_num_rows($sql1);
                             } else {
-                                $sql1 = mysqli_query($koneksi, "SELECT id_tiket FROM ticketing WHERE status_tiket = 'Pending' AND (id_nik_request = '$niklogin' OR id_nik_request = '$niklogin') ");
+                                $sql1 = mysqli_query($koneksi, "SELECT id_tiket FROM ticketing WHERE status_tiket = 'Pending' AND id_nik_request='$niklogin' ");
                                 $PendingTiket = mysqli_num_rows($sql1);
                             }
                             ?>
@@ -90,7 +90,7 @@
                                 $sql2 = mysqli_query($koneksi, "SELECT ticketing.id_tiket, user.lokasi FROM ticketing INNER JOIN USER ON ticketing.id_nik_request = user.idnik  WHERE status_tiket = 'Closed' AND user.lokasi = '$lokasilogin' ");
                                 $ClosedTiket = mysqli_num_rows($sql2);
                             } else {
-                                $sql2 = mysqli_query($koneksi, "SELECT id_tiket FROM ticketing WHERE status_tiket = 'Closed' AND (id_nik_request = '$niklogin' OR id_nik_request = '$niklogin') ");
+                                $sql2 = mysqli_query($koneksi, "SELECT id_tiket FROM ticketing WHERE status_tiket = 'Closed' AND id_nik_request='$niklogin' ");
                                 $ClosedTiket = mysqli_num_rows($sql2);
                             } ?>
                             <h2 class="mt-4 ff-secondary fw-semibold"><span class="counter-value" data-target="<?= $ClosedTiket ?>">0</span></h2>
@@ -120,7 +120,7 @@
                                 $sql3 = mysqli_query($koneksi, "SELECT ticketing.id_tiket, user.lokasi FROM ticketing INNER JOIN USER ON ticketing.id_nik_request = user.idnik  WHERE status_tiket = 'Process' AND user.lokasi = '$lokasilogin' ");
                                 $ProcessTiket = mysqli_num_rows($sql3);
                             } else {
-                                $sql3 = mysqli_query($koneksi, "SELECT id_tiket FROM ticketing WHERE status_tiket = 'Process' AND (id_nik_request = '$niklogin' OR id_nik_request = '$niklogin')");
+                                $sql3 = mysqli_query($koneksi, "SELECT id_tiket FROM ticketing WHERE status_tiket = 'Process' AND id_nik_request='$niklogin' ");
                                 $ProcessTiket = mysqli_num_rows($sql3);
                             }
                             ?>
@@ -170,11 +170,11 @@
 
 
                             <div class="col-xxl-2 col-sm-2">
-                                <input value="<?= date('Y-m-01', strtotime("-2 months")) ?>" type="date" class="form-control input-light" name="tanggal1" data-provider="flatpickr" data-date-format="Y-m-d">
+                                <input value="<?= date('Y-m-01', strtotime("-2 months")) ?>" type="date" class="form-control input-light" name="tanggal1" data-provider="flatpickr" >
                             </div>
 
                             <div class="col-xxl-2 col-sm-3">
-                                <input value="<?= date('Y-m-t') ?>" type="date" class="form-control input-light" name="tanggal2" data-provider="flatpickr" data-date-format="Y-m-d" placeholder="Select Date Closed Ticket">
+                                <input value="<?= date('Y-m-t') ?>" type="date" class="form-control input-light" name="tanggal2" data-provider="flatpickr"  placeholder="Select Date Closed Ticket">
                             </div>
 
 
@@ -229,8 +229,9 @@
                                             <tr>
                                                 <th>ID Ticket</th>
                                                 <th>Create Date</th>
+                                                <th>Proses Date</th>
                                                 <th>End Date</th>
-                                                <th>Durasi</th>
+                                                <th>Duration</th>
                                                 <th>Location</th>
                                                 <th>Request</th>
                                                 <th>Whatsapp</th>
@@ -253,7 +254,7 @@
                                                 $kategoriFilter = $_POST['kategoriFilter'];
                                                 $statusFilter = $_POST['statusFilter'];
 
-                                                $sql7 = mysqli_query($koneksi, "SELECT * FROM access_level WHERE idnik =$niklogin ");
+                                                $sql7 = mysqli_query($koneksi, "SELECT * FROM access_level WHERE idnik = $niklogin ");
                                                 $row7 = mysqli_fetch_assoc($sql7); ?>
 
                                                 <?php if (isset($row7['admin']) && ($row7['admin'] == '1')) {
@@ -261,23 +262,26 @@
                                                     ticketing.*, user.lokasi,
                                                     user1.nama AS nama_request,
                                                     user2.nama AS nama_pic 
-                                                    FROM
-                                                    ticketing
+                                                    FROM ticketing
                                                     LEFT JOIN USER AS user1 ON ticketing.id_nik_request = user1.idnik
                                                     LEFT JOIN USER AS user2 ON ticketing.nik_pic = user2.idnik
-                                                    INNER JOIN USER ON ticketing.id_nik_request = user.idnik 
+                                                    INNER JOIN USER ON ticketing.id_nik_request = user.idnik
                                                     WHERE ticketing.start_date BETWEEN '$daritanggal' AND '$ketanggal' 
-                                                    AND ticketing.kategori_tiket = $kategoriFilter AND ticketing.status_tiket = $statusFilter ");
+                                                    AND ticketing.kategori_tiket = $kategoriFilter 
+                                                    AND ticketing.status_tiket = $statusFilter  ");
                                                     while ($row = mysqli_fetch_assoc($sql4)) { ?>
                                                         <tr>
                                                             <td><a href="index.php?page=EditTicketIT&id=<?= $row['id_tiket']; ?>"><?= $row['id_tiket'] ?></a></td>
                                                             <td><?= $row['start_date'] ?></td>
+                                                            <td><?= $row['proses_date'] ?></td>
                                                             <td><?= $row['end_date'] ?></td>
                                                             <td><?php $waktuawal = New DateTime($row['start_date']);
                                                             $waktuakhir = New DateTime($row['end_date']);
                                                             $durasi = $waktuawal->diff($waktuakhir);
-                                                            $jam = $durasi->h ;
-                                                            echo "$jam jam ";                              
+                                                            $jam = $durasi->h;
+                                                            $menit = $durasi->i; 
+                                                            $formatted_menit = sprintf("%02d", $menit); 
+                                                            echo "$jam jam $formatted_menit menit";                           
                                                             ?></td>
                                                             <td><?= $row['lokasi'] ?></td>
                                                             <td><?= $row['nama_request'] ?></td>
@@ -317,17 +321,19 @@
                                                     WHERE user.lokasi = '$lokasilogin' AND ticketing.start_date BETWEEN '$daritanggal' AND '$ketanggal' 
                                                     AND ticketing.kategori_tiket = $kategoriFilter AND ticketing.status_tiket = $statusFilter ");
                                                     while ($row = mysqli_fetch_assoc($sql4)) {
-
                                                     ?>
                                                         <tr>
                                                             <td><a href="index.php?page=EditTicketIT&id=<?= $row['id_tiket']; ?>"><?= $row['id_tiket'] ?></a></td>
                                                             <td><?= $row['start_date'] ?></td>
+                                                            <td><?= $row['proses_date'] ?></td>
                                                             <td><?= $row['end_date'] ?></td>
                                                             <td><?php $waktuawal = New DateTime($row['start_date']);
                                                             $waktuakhir = New DateTime($row['end_date']);
                                                             $durasi = $waktuawal->diff($waktuakhir);
-                                                            $jam = $durasi->h ;
-                                                            echo "$jam jam ";                              
+                                                            $jam = $durasi->h;
+                                                            $menit = $durasi->i; 
+                                                            $formatted_menit = sprintf("%02d", $menit); 
+                                                            echo "$jam jam $formatted_menit menit";                              
                                                             ?></td>
                                                             <td><?= $row['lokasi'] ?></td>
                                                             <td><?= $row['nama_request'] ?></td>
@@ -345,7 +351,7 @@
                                                                     </button>
                                                                     <ul class="dropdown-menu dropdown-menu-end">
                                                                         <li>
-                                                                            <a href="index.php?page=ViewTicketIT&id=<?= $row['id_tiket']; ?>" class="dropdown-item"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a>
+                                                                            <a href="index.php?page=EditTicketIT&id=<?= $row['id_tiket']; ?>" class="dropdown-item"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a>
                                                                         </li>
                                                                     </ul>
                                                                 </div>
@@ -373,12 +379,15 @@
 
                                                             <td><a href="index.php?page=ViewTicketIT&id=<?= $row['id_tiket']; ?>"><?= $row['id_tiket'] ?></a></td>
                                                             <td><?= $row['start_date'] ?></td>
+                                                            <td><?= $row['proses_date'] ?></td>
                                                             <td><?= $row['end_date'] ?></td>
                                                             <td><?php $waktuawal = New DateTime($row['start_date']);
                                                             $waktuakhir = New DateTime($row['end_date']);
                                                             $durasi = $waktuawal->diff($waktuakhir);
-                                                            $jam = $durasi->h ;
-                                                            echo "$jam jam ";                              
+                                                            $jam = $durasi->h;
+                                                            $menit = $durasi->i; 
+                                                            $formatted_menit = sprintf("%02d", $menit); 
+                                                            echo "$jam jam $formatted_menit menit";                            
                                                             ?></td>
                                                             <td><?= $row['lokasi'] ?></td>
                                                             <td><?= $row['nama_request'] ?></td>
@@ -408,8 +417,8 @@
                                                 $sql7 = mysqli_query($koneksi, "SELECT * FROM access_level WHERE idnik =$niklogin ");
                                                 $row7 = mysqli_fetch_assoc($sql7);
 
-                                                $tgl1 = date('Y-m-d', strtotime("-2 months"));
-                                                $tgl2 = date('Y-m-d');
+                                                $tgl1 = date('Y-m-01', strtotime("-2 months"));
+                                                $tgl2 = date('Y-m-t');
                                                 ?>
 
 
@@ -428,12 +437,15 @@
                                                         <tr>
                                                             <td><a href="index.php?page=EditTicketIT&id=<?= $row['id_tiket']; ?>"><?= $row['id_tiket'] ?></a></td>
                                                             <td><?= $row['start_date'] ?></td>
+                                                            <td><?= $row['proses_date'] ?></td>
                                                             <td><?= $row['end_date'] ?></td>
                                                             <td><?php $waktuawal = New DateTime($row['start_date']);
                                                             $waktuakhir = New DateTime($row['end_date']);
                                                             $durasi = $waktuawal->diff($waktuakhir);
-                                                            $jam = $durasi->h ;
-                                                            echo "$jam jam ";                              
+                                                            $jam = $durasi->h;
+                                                            $menit = $durasi->i; 
+                                                            $formatted_menit = sprintf("%02d", $menit); 
+                                                            echo "$jam jam $formatted_menit menit";                                
                                                             ?></td>
                                                             <td><?= $row['lokasi'] ?></td>
                                                             <td><?= $row['nama_request'] ?></td>
@@ -477,12 +489,15 @@
                                                         <tr>
                                                             <td><a href="index.php?page=EditTicketIT&id=<?= $row['id_tiket']; ?>"><?= $row['id_tiket'] ?></a></td>
                                                             <td><?= $row['start_date'] ?></td>
+                                                            <td><?= $row['proses_date'] ?></td>
                                                             <td><?= $row['end_date'] ?></td>
                                                             <td><?php $waktuawal = New DateTime($row['start_date']);
                                                             $waktuakhir = New DateTime($row['end_date']);
                                                             $durasi = $waktuawal->diff($waktuakhir);
-                                                            $jam = $durasi->h ;
-                                                            echo "$jam jam ";                              
+                                                            $jam = $durasi->h;
+                                                            $menit = $durasi->i; 
+                                                            $formatted_menit = sprintf("%02d", $menit); 
+                                                            echo "$jam jam $formatted_menit menit";                                  
                                                             ?></td>
                                                             <td><?= $row['lokasi'] ?></td>
                                                             <td><?= $row['nama_request'] ?></td>
@@ -500,7 +515,7 @@
                                                                     </button>
                                                                     <ul class="dropdown-menu dropdown-menu-end">
                                                                         <li>
-                                                                            <a href="index.php?page=ViewTicketIT&id=<?= $row['id_tiket']; ?>" class="dropdown-item"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a>
+                                                                            <a href="index.php?page=EditTicketIT&id=<?= $row['id_tiket']; ?>" class="dropdown-item"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a>
                                                                         </li>
                                                                     </ul>
                                                                 </div>
@@ -524,12 +539,15 @@
                                                         <tr>
                                                             <td><a href="index.php?page=ViewTicketIT&id=<?= $row['id_tiket']; ?>"><?= $row['id_tiket'] ?></a></td>
                                                             <td><?= $row['start_date'] ?></td>
+                                                            <td><?= $row['proses_date'] ?></td>
                                                             <td><?= $row['end_date'] ?></td>
                                                             <td><?php $waktuawal = New DateTime($row['start_date']);
                                                             $waktuakhir = New DateTime($row['end_date']);
                                                             $durasi = $waktuawal->diff($waktuakhir);
-                                                            $jam = $durasi->h ;
-                                                            echo "$jam jam ";                              
+                                                            $jam = $durasi->h;
+                                                            $menit = $durasi->i; 
+                                                            $formatted_menit = sprintf("%02d", $menit); 
+                                                            echo "$jam jam $formatted_menit menit";                                
                                                             ?></td>
                                                             <td><?= $row['lokasi'] ?></td>
                                                             <td><?= $row['nama_request'] ?></td>
@@ -655,7 +673,7 @@
                     <div class="modal-footer mt-3">
                         <div class="hstack gap-2 justify-content-end">
                             <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary" name="add-tiket">Add Ticket</button>
+                            <button type="submit" class="btn btn-primary" name="add-tiket-user">Add Ticket</button>
                         </div>
                     </div>
 

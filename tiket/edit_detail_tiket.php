@@ -81,7 +81,7 @@ $id_tiket1 = $_GET['id'];
                                                     <label for="choices-single-default" class="form-label text-muted"><span>Request Type :</span></label>
                                                     <select class="form-control" data-choices name="kategori_tiket">
                                                         <?php
-                                                        $statusOptions = ['Cloud Storage', 'Email', 'Hardware', 'Network', 'Printer & Scanner', 'Software'];
+                                                        $statusOptions = ['Cloud Storage', 'Email', 'Hardware', 'Network', 'Printer & Scanner', 'Software', 'Documentation', 'Infrastructure', 'License/Agreement'];
                                                         foreach ($statusOptions as $option) {
                                                             $selected = ($option === $row['kategori_tiket']) ? 'selected' : '';
                                                             echo '<option value="' . $option . '" ' . $selected . '>' . $option . '</option>';
@@ -127,9 +127,9 @@ $id_tiket1 = $_GET['id'];
                         <h6 class="fw-semibold text-uppercase mb-3">Ticket Description</h6>
                         <label for="tasksTitle-field" class="form-label"><?= $row["disc_keluhan"]; ?></label>
                         <h6 class="fw-semibold text-uppercase mb-3">Justification IT</h6>
-                        <textarea id="ckeditor-classic" name="justification"><?= $row["justification"] ?></textarea>
+                        <textarea id="ckeditor-classic1" name="justification"><?= $row["justification"] ?></textarea>
                         <h6 class="fw-semibold text-uppercase mb-3 pt-4">Progress / Action Notes</h6>
-                        <textarea id="ckeditor-classic1" name="action_note"><?= $row["action_note"] ?></textarea>
+                        <textarea id="ckeditor-classic2" name="action_note"><?= $row["action_note"] ?></textarea>
 
 
                     </div>
@@ -196,19 +196,50 @@ $id_tiket1 = $_GET['id'];
         <div class="card-header">
             <h6 class="card-title fw-semibold mb-0">Files Attachment</h6>
         </div>
+        <?php
+        $file = "file/it/" . $row['lampiran1'];
+        $filesize = filesize($file);
+        if ($filesize >= 1024 * 1024) {
+            $filesize = number_format($filesize / (1024 * 1024), 2) . ' MB';
+        } elseif ($filesize >= 1024) {
+            $filesize = number_format($filesize / 1024, 2) . ' KB';
+        } else {
+            $filesize = $filesize . ' bytes';
+        }
+        ?>
         <div class="card-body">
-            <?php if ($row['lampiran1']) : ?>
-                <a href="file/it/<?= $row['lampiran1'] ?>" class="download-link">
-                    <i class="bx bx-download"></i> Download File
-                </a>
-            <?php else : ?>
-                <div class="alert alert-info" role="alert">
-                    <i class="fa fa-info-circle me-2"></i>
-                    No files uploaded.
+            <div class="d-flex align-items-center border border-dashed p-2 rounded">
+                <div class="flex-shrink-0 avatar-sm">
+                    <div class="avatar-title bg-light rounded">
+                        <?php
+                        $file_extension = pathinfo($row['lampiran1'], PATHINFO_EXTENSION);
+                        if ($file_extension === 'jpg' || $file_extension === 'jpeg' || $file_extension === 'png') {
+                            echo '<i class="ri-image-line fs-20 text-primary"></i>';
+                        } elseif ($file_extension === 'pdf') {
+                            echo '<i class="ri-file-pdf-line fs-20 text-danger"></i>';
+                        } else {
+                            echo '<i class="ri-file-zip-line fs-20 text-primary"></i>';
+                        }
+                        ?>
+                    </div>
                 </div>
-            <?php endif; ?>
+                <?php if ($row['lampiran1']) : ?>
+                    <div class="flex-grow-1 ms-3">
+                        <a href="file/it/<?= $row['lampiran1'] ?>" class="download-link">
+                            <i class="mb-1 ri-download-2-line"></i> <?= $row['lampiran1'] ?>
+                            <small class="text-muted">(<?= $filesize ?>)</small>
+                        </a>
+                    </div>
+                <?php else : ?>
+                    <div class="flex-grow-1 ms-3 mt-3 alert alert-info" role="alert">
+                        <i class="fa fa-info-circle me-2"></i>
+                        No files uploaded.
+                    </div>
+                <?php endif; ?>
+            </div>
         </div>
     </div>
+
 
 
     <!-- <div class="card">
@@ -236,10 +267,6 @@ $id_tiket1 = $_GET['id'];
     </div> -->
 
 
-
-
-</div>
-</div>
 
 
 </div>
