@@ -28,6 +28,14 @@ if (isset($_POST["updateIT"])) {
                 header('Location: ../index.php?page=ITSupport');
                 exit();
             }
+        } elseif ($status_tiket === 'Process') {
+            $updateProcessDate = mysqli_query($koneksi, "UPDATE ticketing SET proses_date = '$timestamp' WHERE id_tiket = '$id_tiket'");
+            if (!$updateProcessDate) {
+                $_SESSION["Messages"] = 'Failed to update process date';
+                $_SESSION["Icon"] = 'error';
+                header('Location: ../index.php?page=ITSupport');
+                exit();
+            }
         }
 
         header('Location: ../index.php?page=ITSupport');

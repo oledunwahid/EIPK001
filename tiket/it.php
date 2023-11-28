@@ -231,7 +231,7 @@
                                                 <th>Create Date</th>
                                                 <th>Proses Date</th>
                                                 <th>End Date</th>
-                                                <th>Duration</th>
+                                                <th>Duration Process</th>
                                                 <th>Location</th>
                                                 <th>Request</th>
                                                 <th>Whatsapp</th>
@@ -275,7 +275,7 @@
                                                             <td><?= $row['start_date'] ?></td>
                                                             <td><?= $row['proses_date'] ?></td>
                                                             <td><?= $row['end_date'] ?></td>
-                                                            <td><?php $waktuawal = New DateTime($row['start_date']);
+                                                            <td><?php $waktuawal = New DateTime($row['proses_date']);
                                                             $waktuakhir = New DateTime($row['end_date']);
                                                             $durasi = $waktuawal->diff($waktuakhir);
                                                             $jam = $durasi->h;
@@ -327,7 +327,7 @@
                                                             <td><?= $row['start_date'] ?></td>
                                                             <td><?= $row['proses_date'] ?></td>
                                                             <td><?= $row['end_date'] ?></td>
-                                                            <td><?php $waktuawal = New DateTime($row['start_date']);
+                                                            <td><?php $waktuawal = New DateTime($row['proses_date']);
                                                             $waktuakhir = New DateTime($row['end_date']);
                                                             $durasi = $waktuawal->diff($waktuakhir);
                                                             $jam = $durasi->h;
@@ -381,7 +381,7 @@
                                                             <td><?= $row['start_date'] ?></td>
                                                             <td><?= $row['proses_date'] ?></td>
                                                             <td><?= $row['end_date'] ?></td>
-                                                            <td><?php $waktuawal = New DateTime($row['start_date']);
+                                                            <td><?php $waktuawal = New DateTime($row['proses_date']);
                                                             $waktuakhir = New DateTime($row['end_date']);
                                                             $durasi = $waktuawal->diff($waktuakhir);
                                                             $jam = $durasi->h;
@@ -439,7 +439,7 @@
                                                             <td><?= $row['start_date'] ?></td>
                                                             <td><?= $row['proses_date'] ?></td>
                                                             <td><?= $row['end_date'] ?></td>
-                                                            <td><?php $waktuawal = New DateTime($row['start_date']);
+                                                            <td><?php $waktuawal = New DateTime($row['proses_date']);
                                                             $waktuakhir = New DateTime($row['end_date']);
                                                             $durasi = $waktuawal->diff($waktuakhir);
                                                             $jam = $durasi->h;
@@ -491,7 +491,7 @@
                                                             <td><?= $row['start_date'] ?></td>
                                                             <td><?= $row['proses_date'] ?></td>
                                                             <td><?= $row['end_date'] ?></td>
-                                                            <td><?php $waktuawal = New DateTime($row['start_date']);
+                                                            <td><?php $waktuawal = New DateTime($row['proses_date']);
                                                             $waktuakhir = New DateTime($row['end_date']);
                                                             $durasi = $waktuawal->diff($waktuakhir);
                                                             $jam = $durasi->h;
@@ -541,7 +541,7 @@
                                                             <td><?= $row['start_date'] ?></td>
                                                             <td><?= $row['proses_date'] ?></td>
                                                             <td><?= $row['end_date'] ?></td>
-                                                            <td><?php $waktuawal = New DateTime($row['start_date']);
+                                                            <td><?php $waktuawal = New DateTime($row['proses_date']);
                                                             $waktuakhir = New DateTime($row['end_date']);
                                                             $durasi = $waktuawal->diff($waktuakhir);
                                                             $jam = $durasi->h;

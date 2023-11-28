@@ -48,10 +48,12 @@ $id_tiket1 = $_GET['id'];
                                             <div class="vr"></div>
                                             <div class="text-muted"><span>Create Date :</span> <?= $row['start_date'] ?></span></div>
                                             <div class="vr"></div>
+                                            <div class="text-muted"><span>Process Date :</span> <?= $row['proses_date'] ?></span></div>
+                                            <div class="vr"></div>
                                             <div class="text-muted"><span>Closed Date :</span><?= $row['end_date'] ?></div>
                                             <br>
-                                            <div class="row-lg-4 row-md-8">
-                                                <div class="mb-6">
+                                            <div class="col-lg-4  hstack gap-3 flex-wrap">
+                                                <div class="mt-9">
                                                     <label for="choices-single-default" class="form-label text-muted"><span>Status : </span> <span style="font-weight: bold;"><?= $row['status_tiket'] ?></span></label>
                                                     <div class="vr"></div>
                                                     <label for="choices-single-default" class="form-label text-muted"><span>Request Type : </span><span style="font-weight: bold;"><?= $row['kategori_tiket'] ?></span></label>

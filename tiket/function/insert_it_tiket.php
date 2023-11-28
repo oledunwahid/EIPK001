@@ -100,7 +100,7 @@ if (isset($_POST["add-tiket-admin"])) {
     $id_nik_request = $_POST["id_nik_request"];
     $description = $_POST["description"];
     $whatsapp = $_POST["wa"];
-    $status_tiket = 'On Process';
+    $status_tiket = 'Process';
 
 
 

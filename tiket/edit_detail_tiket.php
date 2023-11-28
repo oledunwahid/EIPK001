@@ -50,6 +50,11 @@ $id_tiket1 = $_GET['id'];
                                             </div>
                                             <div class="vr"></div>
                                             <div class="text-muted">
+                                                <span>Process Date :</span>
+                                                <span class="fw-semibold"><?= $row['proses_date'] ?></span>
+                                            </div>
+                                            <div class="vr"></div>
+                                            <div class="text-muted">
                                                 <span>Closed Date :</span>
                                                 <span class="fw-semibold"><?= $row['end_date'] ?></span>
                                             </div>
