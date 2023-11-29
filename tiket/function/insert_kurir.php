@@ -20,7 +20,7 @@ if (isset($_POST["add-request"])) {
     $status_input = $_POST["status_input"];
 
     $query = "INSERT INTO kurir VALUES
-    ('$id_kurir', '$id_nik_request', '$tanggal_req', '$jenis_barang', '$whatsapp',  '$tipe_kurir', '$description','$alamat_kurir','$id_nik_kurir', '', '1')";
+    ('$id_kurir', '$id_nik_request', '$tanggal_req', '$jenis_barang', '$whatsapp',  '$tipe_kurir', '$description','$alamat_kurir','$id_nik_kurir', '', 'On Process')";
     $kondisi = mysqli_query($koneksi, $query);
 
     $query2 = "INSERT INTO riwayat_kurir VALUES

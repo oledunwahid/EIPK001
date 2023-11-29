@@ -37,11 +37,14 @@ if (isset($_SESSION['username'])) {
 			case 'ATKList':
 				include 'facilities/atk.php';
 				break;
-			case 'Maintenance':
-				include '';
+			case 'Building Facilities':
+				include 'facilities/building-facilities.php';
 				break;
-			case 'OtherFacilities':
-				include '';
+			case 'Edit Building Facilities':
+				include 'facilities/edit_building_facilities.php';
+				break;
+			case 'Other Facilities':
+				include 'facilities/other_facilities.php';
 				break;
 			case 'Delivery':
 				include 'kurir.php';

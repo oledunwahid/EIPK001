@@ -23,10 +23,7 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
                         <div>
-                            <?php if (isset($row7['admin']) && ($row7['admin'] == '1')) {
-                                $sql = mysqli_query($koneksi, "SELECT id_kurir FROM kurir");
-                                $totalRequest = mysqli_num_rows($sql);
-                            } elseif (isset($row7['ga4']) && ($row7['ga4'] == '1')) {
+                            <?php if (isset($row7['admin']) && ($row7['admin'] == '1' || ($row7['ga4'] == '1'))) {
                                 $sql = mysqli_query($koneksi, "SELECT id_kurir FROM kurir");
                                 $totalRequest = mysqli_num_rows($sql);
                             } else {
@@ -60,14 +57,11 @@
                     <div class="d-flex justify-content-between">
                         <div>
                             <?php
-                            if (isset($row7['admin']) && ($row7['admin'] == '1')) {
-                                $sql1 = mysqli_query($koneksi, "SELECT id_kurir FROM kurir WHERE status_kurir = '1'");
-                                $ActiveDelivery = mysqli_num_rows($sql1);
-                            } elseif (isset($row7['ga4']) && ($row7['ga4'] == '1')) {
-                                $sql1 = mysqli_query($koneksi, "SELECT id_kurir FROM kurir WHERE status_kurir = '1'");
+                            if (isset($row7['admin']) && ($row7['admin'] == '1' || ($row7['ga4'] == '1'))) {
+                                $sql1 = mysqli_query($koneksi, "SELECT id_kurir FROM kurir WHERE status_kurir = 'On Process'");
                                 $ActiveDelivery = mysqli_num_rows($sql1);
                             } else {
-                                $sql1 = mysqli_query($koneksi, "SELECT id_kurir FROM kurir WHERE status_kurir = '1' AND (id_nik_request = '$niklogin' OR id_nik_kurir = '$niklogin')");
+                                $sql1 = mysqli_query($koneksi, "SELECT id_kurir FROM kurir WHERE status_kurir = 'On Process' AND (id_nik_request = '$niklogin' OR id_nik_kurir = '$niklogin')");
                                 $ActiveDelivery = mysqli_num_rows($sql1);
                             }
                             ?>
@@ -92,14 +86,11 @@
                     <div class="d-flex justify-content-between">
                         <div>
                             <?php
-                            if (isset($row7['admin']) && ($row7['admin'] == '1')) {
-                                $sql1 = mysqli_query($koneksi, "SELECT id_kurir FROM kurir WHERE status_kurir = '2'");
-                                $CanceledDelivery = mysqli_num_rows($sql1);
-                            } elseif (isset($row7['ga4']) && ($row7['ga4'] == '1')) {
-                                $sql1 = mysqli_query($koneksi, "SELECT id_kurir FROM kurir WHERE status_kurir = '2'");
+                            if (isset($row7['admin']) && ($row7['admin'] == '1' || ($row7['ga4'] == '1'))){
+                                $sql1 = mysqli_query($koneksi, "SELECT id_kurir FROM kurir WHERE status_kurir = 'Canceled'");
                                 $CanceledDelivery = mysqli_num_rows($sql1);
                             } else {
-                                $sql1 = mysqli_query($koneksi, "SELECT id_kurir FROM kurir WHERE status_kurir = '2' AND (id_nik_request = '$niklogin' OR id_nik_kurir = '$niklogin')");
+                                $sql1 = mysqli_query($koneksi, "SELECT id_kurir FROM kurir WHERE status_kurir = 'Canceled' AND (id_nik_request = '$niklogin' OR id_nik_kurir = '$niklogin')");
                                 $CanceledDelivery = mysqli_num_rows($sql1);
                             }
                             ?>
@@ -114,7 +105,7 @@
                             </div>
                         </div>
                     </div>
-                </div><!-- end card body -->
+                </div>
             </div>
         </div>
         <!--end col-->
@@ -124,14 +115,11 @@
                     <div class="d-flex justify-content-between">
                         <div>
                             <?php
-                            if (isset($row7['admin']) && ($row7['admin'] == '1')) {
-                                $sql2 = mysqli_query($koneksi, "SELECT id_kurir FROM kurir WHERE status_kurir = '0'");
-                                $Delivered = mysqli_num_rows($sql2);
-                            } elseif (isset($row7['ga4']) && ($row7['ga4'] == '1')) {
-                                $sql2 = mysqli_query($koneksi, "SELECT id_kurir FROM kurir WHERE status_kurir = '0'");
+                            if (isset($row7['admin']) && ($row7['admin'] == '1' || ($row7['ga4'] == '1'))) {
+                                $sql2 = mysqli_query($koneksi, "SELECT id_kurir FROM kurir WHERE status_kurir = 'Closed'");
                                 $Delivered = mysqli_num_rows($sql2);
                             } else {
-                                $sql2 = mysqli_query($koneksi, "SELECT id_kurir FROM kurir WHERE status_kurir = '0' AND (id_nik_request = '$niklogin' OR id_nik_kurir = '$niklogin')");
+                                $sql2 = mysqli_query($koneksi, "SELECT id_kurir FROM kurir WHERE status_kurir = 'Closed' AND (id_nik_request = '$niklogin' OR id_nik_kurir = '$niklogin')");
                                 $Delivered = mysqli_num_rows($sql2);
                             }
                             ?>
@@ -184,9 +172,9 @@
                                 <div class="input-light mb-6">
                                     <select class="form-control" data-choices name="barangFilter">
                                         <option value="FALSE">All Category</option>
-                                        <option value="'Dokumen'">Surat/Dokumen</option>
+                                        <option value="'Surat/Dokumen'">Surat/Dokumen</option>
+                                        <option value="'Barang tidak mudah pecah'">Barang tidak mudah pecah</option>
                                         <option value="'Barang Mudah Pecah'">Barang Mudah Pecah</option>
-                                        <option value="'Barang Tidak Mudah Pecah'">Barang Tidak Mudah Pecah</option>
                                         <option value="'Elektronik'">Elektronik</option>
                                         <option value="'Logistik'">Logistik</option>
                                         <option value="'Office'">Office</option>
@@ -200,9 +188,9 @@
                                     <div>
                                         <select class="form-control" data-choices name="statusFilter">
                                             <option value="FALSE">All Status</option>
-                                            <option value="'0'">Closed</option>
-                                            <option value="'1'">On Process</option>
-                                            <option value="'2'">Canceled</option>
+                                            <option value="'Closed'">Closed</option>
+                                            <option value="'On Process'">On Process</option>
+                                            <option value="'Canceled'">Canceled</option>
                                         </select>
                                     </div>
                                 </div>
@@ -232,7 +220,7 @@
 
                             <!--end col-->
                             <div class="col-xxl-1 col-sm-2">
-                                <button type="submit" name="filter" class="btn btn-primary w-100" onclick="SearchData();">
+                                <button type="submit" name="filter" class="btn btn-primary w-100">
                                     <i class="ri-equalizer-fill me-1 align-bottom"></i>
                                     Filters
                                 </button>
@@ -261,7 +249,7 @@
                                                 <th>Description</th>
                                                 <th>Alamat</th>
                                                 <th>Nama Kurir</th>
-                                                <th>Status</th>
+                                                <th>Status Ticket</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -277,62 +265,9 @@
 
                                                 $sql7 = mysqli_query($koneksi, "SELECT * FROM access_level WHERE idnik =$niklogin ");
                                                 $row7 = mysqli_fetch_assoc($sql7); ?>
-                                                        <?php
-                                                        if (isset($row7['admin']) && ($row7['admin'] == '1')) {
-                                                        $sql7 = mysqli_query($koneksi, "SELECT
-                                                        kurir.*,
-                                                        user1.nama AS nama_request,
-                                                        user2.nama AS nama_kurir 
-                                                        FROM kurir
-                                                        LEFT JOIN USER AS user1 ON kurir.id_nik_request = user1.idnik
-                                                        LEFT JOIN USER AS user2 ON kurir.id_nik_kurir = user2.idnik
-                                                        INNER JOIN USER ON kurir.id_nik_request = user.idnik
-                                                        WHERE kurir.tanggal_req BETWEEN '$daritanggal' AND '$ketanggal' 
-                                                        AND kurir.jenis_barang = $barangFilter 
-                                                        AND kurir.status_kurir = $statusFilter 
-                                                        AND kurir.tipe_kurir = $tipeFilter ");
-                                                            while ($row6 = mysqli_fetch_assoc($sql7)) {
-                                                        ?>
-                                                                <tr>
-                                                                    <td><a href="index.php?page=EditKurir&id=<?= $row6['id_kurir']; ?>"><?= $row6['id_kurir'] ?></a></td>
-                                                                    <td><?= $row6['nama_request'] ?></td>
-                                                                    <td><?= $row6['tanggal_req'] ?></td>
-                                                                    <td><?= $row6['jenis_barang'] ?></td>
-                                                                    <td><?= $row6['whatsapp'] ?></td>
-                                                                    <td><?= $row6['tipe_kurir'] ?></td>
-                                                                    <td><?= $row6['deskripsi'] ?></td>
-                                                                    <td><?= $row6['alamat_kurir'] ?></td>
-                                                                    <td><?= $row6['nama_kurir'] ?></td>
-
-                                                                    <td>
-                                                                        <?php
-                                                                        if ($row6['status_kurir'] == 1) {
-                                                                            echo 'On Process';
-                                                                        } elseif ($row6['status_kurir'] == 2) {
-                                                                            echo 'Canceled';
-                                                                        } else {
-                                                                            echo 'Closed';
-                                                                        }
-                                                                        ?>
-
-                                                                    </td>
-                                                                    <td>
-                                                                        <div class="dropdown d-inline-block">
-                                                                            <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                                <i class="ri-more-fill align-middle"></i>
-                                                                            </button>
-                                                                            <ul class="dropdown-menu dropdown-menu-end">
-                                                                                <li>
-                                                                                    <a href="index.php?page=EditKurir&id=<?= $row6['id_kurir']; ?>" class="dropdown-item"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a>
-                                                                                </li>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-                                                            <?php
-                                                            }
-                                                        } elseif (isset($row7['ga4']) && ($row7['ga4'] == '1')) {
-                                                            $sql7 = mysqli_query($koneksi, "SELECT
+                                                <?php
+                                                if (isset($row7['admin']) && ($row7['admin'] == '1' || ($row7['ga4'] == '1'))) {
+                                                    $sql7 = mysqli_query($koneksi, "SELECT
                                                         kurir.*,
                                                         user1.nama AS nama_request,
                                                         user2.nama AS nama_kurir 
@@ -344,48 +279,48 @@
                                                         AND kurir.jenis_barang = $barangFilter 
                                                         AND kurir.status_kurir = $statusFilter 
                                                         AND kurir.tipe_kurir = $tipeFilter");
-                                                            while ($row6 = mysqli_fetch_assoc($sql7)) {
-                                                            ?>
-                                                                <tr>
-                                                                    <td><a href="index.php?page=EditKurir&id=<?= $row6['id_kurir']; ?>"><?= $row6['id_kurir'] ?></a></td>
-                                                                    <td><?= $row6['nama_request'] ?></td>
-                                                                    <td><?= $row6['tanggal_req'] ?></td>
-                                                                    <td><?= $row6['jenis_barang'] ?></td>
-                                                                    <td><?= $row6['whatsapp'] ?></td>
-                                                                    <td><?= $row6['tipe_kurir'] ?></td>
-                                                                    <td><?= $row6['deskripsi'] ?></td>
-                                                                    <td><?= $row6['alamat_kurir'] ?></td>
-                                                                    <td><?= $row6['nama_kurir'] ?></td>
+                                                    while ($row6 = mysqli_fetch_assoc($sql7)) {
+                                                ?>
+                                                        <tr>
+                                                            <td><a href="index.php?page=EditKurir&id=<?= $row6['id_kurir']; ?>"><?= $row6['id_kurir'] ?></a></td>
+                                                            <td><?= $row6['nama_request'] ?></td>
+                                                            <td><?= $row6['tanggal_req'] ?></td>
+                                                            <td><?= $row6['jenis_barang'] ?></td>
+                                                            <td><?= $row6['whatsapp'] ?></td>
+                                                            <td><?= $row6['tipe_kurir'] ?></td>
+                                                            <td><?= $row6['deskripsi'] ?></td>
+                                                            <td><?= $row6['alamat_kurir'] ?></td>
+                                                            <td><?= $row6['nama_kurir'] ?></td>
 
-                                                                    <td>
-                                                                        <?php
-                                                                        if ($row6['status_kurir'] == 1) {
-                                                                            echo 'On Process';
-                                                                        } elseif ($row6['status_kurir'] == 2) {
-                                                                            echo 'Canceled';
-                                                                        } else {
-                                                                            echo 'Closed';
-                                                                        }
-                                                                        ?>
+                                                            <td>
+                                                                <?php
+                                                                if ($row6['status_kurir'] == 'On Process') {
+                                                                    echo 'On Process';
+                                                                } elseif ($row6['status_kurir'] == 'Canceled') {
+                                                                    echo 'Canceled';
+                                                                } else {
+                                                                    echo 'Closed';
+                                                                }
+                                                                ?>
 
-                                                                    </td>
-                                                                    <td>
-                                                                        <div class="dropdown d-inline-block">
-                                                                            <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                                <i class="ri-more-fill align-middle"></i>
-                                                                            </button>
-                                                                            <ul class="dropdown-menu dropdown-menu-end">
-                                                                                <li>
-                                                                                    <a href="index.php?page=EditKurir&id=<?= $row6['id_kurir']; ?>" class="dropdown-item"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a>
-                                                                                </li>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-                                                            <?php
-                                                            }
-                                                        } else {
-                                                            $sql7 = mysqli_query($koneksi, "SELECT
+                                                            </td>
+                                                            <td>
+                                                                <div class="dropdown d-inline-block">
+                                                                    <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                        <i class="ri-more-fill align-middle"></i>
+                                                                    </button>
+                                                                    <ul class="dropdown-menu dropdown-menu-end">
+                                                                        <li>
+                                                                            <a href="index.php?page=EditKurir&id=<?= $row6['id_kurir']; ?>" class="dropdown-item"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    <?php
+                                                    }
+                                                } else {
+                                                    $sql7 = mysqli_query($koneksi, "SELECT
                                                         kurir.*,
                                                         user1.nama AS nama_request,
                                                         user2.nama AS nama_kurir 
@@ -399,55 +334,55 @@
                                                         AND kurir.tipe_kurir = $tipeFilter 
                                                         AND kurir.id_nik_request = '$niklogin'");
 
-                                                            while ($row6 = mysqli_fetch_assoc($sql7)) {
-                                                            ?>
-                                                                <tr>
-                                                                    <td><a href="index.php?page=ViewKurir&id=<?= $row6['id_kurir']; ?>"><?= $row6['id_kurir'] ?></a></td>
-                                                                    <td><?= $row6['nama_request'] ?></td>
-                                                                    <td><?= $row6['tanggal_req'] ?></td>
-                                                                    <td><?= $row6['jenis_barang'] ?></td>
-                                                                    <td><?= $row6['whatsapp'] ?></td>
-                                                                    <td><?= $row6['tipe_kurir'] ?></td>
-                                                                    <td><?= $row6['deskripsi'] ?></td>
-                                                                    <td><?= $row6['alamat_kurir'] ?></td>
-                                                                    <td><?= $row6['nama_kurir'] ?></td>
+                                                    while ($row6 = mysqli_fetch_assoc($sql7)) {
+                                                    ?>
+                                                        <tr>
+                                                            <td><a href="index.php?page=ViewKurir&id=<?= $row6['id_kurir']; ?>"><?= $row6['id_kurir'] ?></a></td>
+                                                            <td><?= $row6['nama_request'] ?></td>
+                                                            <td><?= $row6['tanggal_req'] ?></td>
+                                                            <td><?= $row6['jenis_barang'] ?></td>
+                                                            <td><?= $row6['whatsapp'] ?></td>
+                                                            <td><?= $row6['tipe_kurir'] ?></td>
+                                                            <td><?= $row6['deskripsi'] ?></td>
+                                                            <td><?= $row6['alamat_kurir'] ?></td>
+                                                            <td><?= $row6['nama_kurir'] ?></td>
 
-                                                                    <td>
-                                                                        <?php
-                                                                        if ($row6['status_kurir'] == 1) {
-                                                                            echo 'On Process';
-                                                                        } elseif ($row6['status_kurir'] == 2) {
-                                                                            echo 'Canceled';
-                                                                        } else {
-                                                                            echo 'Closed';
-                                                                        }
-                                                                        ?>
+                                                            <td>
+                                                                <?php
+                                                                if ($row6['status_kurir'] == 'On Process') {
+                                                                    echo 'On Process';
+                                                                } elseif ($row6['status_kurir'] == 'Canceled') {
+                                                                    echo 'Canceled';
+                                                                } else {
+                                                                    echo 'Closed';
+                                                                }
+                                                                ?>
 
-                                                                    </td>
-                                                                    <td>
-                                                                        <div class="dropdown d-inline-block">
-                                                                            <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                                <i class="ri-more-fill align-middle"></i>
-                                                                            </button>
-                                                                            <ul class="dropdown-menu dropdown-menu-end">
-                                                                                <li>
-                                                                                    <a href="index.php?page=ViewKurir&id=<?= $row6['id_kurir']; ?>" class="dropdown-item"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a>
-                                                                                </li>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-                                                        <?php }
-                                                        }
+                                                            </td>
+                                                            <td>
+                                                                <div class="dropdown d-inline-block">
+                                                                    <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                        <i class="ri-more-fill align-middle"></i>
+                                                                    </button>
+                                                                    <ul class="dropdown-menu dropdown-menu-end">
+                                                                        <li>
+                                                                            <a href="index.php?page=ViewKurir&id=<?= $row6['id_kurir']; ?>" class="dropdown-item"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                <?php }
+                                                }
                                             } else {
                                                 $sql7 = mysqli_query($koneksi, "SELECT * FROM access_level WHERE idnik =$niklogin ");
                                                 $row7 = mysqli_fetch_assoc($sql7);
 
-                                                $tgl1 = date('Y-m-d', strtotime("-2 months"));
+                                                $tgl1 = date('Y-m-t', strtotime("-2 months"));
                                                 $tgl2 = date('Y-m-t');
                                                 ?>
                                                 <?php
-                                                if (isset($row7['admin']) && ($row7['admin'] == '1')) {
+                                                if (isset($row7['admin']) && ($row7['admin'] == '1' || ($row7['ga4'] == '1'))) {
                                                     $sql7 = mysqli_query($koneksi, "SELECT
                                                     kurir.*,
                                                     user1.nama AS nama_request,
@@ -473,60 +408,9 @@
 
                                                             <td>
                                                                 <?php
-                                                                if ($row6['status_kurir'] == 1) {
+                                                                if ($row6['status_kurir'] == 'On Process') {
                                                                     echo 'On Process';
-                                                                } elseif ($row6['status_kurir'] == 2) {
-                                                                    echo 'Canceled';
-                                                                } else {
-                                                                    echo 'Closed';
-                                                                }
-                                                                ?>
-
-                                                            </td>
-                                                            <td>
-                                                                <div class="dropdown d-inline-block">
-                                                                    <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                        <i class="ri-more-fill align-middle"></i>
-                                                                    </button>
-                                                                    <ul class="dropdown-menu dropdown-menu-end">
-                                                                        <li>
-                                                                            <a href="index.php?page=EditKurir&id=<?= $row6['id_kurir']; ?>" class="dropdown-item"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    <?php
-                                                    }
-                                                } elseif (isset($row7['ga4']) && ($row7['ga4'] == '1')) {
-                                                    $sql7 = mysqli_query($koneksi, "SELECT
-                                                    kurir.*,
-                                                    user1.nama AS nama_request,
-                                                    user2.nama AS nama_kurir 
-                                                    FROM kurir
-                                                    LEFT JOIN USER AS user1 ON kurir.id_nik_request = user1.idnik
-                                                    LEFT JOIN USER AS user2 ON kurir.id_nik_kurir = user2.idnik
-                                                    INNER JOIN USER ON kurir.id_nik_request = user.idnik 
-                                                    WHERE kurir.tanggal_req BETWEEN '$tgl1' AND '$tgl2'");
-
-                                                    while ($row6 = mysqli_fetch_assoc($sql7)) {
-                                                    ?>
-                                                        <tr>
-                                                            <td><a href="index.php?page=EditKurir&id=<?= $row6['id_kurir']; ?>"><?= $row6['id_kurir'] ?></a></td>
-                                                            <td><?= $row6['nama_request'] ?></td>
-                                                            <td><?= $row6['tanggal_req'] ?></td>
-                                                            <td><?= $row6['jenis_barang'] ?></td>
-                                                            <td><?= $row6['whatsapp'] ?></td>
-                                                            <td><?= $row6['tipe_kurir'] ?></td>
-                                                            <td><?= $row6['deskripsi'] ?></td>
-                                                            <td><?= $row6['alamat_kurir'] ?></td>
-                                                            <td><?= $row6['nama_kurir'] ?></td>
-
-                                                            <td>
-                                                                <?php
-                                                                if ($row6['status_kurir'] == 1) {
-                                                                    echo 'On Process';
-                                                                } elseif ($row6['status_kurir'] == 2) {
+                                                                } elseif ($row6['status_kurir'] == 'Canceled') {
                                                                     echo 'Canceled';
                                                                 } else {
                                                                     echo 'Closed';
@@ -575,9 +459,9 @@
 
                                                             <td>
                                                                 <?php
-                                                                if ($row6['status_kurir'] == 1) {
+                                                                if ($row6['status_kurir'] == 'On Process') {
                                                                     echo 'On Process';
-                                                                } elseif ($row6['status_kurir'] == 2) {
+                                                                } elseif ($row6['status_kurir'] == 'Canceled') {
                                                                     echo 'Canceled';
                                                                 } else {
                                                                     echo 'Closed';
@@ -652,20 +536,20 @@
                                         </select>
                                         <input type="text" class="form-control" hidden name="status_input" value="Input by Admin" />
                                     </div>
-                                <?php } elseif(isset($row7['ga4']) && ($row7['ga4'] == '1')){?>
-                                            <div class="mb-3 mt-3">
-                                            <label for="tasksTitle-field" class="form-label"><span> Request User</span></label>
-                                            <select class="form-control" data-choices name="id_nik_request">
-                                                <option value="">All Users</option>
-                                                <?php
-                                                $sql5 = mysqli_query($koneksi, 'SELECT idnik, nama, divisi, lokasi FROM user WHERE lokasi = "HO" ');
-                                                while ($row5 = mysqli_fetch_assoc($sql5)) {
-                                                ?>
-                                                    <option value="<?= $row5['idnik'] ?>"><?= $row5['nama'] ?> | <?= $row5['divisi']  ?></option>
-                                                <?php } ?>
-                                            </select>
-                                            <input type="text" class="form-control" hidden name="status_input" value="Input by Admin" />
-                                        </div>
+                                <?php } elseif (isset($row7['ga4']) && ($row7['ga4'] == '1')) { ?>
+                                    <div class="mb-3 mt-3">
+                                        <label for="tasksTitle-field" class="form-label"><span> Request User</span></label>
+                                        <select class="form-control" data-choices name="id_nik_request">
+                                            <option value="">All Users</option>
+                                            <?php
+                                            $sql5 = mysqli_query($koneksi, 'SELECT idnik, nama, divisi, lokasi FROM user WHERE lokasi = "HO" ');
+                                            while ($row5 = mysqli_fetch_assoc($sql5)) {
+                                            ?>
+                                                <option value="<?= $row5['idnik'] ?>"><?= $row5['nama'] ?> | <?= $row5['divisi']  ?></option>
+                                            <?php } ?>
+                                        </select>
+                                        <input type="text" class="form-control" hidden name="status_input" value="Input by Admin" />
+                                    </div>
                                 <?php } else { ?>
                                     <input type="text" class="form-control" hidden name="id_nik_request" value="<?= $niklogin ?>" />
                                     <input type="text" class="form-control" hidden name="status_input" value="Input by User" />
@@ -719,10 +603,10 @@
                                     <div class="mb-3 mt-3">
                                         <label for="tasksTitle-field" class="form-label"><span> PIC Courier</span></label>
                                         <select class="form-control" data-choices name="id_nik_kurir">
-                                            <option value="">All Users</option>
+                                            <option value="">All PIC Internal Courier</option>
                                             <?php
-                                            $sql5 = mysqli_query($koneksi, "SELECT access_menu.*, nama FROM access_menu 
-                                        INNER JOIN USER ON access_menu.idnik = user.idnik WHERE access_type ='Kurir'  ");
+                                            $sql5 = mysqli_query($koneksi, "SELECT access_level.*, nama FROM access_level 
+                                        INNER JOIN USER ON access_level.idnik = user.idnik WHERE access_level.internal_kurir ='1'  ");
                                             while ($row5 = mysqli_fetch_assoc($sql5)) {
                                             ?>
                                                 <option value="<?= $row5['idnik'] ?>"><?= $row5['nama'] ?></option>
@@ -733,7 +617,7 @@
                                         <input class="form-control" name="tanggal_proses" hidden value="<?= $tanggal_proses ?>" />
                                     </div>
 
-                                <?php }elseif(isset($row7['ga4']) && ($row7['ga4'] == '1')) { ?>
+                                <?php } elseif (isset($row7['ga4']) && ($row7['ga4'] == '1')) { ?>
                                     <div class="mb-3 mt-3">
                                         <label for="tasksTitle-field" class="form-label"><span> PIC Courier</span></label>
                                         <select class="form-control" data-choices name="id_nik_kurir">
@@ -750,7 +634,7 @@
                                         </select>
                                         <input class="form-control" name="tanggal_proses" hidden value="<?= $tanggal_proses ?>" />
                                     </div>
-                                    <?php }?>
+                                <?php } ?>
                             </div>
 
                             <div class="col-lg-6">

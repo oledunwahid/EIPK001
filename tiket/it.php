@@ -55,7 +55,7 @@
                             <?php if (isset($row7['admin']) && ($row7['admin'] == '1')) {
                                 $sql1 = mysqli_query($koneksi, "SELECT id_tiket FROM ticketing WHERE status_tiket = 'Pending' ");
                                 $PendingTiket = mysqli_num_rows($sql1);
-                            } elseif(isset($row7['it']) && ($row7['it'] == '1')) {
+                            } elseif (isset($row7['it']) && ($row7['it'] == '1')) {
                                 $sql1 = mysqli_query($koneksi, "SELECT ticketing.id_tiket, user.lokasi FROM ticketing INNER JOIN USER ON ticketing.id_nik_request = user.idnik  WHERE status_tiket = 'Pending' AND user.lokasi = '$lokasilogin' ");
                                 $PendingTiket = mysqli_num_rows($sql1);
                             } else {
@@ -150,7 +150,7 @@
                     <div class="d-flex align-items-center">
                         <h5 class="card-title mb-0 flex-grow-1">List Ticketing</h5>
 
-                        <?php if(isset($row7['it']) && ($row7['it'] == '1')) : ?>
+                        <?php if (isset($row7['it']) && ($row7['it'] == '1')) : ?>
                             <a href="index.php?page=AddSupport" class="btn btn-danger add-btn">
                                 <i class="ri-add-line align-bottom me-1"></i> Create Tickets
                             </a>
@@ -170,11 +170,11 @@
 
 
                             <div class="col-xxl-2 col-sm-2">
-                                <input value="<?= date('Y-m-01', strtotime("-2 months")) ?>" type="date" class="form-control input-light" name="tanggal1" data-provider="flatpickr" >
+                                <input value="<?= date('Y-m-01', strtotime("-2 months")) ?>" type="date" class="form-control input-light" name="tanggal1" data-provider="flatpickr">
                             </div>
 
                             <div class="col-xxl-2 col-sm-3">
-                                <input value="<?= date('Y-m-t') ?>" type="date" class="form-control input-light" name="tanggal2" data-provider="flatpickr"  placeholder="Select Date Closed Ticket">
+                                <input value="<?= date('Y-m-t') ?>" type="date" class="form-control input-light" name="tanggal2" data-provider="flatpickr" placeholder="Select Date Closed Ticket">
                             </div>
 
 
@@ -214,6 +214,12 @@
                                     Filters
                                 </button>
                             </div>
+                            <div class="col-xxl-2 col-sm-2">
+                                <button class="btn btn-secondary w-100" onclick="refreshPage()">
+                                    <i class="ri-refresh-line me-1 align-bottom"></i>
+                                    Refresh
+                                </button>
+                            </div>
                             <!--end col-->
                         </div>
                         <!--end row-->
@@ -247,8 +253,7 @@
 
                                         <tbody>
                                             <?php
-                                            if (isset($_POST["filter"])) 
-                                            {
+                                            if (isset($_POST["filter"])) {
                                                 $daritanggal = $_POST['tanggal1'];
                                                 $ketanggal = $_POST['tanggal2'];
                                                 $kategoriFilter = $_POST['kategoriFilter'];
@@ -275,14 +280,14 @@
                                                             <td><?= $row['start_date'] ?></td>
                                                             <td><?= $row['proses_date'] ?></td>
                                                             <td><?= $row['end_date'] ?></td>
-                                                            <td><?php $waktuawal = New DateTime($row['proses_date']);
-                                                            $waktuakhir = New DateTime($row['end_date']);
-                                                            $durasi = $waktuawal->diff($waktuakhir);
-                                                            $jam = $durasi->h;
-                                                            $menit = $durasi->i; 
-                                                            $formatted_menit = sprintf("%02d", $menit); 
-                                                            echo "$jam jam $formatted_menit menit";                           
-                                                            ?></td>
+                                                            <td><?php $waktuawal = new DateTime($row['proses_date']);
+                                                                $waktuakhir = new DateTime($row['end_date']);
+                                                                $durasi = $waktuawal->diff($waktuakhir);
+                                                                $jam = $durasi->h;
+                                                                $menit = $durasi->i;
+                                                                $formatted_menit = sprintf("%02d", $menit);
+                                                                echo "$jam jam $formatted_menit menit";
+                                                                ?></td>
                                                             <td><?= $row['lokasi'] ?></td>
                                                             <td><?= $row['nama_request'] ?></td>
                                                             <td><?= $row['whatsapp'] ?></td>
@@ -327,14 +332,14 @@
                                                             <td><?= $row['start_date'] ?></td>
                                                             <td><?= $row['proses_date'] ?></td>
                                                             <td><?= $row['end_date'] ?></td>
-                                                            <td><?php $waktuawal = New DateTime($row['proses_date']);
-                                                            $waktuakhir = New DateTime($row['end_date']);
-                                                            $durasi = $waktuawal->diff($waktuakhir);
-                                                            $jam = $durasi->h;
-                                                            $menit = $durasi->i; 
-                                                            $formatted_menit = sprintf("%02d", $menit); 
-                                                            echo "$jam jam $formatted_menit menit";                              
-                                                            ?></td>
+                                                            <td><?php $waktuawal = new DateTime($row['proses_date']);
+                                                                $waktuakhir = new DateTime($row['end_date']);
+                                                                $durasi = $waktuawal->diff($waktuakhir);
+                                                                $jam = $durasi->h;
+                                                                $menit = $durasi->i;
+                                                                $formatted_menit = sprintf("%02d", $menit);
+                                                                echo "$jam jam $formatted_menit menit";
+                                                                ?></td>
                                                             <td><?= $row['lokasi'] ?></td>
                                                             <td><?= $row['nama_request'] ?></td>
                                                             <td><?= $row['whatsapp'] ?></td>
@@ -381,14 +386,14 @@
                                                             <td><?= $row['start_date'] ?></td>
                                                             <td><?= $row['proses_date'] ?></td>
                                                             <td><?= $row['end_date'] ?></td>
-                                                            <td><?php $waktuawal = New DateTime($row['proses_date']);
-                                                            $waktuakhir = New DateTime($row['end_date']);
-                                                            $durasi = $waktuawal->diff($waktuakhir);
-                                                            $jam = $durasi->h;
-                                                            $menit = $durasi->i; 
-                                                            $formatted_menit = sprintf("%02d", $menit); 
-                                                            echo "$jam jam $formatted_menit menit";                            
-                                                            ?></td>
+                                                            <td><?php $waktuawal = new DateTime($row['proses_date']);
+                                                                $waktuakhir = new DateTime($row['end_date']);
+                                                                $durasi = $waktuawal->diff($waktuakhir);
+                                                                $jam = $durasi->h;
+                                                                $menit = $durasi->i;
+                                                                $formatted_menit = sprintf("%02d", $menit);
+                                                                echo "$jam jam $formatted_menit menit";
+                                                                ?></td>
                                                             <td><?= $row['lokasi'] ?></td>
                                                             <td><?= $row['nama_request'] ?></td>
                                                             <td><?= $row['whatsapp'] ?></td>
@@ -439,14 +444,14 @@
                                                             <td><?= $row['start_date'] ?></td>
                                                             <td><?= $row['proses_date'] ?></td>
                                                             <td><?= $row['end_date'] ?></td>
-                                                            <td><?php $waktuawal = New DateTime($row['proses_date']);
-                                                            $waktuakhir = New DateTime($row['end_date']);
-                                                            $durasi = $waktuawal->diff($waktuakhir);
-                                                            $jam = $durasi->h;
-                                                            $menit = $durasi->i; 
-                                                            $formatted_menit = sprintf("%02d", $menit); 
-                                                            echo "$jam jam $formatted_menit menit";                                
-                                                            ?></td>
+                                                            <td><?php $waktuawal = new DateTime($row['proses_date']);
+                                                                $waktuakhir = new DateTime($row['end_date']);
+                                                                $durasi = $waktuawal->diff($waktuakhir);
+                                                                $jam = $durasi->h;
+                                                                $menit = $durasi->i;
+                                                                $formatted_menit = sprintf("%02d", $menit);
+                                                                echo "$jam jam $formatted_menit menit";
+                                                                ?></td>
                                                             <td><?= $row['lokasi'] ?></td>
                                                             <td><?= $row['nama_request'] ?></td>
                                                             <td><?= $row['whatsapp'] ?></td>
@@ -470,7 +475,7 @@
                                                             </td>
                                                         </tr>
                                                     <?php }
-                                                } elseif(isset($row7['it']) && ($row7['it'] == '1')) {
+                                                } elseif (isset($row7['it']) && ($row7['it'] == '1')) {
                                                     $sql4 = mysqli_query($koneksi, "SELECT
                                                     ticketing.*, user.lokasi,
                                                     user1.nama AS nama_request,
@@ -491,14 +496,14 @@
                                                             <td><?= $row['start_date'] ?></td>
                                                             <td><?= $row['proses_date'] ?></td>
                                                             <td><?= $row['end_date'] ?></td>
-                                                            <td><?php $waktuawal = New DateTime($row['proses_date']);
-                                                            $waktuakhir = New DateTime($row['end_date']);
-                                                            $durasi = $waktuawal->diff($waktuakhir);
-                                                            $jam = $durasi->h;
-                                                            $menit = $durasi->i; 
-                                                            $formatted_menit = sprintf("%02d", $menit); 
-                                                            echo "$jam jam $formatted_menit menit";                                  
-                                                            ?></td>
+                                                            <td><?php $waktuawal = new DateTime($row['proses_date']);
+                                                                $waktuakhir = new DateTime($row['end_date']);
+                                                                $durasi = $waktuawal->diff($waktuakhir);
+                                                                $jam = $durasi->h;
+                                                                $menit = $durasi->i;
+                                                                $formatted_menit = sprintf("%02d", $menit);
+                                                                echo "$jam jam $formatted_menit menit";
+                                                                ?></td>
                                                             <td><?= $row['lokasi'] ?></td>
                                                             <td><?= $row['nama_request'] ?></td>
                                                             <td><?= $row['whatsapp'] ?></td>
@@ -534,21 +539,21 @@
                                                     INNER JOIN USER ON ticketing.id_nik_request = user.idnik 
                                                     WHERE ticketing.start_date BETWEEN '$tgl1' AND '$tgl2' AND
                                                     user.idnik = $niklogin  ");
-                                                    while($row = mysqli_fetch_assoc($sql4)) {
+                                                    while ($row = mysqli_fetch_assoc($sql4)) {
                                                     ?>
                                                         <tr>
                                                             <td><a href="index.php?page=ViewTicketIT&id=<?= $row['id_tiket']; ?>"><?= $row['id_tiket'] ?></a></td>
                                                             <td><?= $row['start_date'] ?></td>
                                                             <td><?= $row['proses_date'] ?></td>
                                                             <td><?= $row['end_date'] ?></td>
-                                                            <td><?php $waktuawal = New DateTime($row['proses_date']);
-                                                            $waktuakhir = New DateTime($row['end_date']);
-                                                            $durasi = $waktuawal->diff($waktuakhir);
-                                                            $jam = $durasi->h;
-                                                            $menit = $durasi->i; 
-                                                            $formatted_menit = sprintf("%02d", $menit); 
-                                                            echo "$jam jam $formatted_menit menit";                                
-                                                            ?></td>
+                                                            <td><?php $waktuawal = new DateTime($row['proses_date']);
+                                                                $waktuakhir = new DateTime($row['end_date']);
+                                                                $durasi = $waktuawal->diff($waktuakhir);
+                                                                $jam = $durasi->h;
+                                                                $menit = $durasi->i;
+                                                                $formatted_menit = sprintf("%02d", $menit);
+                                                                echo "$jam jam $formatted_menit menit";
+                                                                ?></td>
                                                             <td><?= $row['lokasi'] ?></td>
                                                             <td><?= $row['nama_request'] ?></td>
                                                             <td><?= $row['whatsapp'] ?></td>
@@ -605,7 +610,7 @@
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content border-0">
                 <div class="modal-header p-3 bg-soft-info">
-                    <h5 class="modal-title" id="exampleModalLabel">Create Ticketing</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Create Request IT Ticketing - IT-Support</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
                 </div>
                 <form action="function/insert_it_tiket.php" method="POST" enctype="multipart/form-data">
@@ -707,3 +712,9 @@
 <script src="../assets/js/pages/form-editor.init.js"></script>
 
 <script src="../assets/js/pages/select2.init.js"></script>
+
+<script>
+    function refreshPage() {
+        window.location.href = '../index.php?page=Delivery';
+    }
+</script>

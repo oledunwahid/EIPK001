@@ -53,11 +53,11 @@
                                         Stationary</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="index.php?page=Maintenance" class="nav-link">Building
+                                    <a href="index.php?page=Building Facilities" class="nav-link">Building
                                         Maintenance Support</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="index.php?page=OtherFacilities" class="nav-link">Other Facilities
+                                    <a href="index.php?page=Other Facilities" class="nav-link">Other Facilities
                                         Request</a>
                                 </li>
                             </ul>

@@ -22,7 +22,6 @@ if (isset($_POST["add-tiket-admin"])) {
 
 
     $ekstensi_diperbolehkan = array('pdf', 'xlsx', 'xls', 'doc', 'docx', 'jpg', 'png', 'jpeg');
-
     $nama_lampiran1 = $_FILES['lampiran1']['name'];
 
 

@@ -24,30 +24,30 @@
                             <div class="mb-3 mt-3">
 
                                 <label class="form-label mb-0">Create date:</label>
-                                <input type="text" class="form-control" data-provider="flatpickr" data-date-format="Y-m-d" name="kodok">
+                                <input type="text" class="form-control" data-provider="flatpickr" data-date-format="Y-m-d" name="kodok" required>
                             </div>
 
 
                             <div class="mb-3 mt-3">
                                 <label class="form-label mb-0">Start/Process date:</label>
-                                <input type="text" class="form-control" data-provider="flatpickr" data-date-format="Y-m-d" data-enable-time name="proses_date">
+                                <input type="text" class="form-control" data-provider="flatpickr" data-date-format="Y-m-d" data-enable-time name="proses_date" required>
                             </div>
 
 
                             <div class="mb-3 mt-3">
 
                                 <label class="form-label mb-0">End date:</label>
-                                <input type="text" class="form-control" data-provider="flatpickr" data-date-format="Y-m-d" data-enable-time name="end_date">
+                                <input type="text" class="form-control" data-provider="flatpickr" data-date-format="Y-m-d" data-enable-time name="end_date" required>
                             </div>
 
                             <div>
                                 <label for="wa" class="form-label">No.Whatsapp</label>
-                                <input type="number" class="form-control" placeholder="Insert your active number +(62) " name="wa" />
+                                <input type="number" class="form-control" placeholder="Insert your active number +(62) " name="wa" required />
                             </div>
 
                             <div class="mt-3">
                                 <label for="choices-single-default" class="form-label"><span>Request Type :</span></label>
-                                <select class="form-control" data-choices name="kategori_tiket">
+                                <select class="form-control" data-choices name="kategori_tiket" required >
                                     <option value="">Select Request Type</option>
                                     <?php
                                     $statusOptions = ['Cloud Storage', 'Email', 'Hardware', 'Network', 'Printer & Scanner', 'Software', 'Documentation', 'Infrastructure', 'License/Agreement'];
@@ -63,7 +63,7 @@
                                 <div class="mt-3">
                                     <div class="form-label"><span>Status :</span></div>
                                     <div>
-                                        <select class="form-control" data-choices name="status_tiket">
+                                        <select class="form-control" data-choices name="status_tiket" required >
                                             <option value="">Select Status</option>
                                             <?php
                                             $statusOptions = ['Closed', 'Process', 'Reject'];
@@ -95,7 +95,7 @@
                                 ?>
                                 <div class="mt-3">
                                     <label for="choices-single-default" class="form-label "><span>Assigned To :</span></label>
-                                    <select class="form-control" data-choices name="nik_pic">
+                                    <select class="form-control" data-choices name="nik_pic" required >
                                         <option value="">Select PIC</option>
                                         <?php
                                         $sql5 = mysqli_query($koneksi, "SELECT access_menu.idnik, user.nama FROM access_menu INNER JOIN USER ON access_menu.idnik = user.idnik where access_type = 'IT' ");
@@ -111,7 +111,7 @@
                             <div>
                                 <div class="mb-3 mt-3">
                                     <label for="tasksTitle-field" class="form-label"><span> Request User</span></label>
-                                    <select class="form-control" data-choices name="id_nik_request">
+                                    <select class="form-control" data-choices name="id_nik_request" required >
                                         <option value="">All Users</option>
                                         <?php
                                         $sql5 = mysqli_query($koneksi, 'SELECT idnik, nama, lokasi FROM user');

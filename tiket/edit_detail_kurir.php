@@ -76,10 +76,10 @@ $timestamp = $dateTime->format('Y-m-d H:i:s');
                                                 <select class="form-select" name="id_nik_kurir" data-choices id="choices-status-input">
                                                     <option value="<?= $row['id_nik_kurir'] ?>"><?= $row['nama_pic'] ?></option>
                                                     <?php
-                                                    $sql5 = mysqli_query($koneksi, "SELECT access_menu.*, nama 
-                                                                                    FROM access_menu 
-                                                                                    INNER JOIN USER ON access_menu.idnik = user.idnik 
-                                                                                    WHERE access_type ='Kurir'  ");
+                                                    $sql5 = mysqli_query($koneksi, "SELECT access_level.idnik, user.nama 
+                                                    FROM access_level 
+                                                    INNER JOIN USER ON access_level.idnik = user.idnik 
+                                                    WHERE access_level.internal_kurir = 1"); 
                                                     while ($row5 = mysqli_fetch_assoc($sql5)) {
                                                     ?>
                                                         <option value="<?= $row5['idnik'] ?>"><?= $row5['nama'] ?></option>

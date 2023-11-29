@@ -1,5 +1,5 @@
 <?php
-require_once("../koneksi.php");
+require_once("../../koneksi.php");
 
 if (isset($_POST["add-stationary"])) {
     $currentDateTime = new DateTime('now', new DateTimeZone('Asia/Jakarta'));

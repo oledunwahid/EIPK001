@@ -43,14 +43,14 @@
                                             </button>
                                             <ul class="dropdown-menu dropdown-menu-end">
                                                 <li>
-                                                    <a href="javascript:void(0);" class="dropdown-item edit-item-btn" data-bs-toggle="modal" data-bs-target="#editModal<?= $row['id_atk'] ?>" data-nama="<?= $row['description'] ?>">
+                                                    <a href="javascript:void(0);" class="dropdown-item edit-item-btn" data-bs-toggle="modal" data-bs-target="#editModal<?= $row['id_atk'] ?>" data-name="<?= $row['description'] ?>">
                                                         <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>Edit
                                                     </a>
                                                 </li>
                                                 <li>
                                                     <form action="" method="POST" class="delete-form">
                                                         <button type="button" class="dropdown-item edit-item-btn" onclick="showConfirmation('<?= $row['id_atk'] ?>', '<?= $row['description'] ?>')">
-                                                            <i class="fa fa-trash align-bottom me-2 text-muted"></i> Delete
+                                                            <i class="bx bx bxs-trash align-bottom me-2 text-muted" name="delete" id="delete-form" href="#"></i> Delete
                                                         </button>
                                                     </form>
                                                 </li>
@@ -62,12 +62,12 @@
                         </tbody>
                     </table>
                 </div>
-
             </div>
         </div>
-    </div><!--end row-->
+    </div>
 </div>
 
+<!-- add modal -->
 <div class="modal fade zoomIn" id="showModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content border-0">
@@ -75,30 +75,31 @@
                 <h5 class="modal-title" id="exampleModalLabel">Add ATK</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
             </div>
-            <form action="" method="POST">
+            <form action="function/insert_atk.php" method="POST">
                 <div class="modal-body">
                     <div class="row g-3">
                         <div class="col-lg-6">
                             <div id="modal-id">
                                 <label for="choices-status-input" class="form-label">ID ATK</label>
-                                <input type="text" id="id" class="form-control" name="id" required />
+                                <input type="text" class="form-control" name="id_atk" required />
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <label for="choices-status-input" class="form-label">Description</label>
-                            <input type="text" id="desc" class="form-control" name="desc" required />
+                            <input type="text" class="form-control" name="description" required />
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger waves-effect" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary waves-effect waves-light">Add</button>
+                    <button type="submit" class="btn btn-primary waves-effect waves-light" name="add-atk">Add</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 
+<!-- edit modal -->
 <div class="modal fade zoomIn" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content border-0">
@@ -145,3 +146,38 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 
 <script src="../assets/js/pages/datatables.init.js"></script>
+
+<script>
+$('.edit-item-btn').on('click', function() {
+    var description = $(this).data('name'); 
+    var id_atk = $(this).data('id-atk'); 
+
+    $('#editModal input[name="id_atk"]').val(id_atk);
+    $('#editModal input[name="description"]').val(description); 
+});
+
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const deleteButton = document.getElementById('delete-form');
+
+        deleteButton.addEventListener('click', function(event) {
+            event.preventDefault();
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'You are about to delete this item!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, delete it!',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = 'function/delete_atk.php?aksi=delete&id=<?= $_GET['id'] ?>';
+                }
+            });
+        });
+    });
+</script>

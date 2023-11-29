@@ -102,7 +102,7 @@ $id_tiket1 = $_GET['id'];
                                                     <select class="form-control" data-choices name="nik_pic">
                                                         <option value="<?= $row['nik_pic'] ?>"><?= $row['nama_pic'] ?></option>
                                                         <?php
-                                                        $sql5 = mysqli_query($koneksi, "SELECT access_menu.idnik, user.nama FROM access_menu INNER JOIN USER ON access_menu.idnik = user.idnik where access_type = 'IT' ");
+                                                        $sql5 = mysqli_query($koneksi, "SELECT access_level.idnik, user.nama FROM access_level INNER JOIN USER ON access_level.idnik = user.idnik WHERE user.lokasi = '$lokasilogin' AND it = 1 ");
                                                         while ($row5 = mysqli_fetch_assoc($sql5)) {
                                                         ?>
                                                             <option value="<?= $row5['idnik'] ?>"><?= $row5['nama'] ?> </option>
