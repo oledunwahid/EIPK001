@@ -16,11 +16,11 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
                         <div>
-                            <?php if (isset($row7['admin']) && ($row7['admin'] == '1' || ($row7['ga3'] == '1'))) {
-                                $sql = mysqli_query($koneksi, "SELECT id_ga_other_facilities FROM ga_other_facilities");
+                            <?php if (isset($row7['admin']) && ($row7['admin'] == '1' || ($row7['ga2'] == '1'))) {
+                                $sql = mysqli_query($koneksi, "SELECT id_ga_building FROM ga_building");
                                 $totalTicket = mysqli_num_rows($sql);
                             } else {
-                                $sql = mysqli_query($koneksi, "SELECT id_ga_other_facilities FROM id_ga_other_facilities where nik_request='$niklogin' ");
+                                $sql = mysqli_query($koneksi, "SELECT id_ga_building FROM ga_building where nik_request='$niklogin' ");
                                 $totalTicket = mysqli_num_rows($sql);
                             }
                             ?>
@@ -51,10 +51,10 @@
                         <div>
                             <?php
                             if (isset($row7['admin']) && ($row7['admin'] == '1' || ($row7['ga2'] == '1'))) {
-                                $sql1 = mysqli_query($koneksi, "SELECT id_ga_other_facilities FROM ga_other_facilities WHERE status = 'Pending'");
+                                $sql1 = mysqli_query($koneksi, "SELECT id_ga_building FROM ga_building WHERE status = 'Pending'");
                                 $PendingTiket = mysqli_num_rows($sql1);
                             } else {
-                                $sql1 = mysqli_query($koneksi, "SELECT id_ga_other_facilities FROM ga_other_facilities WHERE status = 'Pending' AND (nik_request = '$niklogin' OR id_ga_other_facilities = '$niklogin')");
+                                $sql1 = mysqli_query($koneksi, "SELECT id_ga_building FROM ga_building WHERE status = 'Pending' AND (nik_request = '$niklogin' OR id_ga_building = '$niklogin')");
                                 $PendingTiket = mysqli_num_rows($sql1);
                             }
                             ?>
@@ -80,10 +80,10 @@
                         <div>
                             <?php
                             if (isset($row7['admin']) && ($row7['admin'] == '1' || ($row7['ga2'] == '1'))) {
-                                $sql1 = mysqli_query($koneksi, "SELECT id_ga_other_facilities FROM ga_other_facilities WHERE status = 'Process'");
+                                $sql1 = mysqli_query($koneksi, "SELECT id_ga_building FROM ga_building WHERE status = 'Process'");
                                 $ProcessTicket = mysqli_num_rows($sql1);
                             } else {
-                                $sql1 = mysqli_query($koneksi, "SELECT id_ga_other_facilities FROM ga_other_facilities WHERE status = 'Process' AND (nik_request = '$niklogin' OR id_ga_other_facilities = '$niklogin')");
+                                $sql1 = mysqli_query($koneksi, "SELECT id_ga_building FROM ga_building WHERE status = 'Process' AND (nik_request = '$niklogin' OR id_ga_building = '$niklogin')");
                                 $ProcessTicket = mysqli_num_rows($sql1);
                             }
                             ?>
@@ -109,10 +109,10 @@
                         <div>
                             <?php
                             if (isset($row7['admin']) && ($row7['admin'] == '1' || ($row7['ga2'] == '1'))) {
-                                $sql2 = mysqli_query($koneksi, "SELECT id_ga_other_facilities FROM ga_other_facilities WHERE status = 'Closed'");
+                                $sql2 = mysqli_query($koneksi, "SELECT id_ga_building FROM ga_building WHERE status = 'Closed'");
                                 $ClosedTicket = mysqli_num_rows($sql2);
                             } else {
-                                $sql2 = mysqli_query($koneksi, "SELECT id_ga_other_facilities FROM ga_other_facilities WHERE status = 'Closed' AND (nik_request = '$niklogin' OR id_ga_other_facilities = '$niklogin')");
+                                $sql2 = mysqli_query($koneksi, "SELECT id_ga_building FROM ga_building WHERE status = 'Closed' AND (nik_request = '$niklogin' OR id_ga_building = '$niklogin')");
                                 $ClosedTicket = mysqli_num_rows($sql2);
                             }
                             ?>
@@ -140,9 +140,10 @@
                 <div class="card-header border-0">
                     <div class="d-flex align-items-center">
                         <div class="card-title mb-0 flex-grow-1 flex">
-                            <h5>Other Facilities Request (Purchase Request)</h5>
-                            <h6>For purchasing and replacing items, you are required to attach the approved material request
-                                form.</h6>
+                            <h5>Building Maintenance Support</h5>
+                            <h6>Covers building and facility-related needs (e.g., Chair,
+                                roller blind, glass partition, access
+                                doors, and others).</h6>
                         </div>
                         <div class="flex-shrink-0">
                             <button class="btn btn-danger add-btn" data-bs-toggle="modal" data-bs-target="#showModal"><i class="ri-add-line align-bottom me-1"></i> Create Ticketing</button>
@@ -223,21 +224,21 @@
                                                 <?php
                                                 if (isset($row7['admin']) && ($row7['admin'] == '1' || ($row7['ga2'] == '1'))) {
                                                     $sql7 = mysqli_query($koneksi, "SELECT
-                                                        ga_other_facilities.*,
+                                                        ga_building.*,
                                                         user1.nama AS nama_request,
                                                         user2.nama AS nama_pic 
-                                                        FROM ga_other_facilities
-                                                        LEFT JOIN USER AS user1 ON ga_other_facilities.nik_request = user1.idnik
-                                                        LEFT JOIN USER AS user2 ON ga_other_facilities.nik_pic = user2.idnik
-                                                        INNER JOIN USER ON ga_other_facilities.nik_request = user.idnik
-                                                        WHERE ga_other_facilities.start_date BETWEEN '$daritanggal' AND '$ketanggal' 
-                                                        AND ga_other_facilities.status = $statusFilter ");
+                                                        FROM ga_building
+                                                        LEFT JOIN USER AS user1 ON ga_building.nik_request = user1.idnik
+                                                        LEFT JOIN USER AS user2 ON ga_building.nik_pic = user2.idnik
+                                                        INNER JOIN USER ON ga_building.nik_request = user.idnik
+                                                        WHERE ga_building.start_date BETWEEN '$daritanggal' AND '$ketanggal' 
+                                                        AND ga_building.status = $statusFilter ");
                                                     $rowNumber = 1;
                                                     while ($row6 = mysqli_fetch_assoc($sql7)) {
                                                 ?>
                                                         <tr>
                                                             <td><?= $rowNumber ?></td>
-                                                            <td><a href="index.php?page=Edit Building Facilities&id=<?= $row6['id_ga_other_facilities']; ?>"><?= $row6['id_ga_other_facilities'] ?></a></td>
+                                                            <td><a href="index.php?page=Edit Building Facilities&id=<?= $row6['id_ga_building']; ?>"><?= $row6['id_ga_building'] ?></a></td>
                                                             <td><?= $row6['start_date'] ?></td>
                                                             <td><?= $row6['end_date'] ?></td>
                                                             <td><?= $row6['nama_request'] ?></td>
@@ -262,7 +263,7 @@
                                                                     </button>
                                                                     <ul class="dropdown-menu dropdown-menu-end">
                                                                         <li>
-                                                                            <a href="index.php?page=Edit Building Facilities&id=<?= $row6['id_ga_other_facilities']; ?>" class="dropdown-item"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a>
+                                                                            <a href="index.php?page=Edit Building Facilities&id=<?= $row6['id_ga_building']; ?>" class="dropdown-item"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a>
                                                                         </li>
                                                                     </ul>
                                                                 </div>
@@ -273,22 +274,22 @@
                                                     }
                                                 } else {
                                                     $sql7 = mysqli_query($koneksi, "SELECT
-                                                        ga_other_facilities.*,
+                                                        ga_building.*,
                                                         user1.nama AS nama_request,
                                                         user2.nama AS nama_pic 
-                                                        FROM ga_other_facilities
-                                                        LEFT JOIN USER AS user1 ON ga_other_facilities.nik_request = user1.idnik
-                                                        LEFT JOIN USER AS user2 ON ga_other_facilities.nik_pic = user2.idnik
-                                                        INNER JOIN USER ON ga_other_facilities.nik_request = user.idnik
-                                                        WHERE ga_other_facilities.start_date BETWEEN '$daritanggal' AND '$ketanggal' 
-                                                        AND ga_other_facilities.status = $statusFilter 
-                                                        AND ga_other_facilities.nik_request = '$niklogin'");
+                                                        FROM ga_building
+                                                        LEFT JOIN USER AS user1 ON ga_building.nik_request = user1.idnik
+                                                        LEFT JOIN USER AS user2 ON ga_building.nik_pic = user2.idnik
+                                                        INNER JOIN USER ON ga_building.nik_request = user.idnik
+                                                        WHERE ga_building.start_date BETWEEN '$daritanggal' AND '$ketanggal' 
+                                                        AND ga_building.status = $statusFilter 
+                                                        AND ga_building.nik_request = '$niklogin'");
                                                     $rowNumber = 1;
                                                     while ($row6 = mysqli_fetch_assoc($sql7)) {
                                                     ?>
                                                         <tr>
                                                             <td><?= $rowNumber ?></td>
-                                                            <td><a href="index.php?page=View Building Facilities&id=<?= $row6['id_ga_other_facilities']; ?>"><?= $row6['id_ga_other_facilities'] ?></a></td>
+                                                            <td><a href="index.php?page=View Building Facilities&id=<?= $row6['id_ga_building']; ?>"><?= $row6['id_ga_building'] ?></a></td>
                                                             <td><?= $row6['start_date'] ?></td>
                                                             <td><?= $row6['end_date'] ?></td>
                                                             <td><?= $row6['nama_request'] ?></td>
@@ -313,7 +314,7 @@
                                                                     </button>
                                                                     <ul class="dropdown-menu dropdown-menu-end">
                                                                         <li>
-                                                                            <a href="index.php?page=View Building Facilities&id=<?= $row6['id_ga_other_facilities']; ?>" class="dropdown-item"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a>
+                                                                            <a href="index.php?page=View Building Facilities&id=<?= $row6['id_ga_building']; ?>" class="dropdown-item"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a>
                                                                         </li>
                                                                     </ul>
                                                                 </div>
@@ -332,20 +333,20 @@
                                                 <?php
                                                 if (isset($row7['admin']) && ($row7['admin'] == '1' || ($row7['ga4'] == '1'))) {
                                                     $sql7 = mysqli_query($koneksi, "SELECT
-                                                    ga_other_facilities.*,
+                                                    ga_building.*,
                                                     user1.nama AS nama_request,
                                                     user2.nama AS nama_pic 
-                                                    FROM ga_other_facilities
-                                                    LEFT JOIN USER AS user1 ON ga_other_facilities.nik_request = user1.idnik
-                                                    LEFT JOIN USER AS user2 ON ga_other_facilities.nik_pic = user2.idnik
-                                                    INNER JOIN USER ON ga_other_facilities.nik_request = user.idnik
-                                                    WHERE ga_other_facilities.start_date BETWEEN '$tgl1' AND '$tgl2'");
+                                                    FROM ga_building
+                                                    LEFT JOIN USER AS user1 ON ga_building.nik_request = user1.idnik
+                                                    LEFT JOIN USER AS user2 ON ga_building.nik_pic = user2.idnik
+                                                    INNER JOIN USER ON ga_building.nik_request = user.idnik
+                                                    WHERE ga_building.start_date BETWEEN '$tgl1' AND '$tgl2'");
                                                     $rowNumber = 1;
                                                     while ($row6 = mysqli_fetch_assoc($sql7)) {
                                                 ?>
                                                         <tr>
                                                             <td><?= $rowNumber ?></td>
-                                                            <td><a href="index.php?page=Edit Building Facilities&id=<?= $row6['id_ga_other_facilities']; ?>"><?= $row6['id_ga_other_facilities'] ?></a></td>
+                                                            <td><a href="index.php?page=Edit Building Facilities&id=<?= $row6['id_ga_building']; ?>"><?= $row6['id_ga_building'] ?></a></td>
                                                             <td><?= $row6['start_date'] ?></td>
                                                             <td><?= $row6['end_date'] ?></td>
                                                             <td><?= $row6['nama_request'] ?></td>
@@ -370,7 +371,7 @@
                                                                     </button>
                                                                     <ul class="dropdown-menu dropdown-menu-end">
                                                                         <li>
-                                                                            <a href="index.php?page=Edit Building Facilities&id=<?= $row6['id_ga_other_facilities']; ?>" class="dropdown-item"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a>
+                                                                            <a href="index.php?page=Edit Building Facilities&id=<?= $row6['id_ga_building']; ?>" class="dropdown-item"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a>
                                                                         </li>
                                                                     </ul>
                                                                 </div>
@@ -381,20 +382,20 @@
                                                     }
                                                 } else {
                                                     $sql7 = mysqli_query($koneksi, "SELECT
-                                                    ga_other_facilities.*,
+                                                    ga_building.*,
                                                     user1.nama AS nama_request,
                                                     user2.nama AS nama_pic 
-                                                    FROM ga_other_facilities
-                                                    LEFT JOIN USER AS user1 ON ga_other_facilities.nik_request = user1.idnik
-                                                    LEFT JOIN USER AS user2 ON ga_other_facilities.nik_pic = user2.idnik
-                                                    INNER JOIN USER ON ga_other_facilities.nik_request = user.idnik
-                                                    WHERE ga_other_facilities.start_date BETWEEN '$tgl1' AND '$tgl2' AND ga_other_facilities.nik_request = '$niklogin'");
+                                                    FROM ga_building
+                                                    LEFT JOIN USER AS user1 ON ga_building.nik_request = user1.idnik
+                                                    LEFT JOIN USER AS user2 ON ga_building.nik_pic = user2.idnik
+                                                    INNER JOIN USER ON ga_building.nik_request = user.idnik
+                                                    WHERE ga_building.start_date BETWEEN '$tgl1' AND '$tgl2' AND ga_building.nik_request = '$niklogin'");
                                                     $rowNumber = 1;
                                                     while ($row6 = mysqli_fetch_assoc($sql7)) {
                                                     ?>
                                                         <tr>
                                                             <td><?= $rowNumber ?></td>
-                                                            <td><a href="index.php?page=View Building Facilities&id=<?= $row6['id_ga_other_facilities']; ?>"><?= $row6['id_ga_other_facilities'] ?></a></td>
+                                                            <td><a href="index.php?page=View Building Facilities&id=<?= $row6['id_ga_building']; ?>"><?= $row6['id_ga_building'] ?></a></td>
                                                             <td><?= $row6['start_date'] ?></td>
                                                             <td><?= $row6['end_date'] ?></td>
                                                             <td><?= $row6['nama_request'] ?></td>
@@ -419,7 +420,7 @@
                                                                     </button>
                                                                     <ul class="dropdown-menu dropdown-menu-end">
                                                                         <li>
-                                                                            <a href="index.php?page=View Building Facilities&id=<?= $row6['id_ga_other_facilities']; ?>" class="dropdown-item"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a>
+                                                                            <a href="index.php?page=View Building Facilities&id=<?= $row6['id_ga_building']; ?>" class="dropdown-item"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a>
                                                                         </li>
                                                                     </ul>
                                                                 </div>
@@ -433,9 +434,13 @@
                                             ?>
                                         </tbody>
                                     </table>
+
                                 </div>
+
                             </div>
+
                         </div>
+
                     </div><!--end row-->
                 </div>
                 <!--end card-body-->
@@ -444,4 +449,87 @@
         </div>
         <!--end col-->
     </div>
+    <!--end row-->
 </div>
+
+<div class="modal fade zoomIn" id="showModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" style="max-width: 1070px;">
+        <div class="modal-content border-0">
+            <div class="modal-header p-3 bg-soft-info">
+                <h5 class="modal-title" id="exampleModalLabel">Create Request GA Facilities - Building Maintenance
+                    support</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+            </div>
+            <form action="" method="POST" id="myForm" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="row g-3">
+                        <div class="col-lg-6">
+                            <div>
+                                <h6 class="fw-semibold text-uppercase mb-3">Description</h6>
+                                <textarea class="ckeditor-classic" name="description"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="mb-3 mt-1">
+                                <label for="lampiran1" class="form-label">Material Request Form (if any)</label>
+                                <input type="file" id="lampiran1" class="form-control" name="lampiran1" required />
+                            </div>
+                            <div>
+                                <label for="wa" class="form-label">No.Whatsapp</label>
+                                <input type="number" class="form-control" placeholder="Insert your active number +(62) " name="wa" />
+                            </div>
+                            <div>
+                                <?php if (isset($row7['it']) && ($row7['it'] == '1')) { ?>
+                                    <div class="mb-3 mt-3">
+                                        <label for="tasksTitle-field" class="form-label"><span> Request User</span></label>
+                                        <select class="form-control" data-choices name="id_nik_request">
+                                            <option value="">All Users</option>
+                                            <?php
+                                            $sql5 = mysqli_query($koneksi, 'SELECT idnik, nama, lokasi FROM user');
+                                            while ($row5 = mysqli_fetch_assoc($sql5)) {
+                                            ?>
+                                                <option value="<?= $row5['idnik'] ?>"><?= $row5['nama'] ?> | <?= $row5['lokasi'] ?></option>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                <?php } else { ?>
+                                    <input type="text" class="form-control" hidden name="id_nik_request" value="<?= $niklogin ?>" />
+                                <?php } ?>
+                            </div>
+
+                            <input type="hidden" name="request" value="">
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger waves-effect" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary waves-effect waves-light" onclick="submitForm(event)">Create</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<!--datatable js-->
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="../assets/js/pages/datatables.init.js"></script>
+
+<script src="../assets/libs/@ckeditor/ckeditor5-build-classic/build/ckeditor.js"></script>
+<script src="../assets/js/pages/form-editor.init.js"></script>
+
+<script src="../assets/js/pages/select2.init.js"></script>
+<!-- Sweet Alert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>

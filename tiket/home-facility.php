@@ -51,7 +51,7 @@
                     </div>
                 </div>
                 <div class="mt-4">
-                    <a href="" class="btn btn-danger">Open
+                    <a href="index.php?page=Building Facilities" class="btn btn-danger">Open
                         Building Maintenance</a>
                 </div>
             </div>
@@ -71,7 +71,7 @@
                     </div>
                 </div>
                 <div class="mt-4">
-                    <a href="" class="btn btn-secondary">Open Other
+                    <a href="index.php?page=Other Facilities" class="btn btn-secondary">Open Other
                         Facilities Request</a>
                 </div>
             </div>

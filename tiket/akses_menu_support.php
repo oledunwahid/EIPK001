@@ -26,22 +26,25 @@ if (isset($_SESSION['username'])) {
 				include 'detail_tiket.php';
 				break;
 			case 'ATK/Stationary':
-				include 'facilities/stationary-facilities.php';
+				include 'facilities/stationary_facilities.php';
 				break;
 			case 'EditATK/Stationary':
-				include 'facilities/edit-stationary-facilities.php';
+				include 'facilities/edit_stationary_facilities.php';
 				break;
 			case 'ViewATK/Stationary':
-				include 'facilities/view-stationary-facilities.php';
+				include 'facilities/view_stationary_facilities.php';
 				break;
 			case 'ATKList':
 				include 'facilities/atk.php';
 				break;
 			case 'Building Facilities':
-				include 'facilities/building-facilities.php';
+				include 'facilities/building_facilities.php';
 				break;
 			case 'Edit Building Facilities':
 				include 'facilities/edit_building_facilities.php';
+				break;
+			case 'View Building Facilities':
+				include 'facilities/view_building_facilities.php';
 				break;
 			case 'Other Facilities':
 				include 'facilities/other_facilities.php';

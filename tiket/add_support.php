@@ -22,7 +22,6 @@
 
 
                             <div class="mb-3 mt-3">
-
                                 <label class="form-label mb-0">Create date:</label>
                                 <input type="text" class="form-control" data-provider="flatpickr" data-date-format="Y-m-d" name="kodok" required>
                             </div>

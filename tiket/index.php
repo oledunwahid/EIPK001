@@ -2,12 +2,10 @@
 
 include "roleseason.php";
 include "koneksi.php";
-?>
-<?php $tgl = date('Y-m-d'); 
-$currentDateTime = new DateTime('now', new DateTimeZone('Asia/Jakarta'));
-?>
 
-<?php
+$tgl = date('Y-m-d'); 
+$currentDateTime = new DateTime('now', new DateTimeZone('Asia/Jakarta'));
+
 $username = $_SESSION['username'];
 
 $sqllogin = mysqli_query($koneksi, "SELECT * FROM login inner join user ON user.idnik = login.idnik WHERE username='$username'");
@@ -24,9 +22,7 @@ $lokasilogin              = $rowlogin['lokasi'];
 
 date_default_timezone_set('Asia/Jakarta');
 
-?>
 
-<?php
 function fsize($file)
 {
     $a = array("B", "KB", "MB", "GB", "TB", "PB");
@@ -45,7 +41,6 @@ function fsize($file)
 <html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none" data-preloader="disable">
 
 <head>
-
     <meta charset="utf-8" />
     <title>EIP | Mineral Alam Abadi</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -53,15 +48,11 @@ function fsize($file)
     <meta content="Themesbrand" name="author" />
     <!-- App favicon -->
     <link rel="shortcut icon" href="assets/images/logo.svg">
-
     <!-- jsvectormap css -->
     <link href="../assets/libs/jsvectormap/css/jsvectormap.min.css" rel="stylesheet" type="text/css" />
-
     <!--Swiper slider css-->
     <link href="../assets/libs/swiper/swiper-bundle.min.css" rel="stylesheet" type="text/css" />
-
     <!-- Layout config Js -->
-
     <!-- Bootstrap Css -->
     <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <!-- Icons Css -->
@@ -71,7 +62,6 @@ function fsize($file)
     <!-- custom Css-->
     <link href="../assets/css/custom.min.css" rel="stylesheet" type="text/css" />
     <link href="../assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
-
 </head>
 
 <body>
@@ -108,14 +98,11 @@ function fsize($file)
                                     </ol>
                                 </div>
                                 
-
                             </div>
                         </div>
                     </div>
                     <!-- end page title -->
-
                     <?php include "akses_menu_support.php" ?>
-
                 </div>
                 <!-- container-fluid -->
             </div>

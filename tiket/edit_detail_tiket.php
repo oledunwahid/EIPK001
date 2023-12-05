@@ -30,7 +30,7 @@ $id_tiket1 = $_GET['id'];
                                 <div class="row align-items-center">
                                     <div class="col-md-auto">
                                         <div class="avatar-md mb-md-0 mb-4">
-                                            <div class="avatar-title  rounded-circle" style="background-color: #b30000">
+                                            <div class="avatar-title rounded-circle" style="background-color: #b30000">
                                                 <img src="assets/images/logo_MAAA.png" alt="" width="65px" />
                                             </div>
                                         </div>
