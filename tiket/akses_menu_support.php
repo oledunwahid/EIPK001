@@ -61,6 +61,12 @@ if (isset($_SESSION['username'])) {
 			case 'Received':
 				include 'received_kurir.php';
 				break;
+			case 'EditReceived':
+				include 'edit_received_kurir.php';
+				break;
+			case 'ViewReceived':
+				include 'view_received_kurir.php';
+				break;
 			case 'EditKurir':
 				include 'edit_detail_kurir.php';
 				break;

@@ -67,6 +67,7 @@
                                                 <th>Whatsapp</th>
                                                 <th>Nama PT</th>
                                                 <th>Foto Barang</th>
+                                                <th>Status Package</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -95,10 +96,15 @@
                                                             <td><?= $row6['nama_ekspedisi'] ?></td>
                                                             <td><?= $row6['no_resi'] ?></td>
                                                             <td><?= $row6['nama_request'] ?></td>
-                                                            <td><?= $row6['tujuan_penerima'] ?></td>
                                                             <td><?= $row6['no_hp'] ?></td>
                                                             <td><?= $row6['nama_pt'] ?></td>
-                                                            <td><?= $row6['bukti_foto'] ?></td>
+                                                            <td>
+                                                                <a href="file/facilities/<?= $row6['bukti_foto']; ?>" target="_blank">
+                                                                    <?= $row6['bukti_foto'] ?>
+                                                                </a>
+                                                            </td>
+                                                            <td><?= $row6['status_received'] ?></td>
+
                                                             <td>
                                                                 <div class="dropdown d-inline-block">
                                                                     <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -106,7 +112,7 @@
                                                                     </button>
                                                                     <ul class="dropdown-menu dropdown-menu-end">
                                                                         <li>
-                                                                            <a href="index.php?page=EditKurir&id=<?= $row6['id_received']; ?>" class="dropdown-item"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a>
+                                                                            <a href="index.php?page=EditReceived&id=<?= $row6['id_received']; ?>" class="dropdown-item"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a>
                                                                         </li>
                                                                     </ul>
                                                                 </div>
@@ -133,10 +139,15 @@
                                                             <td><?= $row6['nama_ekspedisi'] ?></td>
                                                             <td><?= $row6['no_resi'] ?></td>
                                                             <td><?= $row6['nama_request'] ?></td>
-                                                            <td><?= $row6['tujuan_penerima'] ?></td>
                                                             <td><?= $row6['no_hp'] ?></td>
                                                             <td><?= $row6['nama_pt'] ?></td>
-                                                            <td><?= $row6['bukti_foto'] ?></td>
+                                                            <td>
+                                                                <a href="file/facilities/<?= $row6['bukti_foto']; ?>" target="_blank">
+                                                                    <?= $row6['bukti_foto'] ?>
+                                                                </a>
+                                                            </td>
+                                                            <td><?= $row6['status_received'] ?></td>
+
                                                             <td>
                                                                 <div class="dropdown d-inline-block">
                                                                     <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -144,7 +155,7 @@
                                                                     </button>
                                                                     <ul class="dropdown-menu dropdown-menu-end">
                                                                         <li>
-                                                                            <a href="index.php?page=EditKurir&id=<?= $row6['id_received']; ?>" class="dropdown-item"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a>
+                                                                            <a href="index.php?page=ViewReceived&id=<?= $row6['id_received']; ?>" class="dropdown-item"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a>
                                                                         </li>
                                                                     </ul>
                                                                 </div>
@@ -178,10 +189,15 @@
                                                             <td><?= $row6['nama_ekspedisi'] ?></td>
                                                             <td><?= $row6['no_resi'] ?></td>
                                                             <td><?= $row6['nama_request'] ?></td>
-                                                            <td><?= $row6['tujuan_penerima'] ?></td>
                                                             <td><?= $row6['no_hp'] ?></td>
                                                             <td><?= $row6['nama_pt'] ?></td>
-                                                            <td><?= $row6['bukti_foto'] ?></td>
+                                                            <td>
+                                                                <a href="file/facilities/<?= $row6['bukti_foto']; ?>" target="_blank">
+                                                                    <?= $row6['bukti_foto'] ?>
+                                                                </a>
+                                                            </td>
+                                                            <td><?= $row6['status_received'] ?></td>
+
                                                             <td>
                                                                 <div class="dropdown d-inline-block">
                                                                     <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -189,7 +205,7 @@
                                                                     </button>
                                                                     <ul class="dropdown-menu dropdown-menu-end">
                                                                         <li>
-                                                                            <a href="index.php?page=EditKurir&id=<?= $row6['id_received']; ?>" class="dropdown-item"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a>
+                                                                            <a href="index.php?page=EditReceived&id=<?= $row6['id_received']; ?>" class="dropdown-item"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a>
                                                                         </li>
                                                                     </ul>
                                                                 </div>
@@ -216,10 +232,15 @@
                                                             <td><?= $row6['nama_ekspedisi'] ?></td>
                                                             <td><?= $row6['no_resi'] ?></td>
                                                             <td><?= $row6['nama_request'] ?></td>
-                                                            <td><?= $row6['tujuan_penerima'] ?></td>
                                                             <td><?= $row6['no_hp'] ?></td>
                                                             <td><?= $row6['nama_pt'] ?></td>
-                                                            <td><?= $row6['bukti_foto'] ?></td>
+                                                            <td>
+                                                                <a href="file/facilities/<?= $row6['bukti_foto']; ?>" target="_blank">
+                                                                    <?= $row6['bukti_foto'] ?>
+                                                                </a>
+                                                            </td>
+                                                            <td><?= $row6['status_received'] ?></td>
+
                                                             <td>
                                                                 <div class="dropdown d-inline-block">
                                                                     <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -227,7 +248,7 @@
                                                                     </button>
                                                                     <ul class="dropdown-menu dropdown-menu-end">
                                                                         <li>
-                                                                            <a href="index.php?page=EditKurir&id=<?= $row6['id_received']; ?>" class="dropdown-item"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a>
+                                                                            <a href="index.php?page=ViewReceived&id=<?= $row6['id_received']; ?>" class="dropdown-item"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a>
                                                                         </li>
                                                                     </ul>
                                                                 </div>
@@ -265,36 +286,37 @@
                     <h5 class="modal-title" id="exampleModalLabel">Create Received Package</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
                 </div>
-                <form action="function/insert_kurir.php" method="POST" enctype="multipart/form-data" id="formModalKurir">
+                <form action="function/insert_received_kurir.php" method="POST" enctype="multipart/form-data" id="formModalKurir">
                     <div class="modal-body">
                         <div class="row g-3">
                             <div class="col-lg-6">
-                                <input type="text" class="form-control" value="<?= $niklogin ?>" name="idnik" hidden />
+                                <input type="text" class="form-control" value="<?= $niklogin ?>" name="idNik" hidden />
+                                <input type="text" class="form-control" value="Diterima PIC" name="status_received" hidden />
 
                                 <div class="mb-3 mt-3">
                                     <label class="form-label">Tanggal/Jam diterima PIC</label>
-                                    <input type="text" class="form-control" data-provider="flatpickr" data-date-format="Y-m-d" data-enable-time placeholder="Input tanggal barang diterima" name="" required>
+                                    <input type="text" class="form-control" data-provider="flatpickr" data-date-format="Y-m-d" data-enable-time placeholder="Input tanggal barang diterima" name="tanggalRequest" required>
                                 </div>
 
                                 <div class="mb-3 mt-3">
                                     <label for="tasksTitle-field" class="form-label"><span> Nama Pengirim </span></label>
-                                    <input type="text" class="form-control" placeholder="Insert nama PT perusahaan pengirim" name="" />
+                                    <input type="text" class="form-control" placeholder="Insert nama PT perusahaan pengirim" name="namaPengirim" />
                                 </div>
 
                                 <div class="mb-3 mt-3">
                                     <label for="tasksTitle-field" class="form-label"><span> Nama Ekspedisi </span></label>
-                                    <input type="text" class="form-control" placeholder="Insert nama ekspedisi" name="" />
+                                    <input type="text" class="form-control" placeholder="Insert nama ekspedisi" name="namaEkspedisi" />
                                 </div>
 
                                 <div class="mb-3 mt-3">
                                     <label for="tasksTitle-field" class="form-label"><span> No. Resi </span></label>
-                                    <input type="text" class="form-control" placeholder="Insert nama PT perusahaan pengirim" name="" />
+                                    <input type="text" class="form-control" placeholder="Insert nama PT perusahaan pengirim" name="noResi" />
                                 </div>
 
                                 <?php if (isset($row7['admin']) && ($row7['admin'] == '1' || ($row7['ga4'] == '1'))) { ?>
                                     <div class="mb-3 mt-3">
                                         <label for="tasksTitle-field" class="form-label"><span>Tujuan Paket Kepada </span></label>
-                                        <select class="form-control" data-choices name="idnik">
+                                        <select class="form-control" data-choices name="namaTujuan">
                                             <option value="">All Users</option>
                                             <?php
                                             $sql5 = mysqli_query($koneksi, 'SELECT idnik, nama, divisi, lokasi, company FROM user WHERE lokasi = "HO"');
@@ -330,17 +352,12 @@
 
                                 <div class="mb-3 mt-3">
                                     <label for="tasksTitle-field" class="form-label"><span> Nama PT (jika ada)</span></label>
-                                    <input type="text" class="form-control" placeholder="Insert nama PT perusahaan pengirim" name="" />
+                                    <input type="text" class="form-control" placeholder="Insert nama PT perusahaan pengirim" name="namaPT" />
                                 </div>
 
                                 <div class="mb-3 mt-3">
-                                    <label class="form-label">Tanggal/Jam diterima kepada tertuju</label>
-                                    <input type="text" class="form-control" data-provider="flatpickr" data-date-format="Y-m-d" data-enable-time placeholder="Input tanggal barang diterima orang tertuju" name="" required>
-                                </div>
-
-                                <div class="mb-3 mt-3">
-                                    <label for="lampiran1" class="form-label">Lampiran Foto Barang (jika ada)</label>
-                                    <input type="file" class="form-control" placeholder="Lampirkan foto barang saat diterima" id="lampiran1" name="" />
+                                    <label class="form-label">Lampiran Foto Barang (jika ada)</label>
+                                    <input type="file" class="form-control" placeholder="Lampirkan foto barang saat diterima" name="buktiFoto" />
                                 </div>
                             </div>
                         </div>
@@ -349,7 +366,7 @@
                     <div class="modal-footer mt-3">
                         <div class="hstack gap-2 justify-content-end">
                             <button type="button" class="btn btn btn-light waves-effect" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary waves-effect waves-light" name="add-request">Create Received Package</button>
+                            <button type="submit" class="btn btn-primary waves-effect waves-light" name="add-received">Create Received Package</button>
                         </div>
                     </div>
 
