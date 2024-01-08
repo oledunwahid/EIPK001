@@ -277,9 +277,9 @@ $id_tiket1 = $_GET['id'];
 </div>
 
 
-<script src="../assets/libs/@ckeditor/ckeditor5-build-classic/build/ckeditor.js"></script>
-<script src="../assets/js/pages/project-create.init.js"></script>
-<script src="../assets/js/pages/ticketdetail.init.js"></script>
+<script src="assets/libs/@ckeditor/ckeditor5-build-classic/build/ckeditor.js"></script>
+<script src="assets/js/pages/project-create.init.js"></script>
+<script src="assets/js/pages/ticketdetail.init.js"></script>
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
@@ -304,3 +304,19 @@ $id_tiket1 = $_GET['id'];
         });
     });
 </script>
+
+<!-- <script>
+    ClassicEditor
+    .create(document.querySelector('#lampiran2'),{
+        ckfinder:
+        {
+            uploadUrl : 'insert'
+        }
+    })
+    .then(editor => {
+        console.log(editor);
+    })
+    .catch ( error => {
+        console.log(error);
+    });
+</script> -->

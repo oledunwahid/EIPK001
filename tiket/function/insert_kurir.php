@@ -23,6 +23,39 @@ if (isset($_POST["add-request"])) {
     ('$id_kurir', '$id_nik_request', '$tanggal_req', '$jenis_barang', '$whatsapp',  '$tipe_kurir', '$description','$alamat_kurir','$id_nik_kurir', '', 'On Process')";
     $kondisi = mysqli_query($koneksi, $query);
 
+    $namaEmployee = 'Bapak/Ibu'; // Ganti dengan nama yang sesuai
+    $link = 'https://localhost/index.php?page=ViewKurir&id=' . $id_kurir; // Ganti dengan URL yang valid
+
+    $message = "Halo " . $namaEmployee . "!\n\nTicketing dengan ID #" . $id_kurir . " Anda sudah berhasil dibuat dengan status 'Process'\n\nTerima kasih telah menggunakan layanan kami. Jangan lupa untuk selalu cek Employee Information Portal (EIP) untuk informasi selanjutnya. Jika Anda memiliki pertanyaan lebih lanjut atau membutuhkan bantuan, jangan ragu untuk menghubungi tim IT kami.\n\nTerima kasih!\n\nInfo lebih lanjut tentang tiket ini: " . $link;
+
+    // Pengaturan untuk cURL
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => 'https://api.fonnte.com/send',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => array(
+            'target' => $whatsapp,
+            'message' => $message,
+            'countryCode' => '62', // Ganti kode negara jika perlu
+        ),
+        CURLOPT_HTTPHEADER => array(
+            'Authorization: SuQ7o9ufuZ89LqrLjN9N' // Ganti TOKEN dengan token Anda
+        ),
+    ));
+
+    // Melakukan request pengiriman pesan WhatsApp
+    $response = curl_exec($curl);
+
+    // Menutup koneksi cURL
+    curl_close($curl);
+
     $query2 = "INSERT INTO riwayat_kurir VALUES
     ('', '$id_kurir', '$timestamp', 'Pending','$status_input')";
     $kondisi2 = mysqli_query($koneksi, $query2);
@@ -31,7 +64,7 @@ if (isset($_POST["add-request"])) {
         session_start();
         $_SESSION["Messages"] = 'Data Berhasil Di Input';
         $_SESSION["Icon"] = 'success';
-    }else{
+    } else {
         session_start();
         $_SESSION["Messages"] = 'Data Gagal Di Input';
         $_SESSION["Icon"] = 'error';

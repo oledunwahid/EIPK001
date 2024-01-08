@@ -17,8 +17,8 @@ if (isset($_POST["add-tiket-admin"])) {
     $status_tiket = $_POST['status_tiket'];
     $nik_pic = $_POST["nik_pic"];
     $kategori_tiket = $_POST["kategori_tiket"];
-    $justification = $_POST["justification"]; 
-    $action_note = $_POST["action_note"];  
+    $justification = $_POST["justification"];
+    $action_note = $_POST["action_note"];
 
 
     $ekstensi_diperbolehkan = array('pdf', 'xlsx', 'xls', 'doc', 'docx', 'jpg', 'png', 'jpeg');
@@ -37,6 +37,39 @@ if (isset($_POST["add-tiket-admin"])) {
         $query = "INSERT INTO ticketing VALUES
         ('$id_tiket', '$id_nik_request', '$whatsapp', '$start_date', '$proses_date', '$end_date','$description', '', '', '$kategori_tiket', '$status_tiket', '$nik_pic', '$justification', '$action_note')";
         $kondisi = mysqli_query($koneksi, $query);
+
+        $namaEmployee = 'Bapak/Ibu'; // Ganti dengan nama yang sesuai
+        $link = 'https://localhost/index.php?page=ViewTicketIT&id=' . $id_tiket; // Ganti dengan URL yang valid
+
+        $message = "Halo " . $namaEmployee . "!\n\nTicketing dengan ID #" . $id_tiket . " Anda sudah berhasil dibuat dengan status 'Process'\n\nTerima kasih telah menggunakan layanan kami. Jangan lupa untuk selalu cek Employee Information Portal (EIP) untuk informasi selanjutnya. Jika Anda memiliki pertanyaan lebih lanjut atau membutuhkan bantuan, jangan ragu untuk menghubungi tim IT kami.\n\nTerima kasih!\n\nInfo lebih lanjut tentang tiket ini: " . $link;
+
+        // Pengaturan untuk cURL
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://api.fonnte.com/send',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => array(
+                'target' => $whatsapp,
+                'message' => $message,
+                'countryCode' => '62', // Ganti kode negara jika perlu
+            ),
+            CURLOPT_HTTPHEADER => array(
+                'Authorization: SuQ7o9ufuZ89LqrLjN9N' // Ganti TOKEN dengan token Anda
+            ),
+        ));
+
+        // Melakukan request pengiriman pesan WhatsApp
+        $response = curl_exec($curl);
+
+        // Menutup koneksi cURL
+        curl_close($curl);
 
         if ($kondisi) {
             session_start();
@@ -58,8 +91,41 @@ if (isset($_POST["add-tiket-admin"])) {
 
                 $lampiran_1 = $file_ren;
                 $query = "INSERT INTO ticketing VALUES
-            ('$id_tiket', '$id_nik_request', '$whatsapp', '$start_date', '$proses_date', '$end_date','$description', '$lampiran_1', '', '$kategori_tiket', '$status_tiket', '$nik_pic', '$justification', '$action_note')";
+                ('$id_tiket', '$id_nik_request', '$whatsapp', '$start_date', '$proses_date', '$end_date','$description', '$lampiran_1', '', '$kategori_tiket', '$status_tiket', '$nik_pic', '$justification', '$action_note')";
                 $kondisi = mysqli_query($koneksi, $query);
+
+                $namaEmployee = 'Bapak/Ibu'; // Ganti dengan nama yang sesuai
+                $link = 'https://localhost/index.php?page=ViewTicketIT&id=' . $id_tiket; // Ganti dengan URL yang valid
+
+                $message = "Halo " . $namaEmployee . "!\n\nTicketing dengan ID #" . $id_tiket . " Anda sudah berhasil dibuat dengan status 'Process'\n\nTerima kasih telah menggunakan layanan kami. Jangan lupa untuk selalu cek Employee Information Portal (EIP) untuk informasi selanjutnya. Jika Anda memiliki pertanyaan lebih lanjut atau membutuhkan bantuan, jangan ragu untuk menghubungi tim IT kami.\n\nTerima kasih!\n\nInfo lebih lanjut tentang tiket ini: " . $link;
+
+                // Pengaturan untuk cURL
+                $curl = curl_init();
+
+                curl_setopt_array($curl, array(
+                    CURLOPT_URL => 'https://api.fonnte.com/send',
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => '',
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => 'POST',
+                    CURLOPT_POSTFIELDS => array(
+                        'target' => $whatsapp,
+                        'message' => $message,
+                        'countryCode' => '62', // Ganti kode negara jika perlu
+                    ),
+                    CURLOPT_HTTPHEADER => array(
+                        'Authorization: SuQ7o9ufuZ89LqrLjN9N' // Ganti TOKEN dengan token Anda
+                    ),
+                ));
+
+                // Melakukan request pengiriman pesan WhatsApp
+                $response = curl_exec($curl);
+
+                // Menutup koneksi cURL
+                curl_close($curl);
 
                 if ($kondisi) {
                     session_start();
@@ -89,7 +155,8 @@ if (isset($_POST["add-tiket-admin"])) {
             exit();
         }
     }
-}elseif(isset($_POST["add-tiket-user"])){$currentDateTime = new DateTime('now', new DateTimeZone('Asia/Jakarta'));
+} elseif (isset($_POST["add-tiket-user"])) {
+    $currentDateTime = new DateTime('now', new DateTimeZone('Asia/Jakarta'));
     $timestamp = $currentDateTime->format('YmdHis');
     $counter = 1;
     $ticketNumber = "IT" . $timestamp . str_pad($counter, 1, '0', STR_PAD_LEFT);
@@ -121,6 +188,39 @@ if (isset($_POST["add-tiket-admin"])) {
         ('$id_tiket', '$id_nik_request', '$whatsapp', '$start_date','', '','$description', '', '', '', '$status_tiket', '', '', '')";
         $kondisi = mysqli_query($koneksi, $query);
 
+        $namaEmployee = 'Bapak/Ibu'; // Ganti dengan nama yang sesuai
+        $link = 'https://localhost/index.php?page=ViewTicketIT&id=' . $id_tiket; // Ganti dengan URL yang valid
+
+        $message = "Halo " . $namaEmployee . "!\n\nTicketing dengan ID #" . $id_tiket . " Anda sudah berhasil dibuat dengan status 'Process'\n\nTerima kasih telah menggunakan layanan kami. Jangan lupa untuk selalu cek Employee Information Portal (EIP) untuk informasi selanjutnya. Jika Anda memiliki pertanyaan lebih lanjut atau membutuhkan bantuan, jangan ragu untuk menghubungi tim IT kami.\n\nTerima kasih!\n\nInfo lebih lanjut tentang tiket ini: " . $link;
+
+        // Pengaturan untuk cURL
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://api.fonnte.com/send',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => array(
+                'target' => $whatsapp,
+                'message' => $message,
+                'countryCode' => '62', // Ganti kode negara jika perlu
+            ),
+            CURLOPT_HTTPHEADER => array(
+                'Authorization: SuQ7o9ufuZ89LqrLjN9N' // Ganti TOKEN dengan token Anda
+            ),
+        ));
+
+        // Melakukan request pengiriman pesan WhatsApp
+        $response = curl_exec($curl);
+
+        // Menutup koneksi cURL
+        curl_close($curl);
+
         if ($kondisi) {
             session_start();
             $_SESSION["Messages"] = 'Data Berhasil Di Input';
@@ -143,6 +243,39 @@ if (isset($_POST["add-tiket-admin"])) {
                 $query = "INSERT INTO ticketing VALUES
                 ('$id_tiket', '$id_nik_request', '$whatsapp', '$start_date','', '','$description', '$lampiran_1', '', '', '$status_tiket', '', '', '')";
                 $kondisi = mysqli_query($koneksi, $query);
+
+                $namaEmployee = 'Bapak/Ibu'; // Ganti dengan nama yang sesuai
+                $link = 'https://localhost/index.php?page=ViewTicketIT&id=' . $id_tiket; // Ganti dengan URL yang valid
+
+                $message = "Halo " . $namaEmployee . "!\n\nTicketing dengan ID #" . $id_tiket . " Anda sudah berhasil dibuat dengan status 'Process'\n\nTerima kasih telah menggunakan layanan kami. Jangan lupa untuk selalu cek Employee Information Portal (EIP) untuk informasi selanjutnya. Jika Anda memiliki pertanyaan lebih lanjut atau membutuhkan bantuan, jangan ragu untuk menghubungi tim IT kami.\n\nTerima kasih!\n\nInfo lebih lanjut tentang tiket ini: " . $link;
+
+                // Pengaturan untuk cURL
+                $curl = curl_init();
+
+                curl_setopt_array($curl, array(
+                    CURLOPT_URL => 'https://api.fonnte.com/send',
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => '',
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => 'POST',
+                    CURLOPT_POSTFIELDS => array(
+                        'target' => $whatsapp,
+                        'message' => $message,
+                        'countryCode' => '62', // Ganti kode negara jika perlu
+                    ),
+                    CURLOPT_HTTPHEADER => array(
+                        'Authorization: SuQ7o9ufuZ89LqrLjN9N' // Ganti TOKEN dengan token Anda
+                    ),
+                ));
+
+                // Melakukan request pengiriman pesan WhatsApp
+                $response = curl_exec($curl);
+
+                // Menutup koneksi cURL
+                curl_close($curl);
 
                 if ($kondisi) {
                     session_start();
@@ -172,6 +305,6 @@ if (isset($_POST["add-tiket-admin"])) {
             exit();
         }
     }
-}else {
+} else {
     die("akses dilarang");
 }

@@ -13,9 +13,6 @@ if ($_GET["aksi"] == 'delete') {
     $query= "DELETE FROM ticketing WHERE id_tiket='$id_tiket'";
     $querydelete = mysqli_query($koneksi, $query);
     
-
-    
-
     if ($querydelete) {
         session_start();
         $_SESSION["Messages"] = 'Data Berhasil Di Delete';

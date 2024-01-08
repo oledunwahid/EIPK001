@@ -26,31 +26,40 @@ if (isset($_SESSION['username'])) {
 				include 'detail_tiket.php';
 				break;
 			case 'ATK/Stationary':
-				include 'facilities/stationary_facilities.php';
+				include 'stationary_facilities.php';
 				break;
 			case 'EditATK/Stationary':
-				include 'facilities/edit_stationary_facilities.php';
+				include 'edit_stationary_facilities.php';
 				break;
 			case 'ViewATK/Stationary':
-				include 'facilities/view_stationary_facilities.php';
+				include 'view_stationary_facilities.php';
 				break;
 			case 'ATKList':
-				include 'facilities/atk.php';
+				include 'atk.php';
 				break;
 			case 'Building Facilities':
-				include 'facilities/building_facilities.php';
+				include 'building_facilities.php';
 				break;
 			case 'Edit Building Facilities':
-				include 'facilities/edit_building_facilities.php';
+				include 'edit_building_facilities.php';
 				break;
 			case 'View Building Facilities':
-				include 'facilities/view_building_facilities.php';
+				include 'view_building_facilities.php';
 				break;
 			case 'Other Facilities':
-				include 'facilities/other_facilities.php';
+				include 'other_facilities.php';
+				break;
+			case 'Edit Other Facilities':
+				include 'edit_other_facilities.php';
+				break;
+			case 'View Other Facilities':
+				include 'view_other_facilities.php';
 				break;
 			case 'Delivery':
 				include 'kurir.php';
+				break;
+			case 'Received':
+				include 'received_kurir.php';
 				break;
 			case 'EditKurir':
 				include 'edit_detail_kurir.php';

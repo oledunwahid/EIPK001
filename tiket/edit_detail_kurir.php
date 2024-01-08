@@ -3,8 +3,8 @@ $sql = mysqli_query($koneksi, "SELECT kurir.*,user.divisi,user.lokasi,user1.nama
 user2.nama AS nama_pic, login.username
 FROM
 kurir
-LEFT JOIN USER AS user1 ON kurir.id_nik_request = user1.idnik
-LEFT JOIN USER AS user2 ON kurir.id_nik_kurir = user2.idnik
+LEFT JOIN user AS user1 ON kurir.id_nik_request = user1.idnik
+LEFT JOIN user AS user2 ON kurir.id_nik_kurir = user2.idnik
 INNER JOIN
 	user
 	ON 
@@ -78,7 +78,7 @@ $timestamp = $dateTime->format('Y-m-d H:i:s');
                                                     <?php
                                                     $sql5 = mysqli_query($koneksi, "SELECT access_level.idnik, user.nama 
                                                     FROM access_level 
-                                                    INNER JOIN USER ON access_level.idnik = user.idnik 
+                                                    INNER JOIN user ON access_level.idnik = user.idnik 
                                                     WHERE access_level.internal_kurir = 1"); 
                                                     while ($row5 = mysqli_fetch_assoc($sql5)) {
                                                     ?>
@@ -321,13 +321,13 @@ $timestamp = $dateTime->format('Y-m-d H:i:s');
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 
-<script src="../assets/libs/@ckeditor/ckeditor5-build-classic/build/ckeditor.js"></script>
-<script src="../assets/js/pages/project-create.init.js"></script>
-<script src="../assets/js/pages/ticketdetail.init.js"></script>
+<script src="assets/libs/@ckeditor/ckeditor5-build-classic/build/ckeditor.js"></script>
+<script src="assets/js/pages/project-create.init.js"></script>
+<script src="assets/js/pages/ticketdetail.init.js"></script>
 
 
-<script src="../assets/js/pages/datatables.init.js"></script>
-<script src="../assets/js/pages/form-editor.init.js"></script>
+<script src="assets/js/pages/datatables.init.js"></script>
+<script src="assets/js/pages/form-editor.init.js"></script>
 
 <!-- dropzone min -->
 <script src="assets/libs/dropzone/dropzone-min.js"></script>
