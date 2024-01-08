@@ -58,15 +58,15 @@
                                         <thead>
                                             <tr>
                                                 <th>ID Received</th>
-                                                <th>Nama Request</th>
-                                                <th>Tanggal Request</th>
-                                                <th>Jenis Barang</th>
+                                                <th>Tanggal Terima Barang</th>
+                                                <th>Jenis Barang yang diterima</th>
+                                                <th>Nama Pengirim</th>
+                                                <th>Nama Ekspedisi</th>
+                                                <th>No Resi</th>
+                                                <th>Tujuan Penerima</th>
                                                 <th>Whatsapp</th>
-                                                <th>Tipe Kurir</th>
-                                                <th>Description</th>
-                                                <th>Alamat</th>
-                                                <th>Nama Kurir</th>
-                                                <th>Status Ticket</th>
+                                                <th>Nama PT</th>
+                                                <th>Foto Barang</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -84,33 +84,21 @@
                                                         rf_received_package.*,
                                                         user1.nama AS nama_request,
                                                         FROM rf_received_package
-                                                        LEFT JOIN user AS user1 ON rf_received_package.idnik = user1.idnik
-                                                        INNER JOIN user ON rf_received_package.idnik = user.idnik ");
+                                                        LEFT JOIN user AS user1 ON rf_received_package.idnik = user1.idnik");
                                                     while ($row6 = mysqli_fetch_assoc($sql7)) {
                                                 ?>
                                                         <tr>
-                                                            <td><a href="index.php?page=EditKurir&id=<?= $row6['id_received']; ?>"><?= $row6['id_received'] ?></a></td>
+                                                            <td><a href="index.php?page=EditReceived&id=<?= $row6['id_received']; ?>"><?= $row6['id_received'] ?></a></td>
+                                                            <td><?= $row6['received_date'] ?></td>
+                                                            <td><?= $row6['received_jenis_barang'] ?></td>
+                                                            <td><?= $row6['nama_pengirim'] ?></td>
+                                                            <td><?= $row6['nama_ekspedisi'] ?></td>
+                                                            <td><?= $row6['no_resi'] ?></td>
                                                             <td><?= $row6['nama_request'] ?></td>
-                                                            <td><?= $row6['tanggal_req'] ?></td>
-                                                            <td><?= $row6['jenis_barang'] ?></td>
-                                                            <td><?= $row6['whatsapp'] ?></td>
-                                                            <td><?= $row6['tipe_kurir'] ?></td>
-                                                            <td><?= $row6['deskripsi'] ?></td>
-                                                            <td><?= $row6['alamat_kurir'] ?></td>
-                                                            <td><?= $row6['nama_kurir'] ?></td>
-
-                                                            <td>
-                                                                <?php
-                                                                if ($row6['status_kurir'] == 'On Process') {
-                                                                    echo 'On Process';
-                                                                } elseif ($row6['status_kurir'] == 'Canceled') {
-                                                                    echo 'Canceled';
-                                                                } else {
-                                                                    echo 'Closed';
-                                                                }
-                                                                ?>
-
-                                                            </td>
+                                                            <td><?= $row6['tujuan_penerima'] ?></td>
+                                                            <td><?= $row6['no_hp'] ?></td>
+                                                            <td><?= $row6['nama_pt'] ?></td>
+                                                            <td><?= $row6['bukti_foto'] ?></td>
                                                             <td>
                                                                 <div class="dropdown d-inline-block">
                                                                     <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -138,28 +126,17 @@
                                                     while ($row6 = mysqli_fetch_assoc($sql7)) {
                                                     ?>
                                                         <tr>
-                                                            <td><a href="index.php?page=ViewKurir&id=<?= $row6['id_received']; ?>"><?= $row6['id_received'] ?></a></td>
+                                                            <td><a href="index.php?page=ViewReceived&id=<?= $row6['id_received']; ?>"><?= $row6['id_received'] ?></a></td>
+                                                            <td><?= $row6['received_date'] ?></td>
+                                                            <td><?= $row6['received_jenis_barang'] ?></td>
+                                                            <td><?= $row6['nama_pengirim'] ?></td>
+                                                            <td><?= $row6['nama_ekspedisi'] ?></td>
+                                                            <td><?= $row6['no_resi'] ?></td>
                                                             <td><?= $row6['nama_request'] ?></td>
-                                                            <td><?= $row6['tanggal_req'] ?></td>
-                                                            <td><?= $row6['jenis_barang'] ?></td>
-                                                            <td><?= $row6['whatsapp'] ?></td>
-                                                            <td><?= $row6['tipe_kurir'] ?></td>
-                                                            <td><?= $row6['deskripsi'] ?></td>
-                                                            <td><?= $row6['alamat_kurir'] ?></td>
-                                                            <td><?= $row6['nama_kurir'] ?></td>
-
-                                                            <td>
-                                                                <?php
-                                                                if ($row6['status_kurir'] == 'On Process') {
-                                                                    echo 'On Process';
-                                                                } elseif ($row6['status_kurir'] == 'Canceled') {
-                                                                    echo 'Canceled';
-                                                                } else {
-                                                                    echo 'Closed';
-                                                                }
-                                                                ?>
-
-                                                            </td>
+                                                            <td><?= $row6['tujuan_penerima'] ?></td>
+                                                            <td><?= $row6['no_hp'] ?></td>
+                                                            <td><?= $row6['nama_pt'] ?></td>
+                                                            <td><?= $row6['bukti_foto'] ?></td>
                                                             <td>
                                                                 <div class="dropdown d-inline-block">
                                                                     <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -167,7 +144,7 @@
                                                                     </button>
                                                                     <ul class="dropdown-menu dropdown-menu-end">
                                                                         <li>
-                                                                            <a href="index.php?page=ViewKurir&id=<?= $row6['id_received']; ?>" class="dropdown-item"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a>
+                                                                            <a href="index.php?page=EditKurir&id=<?= $row6['id_received']; ?>" class="dropdown-item"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a>
                                                                         </li>
                                                                     </ul>
                                                                 </div>
@@ -194,28 +171,17 @@
                                                     while ($row6 = mysqli_fetch_assoc($sql7)) {
                                                 ?>
                                                         <tr>
-                                                            <td><a href="index.php?page=EditKurir&id=<?= $row6['id_received']; ?>"><?= $row6['id_received'] ?></a></td>
+                                                            <td><a href="index.php?page=EditReceived&id=<?= $row6['id_received']; ?>"><?= $row6['id_received'] ?></a></td>
+                                                            <td><?= $row6['received_date'] ?></td>
+                                                            <td><?= $row6['received_jenis_barang'] ?></td>
+                                                            <td><?= $row6['nama_pengirim'] ?></td>
+                                                            <td><?= $row6['nama_ekspedisi'] ?></td>
+                                                            <td><?= $row6['no_resi'] ?></td>
                                                             <td><?= $row6['nama_request'] ?></td>
-                                                            <td><?= $row6['tanggal_req'] ?></td>
-                                                            <td><?= $row6['jenis_barang'] ?></td>
-                                                            <td><?= $row6['whatsapp'] ?></td>
-                                                            <td><?= $row6['tipe_kurir'] ?></td>
-                                                            <td><?= $row6['deskripsi'] ?></td>
-                                                            <td><?= $row6['alamat_kurir'] ?></td>
-                                                            <td><?= $row6['nama_kurir'] ?></td>
-
-                                                            <td>
-                                                                <?php
-                                                                if ($row6['status_kurir'] == 'On Process') {
-                                                                    echo 'On Process';
-                                                                } elseif ($row6['status_kurir'] == 'Canceled') {
-                                                                    echo 'Canceled';
-                                                                } else {
-                                                                    echo 'Closed';
-                                                                }
-                                                                ?>
-
-                                                            </td>
+                                                            <td><?= $row6['tujuan_penerima'] ?></td>
+                                                            <td><?= $row6['no_hp'] ?></td>
+                                                            <td><?= $row6['nama_pt'] ?></td>
+                                                            <td><?= $row6['bukti_foto'] ?></td>
                                                             <td>
                                                                 <div class="dropdown d-inline-block">
                                                                     <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -243,28 +209,17 @@
                                                     while ($row6 = mysqli_fetch_assoc($sql7)) {
                                                     ?>
                                                         <tr>
-                                                            <td><a href="index.php?page=ViewKurir&id=<?= $row6['id_received']; ?>"><?= $row6['id_received'] ?></a></td>
+                                                            <td><a href="index.php?page=ViewReceived&id=<?= $row6['id_received']; ?>"><?= $row6['id_received'] ?></a></td>
+                                                            <td><?= $row6['received_date'] ?></td>
+                                                            <td><?= $row6['received_jenis_barang'] ?></td>
+                                                            <td><?= $row6['nama_pengirim'] ?></td>
+                                                            <td><?= $row6['nama_ekspedisi'] ?></td>
+                                                            <td><?= $row6['no_resi'] ?></td>
                                                             <td><?= $row6['nama_request'] ?></td>
-                                                            <td><?= $row6['tanggal_req'] ?></td>
-                                                            <td><?= $row6['jenis_barang'] ?></td>
-                                                            <td><?= $row6['whatsapp'] ?></td>
-                                                            <td><?= $row6['tipe_kurir'] ?></td>
-                                                            <td><?= $row6['deskripsi'] ?></td>
-                                                            <td><?= $row6['alamat_kurir'] ?></td>
-                                                            <td><?= $row6['nama_kurir'] ?></td>
-
-                                                            <td>
-                                                                <?php
-                                                                if ($row6['status_kurir'] == 'On Process') {
-                                                                    echo 'On Process';
-                                                                } elseif ($row6['status_kurir'] == 'Canceled') {
-                                                                    echo 'Canceled';
-                                                                } else {
-                                                                    echo 'Closed';
-                                                                }
-                                                                ?>
-
-                                                            </td>
+                                                            <td><?= $row6['tujuan_penerima'] ?></td>
+                                                            <td><?= $row6['no_hp'] ?></td>
+                                                            <td><?= $row6['nama_pt'] ?></td>
+                                                            <td><?= $row6['bukti_foto'] ?></td>
                                                             <td>
                                                                 <div class="dropdown d-inline-block">
                                                                     <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -272,7 +227,7 @@
                                                                     </button>
                                                                     <ul class="dropdown-menu dropdown-menu-end">
                                                                         <li>
-                                                                            <a href="index.php?page=ViewKurir&id=<?= $row6['id_received']; ?>" class="dropdown-item"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a>
+                                                                            <a href="index.php?page=EditKurir&id=<?= $row6['id_received']; ?>" class="dropdown-item"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a>
                                                                         </li>
                                                                     </ul>
                                                                 </div>
@@ -307,24 +262,42 @@
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content border-0">
                 <div class="modal-header p-3 bg-soft-info">
-                    <h5 class="modal-title" id="exampleModalLabel">Create Delivery</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Create Received Package</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
                 </div>
                 <form action="function/insert_kurir.php" method="POST" enctype="multipart/form-data" id="formModalKurir">
                     <div class="modal-body">
-                        <?php $tanggal_req = date('Y-m-d H:i:s'); ?>
                         <div class="row g-3">
                             <div class="col-lg-6">
-                                <input class="form-control" value="<?= $tanggal_req ?>" name="tanggalRequest" hidden />
                                 <input type="text" class="form-control" value="<?= $niklogin ?>" name="idnik" hidden />
+
+                                <div class="mb-3 mt-3">
+                                    <label class="form-label">Tanggal/Jam diterima PIC</label>
+                                    <input type="text" class="form-control" data-provider="flatpickr" data-date-format="Y-m-d" data-enable-time placeholder="Input tanggal barang diterima" name="" required>
+                                </div>
+
+                                <div class="mb-3 mt-3">
+                                    <label for="tasksTitle-field" class="form-label"><span> Nama Pengirim </span></label>
+                                    <input type="text" class="form-control" placeholder="Insert nama PT perusahaan pengirim" name="" />
+                                </div>
+
+                                <div class="mb-3 mt-3">
+                                    <label for="tasksTitle-field" class="form-label"><span> Nama Ekspedisi </span></label>
+                                    <input type="text" class="form-control" placeholder="Insert nama ekspedisi" name="" />
+                                </div>
+
+                                <div class="mb-3 mt-3">
+                                    <label for="tasksTitle-field" class="form-label"><span> No. Resi </span></label>
+                                    <input type="text" class="form-control" placeholder="Insert nama PT perusahaan pengirim" name="" />
+                                </div>
 
                                 <?php if (isset($row7['admin']) && ($row7['admin'] == '1' || ($row7['ga4'] == '1'))) { ?>
                                     <div class="mb-3 mt-3">
-                                        <label for="tasksTitle-field" class="form-label"><span>Tujuan Pengiriman Kepada </span></label>
+                                        <label for="tasksTitle-field" class="form-label"><span>Tujuan Paket Kepada </span></label>
                                         <select class="form-control" data-choices name="idnik">
                                             <option value="">All Users</option>
                                             <?php
-                                            $sql5 = mysqli_query($koneksi, 'SELECT idnik, nama, divisi, lokasi, company FROM user');
+                                            $sql5 = mysqli_query($koneksi, 'SELECT idnik, nama, divisi, lokasi, company FROM user WHERE lokasi = "HO"');
                                             while ($row5 = mysqli_fetch_assoc($sql5)) {
                                             ?>
                                                 <option value="<?= $row5['idnik'] ?>">PT <?= $row5['company'] ?> | <strong><?= $row5['nama'] ?></strong> | <?= $row5['divisi'] ?></option>
@@ -332,102 +305,42 @@
                                         </select>
                                         <input type="text" class="form-control" hidden name="status_input" value="Input by Admin" />
                                     </div>
-                                <?php } else { ?>
-                                    <input type="text" class="form-control" hidden name="idnik" value="<?= $niklogin ?>" />
-                                    <input type="text" class="form-control" hidden name="status_input" value="Input by User" />
-                                <?php } ?>
-
-
-                                <div class="col-lg-12 mt-3">
-                                    <div>
-                                        <div class="mb-3 mt-3">
-                                            <label for="tasksTitle-field" class="form-label"><span> Jenis Barang </span></label>
-                                            <select class="form-control" data-choices name="jenisBarang">
-                                                <option value="">Select Tipe Barang</option>
-                                                <option value="Surat/Dokumen"></option>
-                                                <option value="Pakaian"></option>
-                                                <option value="Pecah Belah"></option>
-                                                <option value="Elektronik"></option>
-                                                <option value="Lainnya"></option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div>
-                                        <label for="wa" class="form-label">No.Whatsapp</label>
-                                        <input type="number" class="form-control" placeholder="Insert your active number +(62) " name="wa" />
-                                    </div>
-
-                                    <?php if (isset($row7['admin']) && ($row7['admin'] == '1' || ($row7['ga4'] == '1'))) { ?>
-                                        <div class="mb-3 mt-3">
-                                            <label for="tasksTitle-field" class="form-label"><span> Select Courier External or Internal </span></label>
-                                            <select class="form-control" data-choices name="tipe_kurir">
-                                                <option value="">Select Kurir</option>
-                                                <option value="Internal Kurir"></option>
-                                                <option value="Ekspedisi Coorporate Reguler"></option>
-                                                <option value="Ekspedisi Coorporate Express"></option>
-                                                <option value="Grab Express Instant Courier"></option>
-                                            </select>
-                                        </div>
-                                    <?php } else { ?>
-                                        <div class="mb-3 mt-3">
-                                            <label for="tasksTitle-field" class="form-label"><span> Select Courier External or Internal </span></label>
-                                            <select class="form-control" data-choices name="tipe_kurir">
-                                                <option value="">Select Kurir</option>
-                                                <option value="Internal Kurir"></option>
-                                                <option value="JNE"></option>
-                                                <option value="J&T"></option>
-                                                <option value="SiCepat"></option>
-                                                <option value="TIKI"></option>
-                                                <option value="Gojek"></option>
-                                                <option value="Grab"></option>
-                                                <option value="Lion Parcel"></option>
-                                                <option value="Pos Indonesia"></option>
-                                                <option value="DHL Express"></option>
-                                                <option value="Lalamove"></option>
-                                                <option value="Wahana Express"></option>
-                                            </select>
-                                        </div>
-                                    <?php } ?>
-                                </div>
-
-                                <?php if (isset($row7['admin']) && ($row7['admin'] == '1' || ($row7['ga4'] == '1'))) { ?>
-                                    <div class="mb-3 mt-3">
-                                        <label for="tasksTitle-field" class="form-label"><span> PIC Courier</span></label>
-                                        <select class="form-control" data-choices name="id_nik_kurir">
-                                            <option value="">All PIC Internal Courier</option>
-                                            <?php
-                                            $sql5 = mysqli_query($koneksi, "SELECT access_level.*, nama FROM access_level 
-                                        INNER JOIN user ON access_level.idnik = user.idnik WHERE access_level.internal_kurir ='1'  ");
-                                            while ($row5 = mysqli_fetch_assoc($sql5)) {
-                                            ?>
-                                                <option value="<?= $row5['idnik'] ?>"><?= $row5['nama'] ?></option>
-                                            <?php
-                                            }
-                                            ?>
-                                        </select>
-                                        <input class="form-control" name="tanggal_proses" hidden value="<?= $tanggal_proses ?>" />
-                                    </div>
                                 <?php } ?>
                             </div>
 
                             <div class="col-lg-6">
-                                <div class="mb-3 mt-3">
-                                    <div class="col-lg-12">
-                                        <div>
-                                            <label for="address" class="form-label">Alamat Tujuan</label>
-                                            <textarea class="form-control" id="ckeditor-classic" name="alamatKurir" placeholder="*Tuliskan alamat pengiriman secara lengkap"></textarea>
-                                        </div>
+                                <div>
+                                    <div class="mb-3 mt-3">
+                                        <label for="tasksTitle-field" class="form-label"><span> Jenis Barang </span></label>
+                                        <select class="form-control" data-choices name="jenisBarang">
+                                            <option value="">Select Tipe Barang</option>
+                                            <option value="Surat/Dokumen"></option>
+                                            <option value="Pakaian"></option>
+                                            <option value="Pecah Belah"></option>
+                                            <option value="Elektronik"></option>
+                                            <option value="Lainnya"></option>
+                                        </select>
                                     </div>
                                 </div>
-                            </div>
 
-                            <br>
+                                <div>
+                                    <label for="wa" class="form-label">No.Whatsapp</label>
+                                    <input type="number" class="form-control" placeholder="Insert your active number +(62) " name="wa" required />
+                                </div>
 
-                            <div>
-                                <label for="catatanKurir" class="form-label">Catatan untuk rf_received_package</label>
-                                <div class="card-body">
-                                    <input type="text" class="form-control" name="catatanKurir" required placeholder="*Isi keterangan/catatan secara detail barang serta tujuan"></input>
+                                <div class="mb-3 mt-3">
+                                    <label for="tasksTitle-field" class="form-label"><span> Nama PT (jika ada)</span></label>
+                                    <input type="text" class="form-control" placeholder="Insert nama PT perusahaan pengirim" name="" />
+                                </div>
+
+                                <div class="mb-3 mt-3">
+                                    <label class="form-label">Tanggal/Jam diterima kepada tertuju</label>
+                                    <input type="text" class="form-control" data-provider="flatpickr" data-date-format="Y-m-d" data-enable-time placeholder="Input tanggal barang diterima orang tertuju" name="" required>
+                                </div>
+
+                                <div class="mb-3 mt-3">
+                                    <label for="lampiran1" class="form-label">Lampiran Foto Barang (jika ada)</label>
+                                    <input type="file" class="form-control" placeholder="Lampirkan foto barang saat diterima" id="lampiran1" name="" />
                                 </div>
                             </div>
                         </div>
@@ -436,7 +349,7 @@
                     <div class="modal-footer mt-3">
                         <div class="hstack gap-2 justify-content-end">
                             <button type="button" class="btn btn btn-light waves-effect" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary waves-effect waves-light" name="add-request">Create Request</button>
+                            <button type="submit" class="btn btn-primary waves-effect waves-light" name="add-request">Create Received Package</button>
                         </div>
                     </div>
 
