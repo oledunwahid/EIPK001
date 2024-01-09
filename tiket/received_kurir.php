@@ -292,7 +292,6 @@
                             <div class="col-lg-6">
                                 <input type="text" class="form-control" value="<?= $niklogin ?>" name="idNik" hidden />
                                 <input type="text" class="form-control" value="Diterima PIC" name="status_received" hidden />
-
                                 <div class="mb-3 mt-3">
                                     <label class="form-label">Tanggal/Jam diterima PIC</label>
                                     <input type="text" class="form-control" data-provider="flatpickr" data-date-format="Y-m-d" data-enable-time placeholder="Input tanggal barang diterima" name="tanggalRequest" required>

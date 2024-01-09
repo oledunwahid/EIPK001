@@ -51,49 +51,31 @@ $timestamp = $dateTime->format('Y-m-d H:i:s');
                                             <div class="vr"></div>
                                             <div class="me-2 text-muted">Status : </div>
                                             <div>
-                                                <select class="form-control" data-choices name="statusKurir">
-                                                    <?php
-                                                    $statusOptions = [
-                                                        0 => 'Closed',
-                                                        1 => 'On Process',
-                                                        2 => 'Canceled',
-                                                    ];
-
-                                                    $lastUpdatedStatus = $row['status_kurir'];
-
-                                                    foreach ($statusOptions as $value => $option) {
-                                                        $selected = ($value == $lastUpdatedStatus) ? 'selected' : '';
-                                                        echo '<option value="' . $value . '" ' . $selected . '>' . $option . '</option>';
-                                                    }
-                                                    ?>
-                                                </select>
+                                                <span class="form-control"><?= isset($row['status_kurir']) ?></span>
                                             </div>
 
-
-                                            <div class="vr"></div>
+                                            <!-- <div class="vr"></div>
                                             <div class="me-2 text-muted">PIC Courier:</div>
                                             <div>
-                                                <select class="form-select" name="id_nik_kurir" data-choices id="choices-status-input">
-                                                    <option value="<?= $row['id_nik_kurir'] ?>"><?= $row['nama_pic'] ?></option>
-                                                    <?php
-                                                    $sql5 = mysqli_query($koneksi, "SELECT access_level.idnik, user.nama 
+                                                <option value="<?= $row['id_nik_kurir'] ?>"><?= $row['nama_pic'] ?></option>
+                                                <?php
+                                                $sql5 = mysqli_query($koneksi, "SELECT access_level.idnik, user.nama 
                                                     FROM access_level 
                                                     INNER JOIN user ON access_level.idnik = user.idnik 
                                                     WHERE access_level.internal_kurir = 1");
-                                                    while ($row5 = mysqli_fetch_assoc($sql5)) {
-                                                    ?>
-                                                        <option value="<?= $row5['idnik'] ?>"><?= $row5['nama'] ?></option>
-                                                    <?php
-                                                    }
-                                                    ?>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-5">
+                                                while ($row5 = mysqli_fetch_assoc($sql5)) {
+                                                ?>
+                                                    <option value="<?= $row5['idnik'] ?>"><?= $row5['nama'] ?></option>
+                                                <?php
+                                                }
+                                                ?>
+                                            </div> -->
+                                            <!-- <div class="col-md-5">
                                                 <div class="card-body">
                                                     <button type="submit" class="btn btn-primary col-md-3" name="updateKurir">Update</button>
                                                     <a href="#" class="btn btn-danger col-md-3" name="delete" id="delete-form">Delete</a>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                         </div>
                                     </form>
                                 </div>
@@ -123,9 +105,6 @@ $timestamp = $dateTime->format('Y-m-d H:i:s');
                     <div class="card-header">
                         <div class="d-sm-flex align-items-center">
                             <h5 class="card-title flex-grow-1 mb-0">Delivery Status</h5>
-                            <div class="flex-shrink-0 mt-2 mt-sm-0">
-                                <a href="javascript:void(0);" class="btn btn-soft-info btn-sm mt-2 mt-sm-0" data-bs-toggle="modal" data-bs-target="#showModal">Update Delivery</a>
-                            </div>
                         </div>
                     </div>
                     <div class="card-body">

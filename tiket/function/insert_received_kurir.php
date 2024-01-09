@@ -12,6 +12,7 @@ if (isset($_POST["add-received"])) {
     $nama_ekspedisi = isset($_POST["namaEkspedisi"]) ? $_POST["namaEkspedisi"] : '';
     $no_resi = isset($_POST["noResi"]) ? $_POST["noResi"] : '';
     $idnik = isset($_POST["idNik"]) ? $_POST["idNik"] : '';
+    $idpic = isset($_POST["idpic"]) ? $_POST["idpic"] : '';
     $whatsapp = isset($_POST["wa"]) ? $_POST["wa"] : '';
     $nama_pt = isset($_POST["namaPT"]) ? $_POST["namaPT"] : '';
     $status_riwayat_received = isset($_POST["statusRiwayat"]) ? $_POST["statusRiwayat"] : '';
@@ -50,14 +51,14 @@ if (isset($_POST["add-received"])) {
     }
 
     $query = "INSERT INTO rf_received_package (id_received, received_date, received_jenis_barang, nama_pengirim, nama_ekspedisi, no_resi, idnik, no_hp, nama_pt, bukti_foto, status_received) 
-    VALUES ('$RequestNumber', NOW(), '$received_jenis_barang', '$nama_pengirim', '$nama_ekspedisi', '$no_resi', '$idnik', '$whatsapp', '$nama_pt', '$bukti_foto', '$status_received')";
+    VALUES ('$RequestNumber',  NOW(), '$received_jenis_barang', '$nama_pengirim', '$nama_ekspedisi', '$no_resi', '$idnik', '$whatsapp', '$nama_pt', '$bukti_foto', 'Received')";
 
     $kondisi = mysqli_query($koneksi, $query);
 
     if ($kondisi) {
         $namaEmployee = 'Bapak/Ibu';
         $link = 'https://localhost/index.php?page=ViewReceived&id=' . $RequestNumber;
-        $message = "Halo " . $namaEmployee . "!\n\nTicketing dengan ID #" . $RequestNumber . " Anda sudah berhasil dibuat dengan status 'Process'\n\nTerima kasih telah menggunakan layanan kami. Jangan lupa untuk selalu cek Employee Information Portal (EIP) untuk informasi selanjutnya. Jika Anda memiliki pertanyaan lebih lanjut atau membutuhkan bantuan, jangan ragu untuk menghubungi tim IT kami.\n\nTerima kasih!\n\nInfo lebih lanjut tentang tiket ini: " . $link;
+        $message = "Halo " . $namaEmployee . "!\n\nTicketing dengan ID #" . $RequestNumber . " Anda sudah berhasil dibuat dengan status 'Received'\n\nTerima kasih telah menggunakan layanan kami. Jangan lupa untuk selalu cek Employee Information Portal (EIP) untuk informasi selanjutnya. Jika Anda memiliki pertanyaan lebih lanjut atau membutuhkan bantuan, jangan ragu untuk menghubungi tim IT kami.\n\nTerima kasih!\n\nInfo lebih lanjut tentang tiket ini: " . $link;
 
         $curl = curl_init();
 
@@ -83,24 +84,8 @@ if (isset($_POST["add-received"])) {
         $response = curl_exec($curl);
         curl_close($curl);
 
-        $query_last_id = "SELECT MAX(id_riwayat_received) AS max_id FROM rf_riwayat_received_package";
-        $result_last_id = mysqli_query($koneksi, $query_last_id);
-        $row = mysqli_fetch_assoc($result_last_id);
-        $max_id = $row['max_id'];
-
-        // Jika tidak ada data di database, atur nilai awal ID
-        if (!$max_id) {
-            $id_riwayat_received = 1; // Atur nilai awal ID
-        } else {
-            // Tambahkan 1 ke nilai terakhir untuk mendapatkan nilai baru
-            $id_riwayat_received = $max_id + 1;
-        }
-
-        // Periksa panjang ID, jika kurang dari 11 digit, tambahkan angka 0 di depannya
-        $id_riwayat_received = str_pad($id_riwayat_received, 11, '0', STR_PAD_LEFT);
-
         $query2 = "INSERT INTO rf_riwayat_received_package (id_riwayat_received,id_received, timestamp, status_riwayat_received, deskripsi_riwayat_received)
-        VALUES ('$id_riwayat_received', '$RequestNumber', '$timestamp','Barang Telah Diterima oleh PIC', '$status_barang')";
+        VALUES ('', '$RequestNumber', '$timestamp','Barang Telah Diterima oleh PIC', '$status_barang')";
         $kondisi2 = mysqli_query($koneksi, $query2);
 
         if ($kondisi2) {

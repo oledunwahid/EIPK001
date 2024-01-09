@@ -43,17 +43,34 @@ $timestamp = $dateTime->format('Y-m-d H:i:s');
 
 
                                 <div class="col-md">
-                                    <form action="function/update_kurir.php" method="POST">
+                                    <form action="function/update_received_kurir.php" method="POST">
                                         <input type="text" hidden name="id_received" value="<?= $row['id_received'] ?>">
                                         <h4 class="fw-semibold" id="ticket-title">#<?= $row['id_received'] ?> - Delivery Ticket </h4>
                                         <div class="hstack gap-3 flex-wrap">
                                             <div class="text-muted"><i class="ri-building-line align-bottom me-1"></i><span id="ticket-client">MAA Group</span></div>
+                                            <div class="vr"></div>
+                                            <div class="me-2 text-muted">Status : </div>
+                                            <div>
+                                                <select class="form-control" data-choices name="statusReceived">
+                                                    <?php
+                                                    $statusOptions = [
+                                                        0 => 'Closed',
+                                                        1 => 'Received',
+                                                        2 => 'Canceled',
+                                                    ];
 
+                                                    $lastUpdatedStatus = $row['status_Received'];
+
+                                                    foreach ($statusOptions as $value => $option) {
+                                                        $selected = ($value == $lastUpdatedStatus) ? 'selected' : '';
+                                                        echo '<option value="' . $value . '" ' . $selected . '>' . $option . '</option>';
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </div>
                                             <div class="vr"></div>
                                             <div class="me-2 text-muted">PIC Package:</div>
                                             <div>
-                                                <select class="form-select" name="id_nik_kurir" data-choices id="choices-status-input">
-                                                    <option value="<?= $row['id_nik_pic'] ?>"><?= $row['nama_pic'] ?></option>
                                                     <?php
                                                     $sql5 = mysqli_query($koneksi, "SELECT access_level.idnik, user.nama 
                                                     FROM access_level 
@@ -65,11 +82,10 @@ $timestamp = $dateTime->format('Y-m-d H:i:s');
                                                     <?php
                                                     }
                                                     ?>
-                                                </select>
                                             </div>
                                             <div class="col-md-5">
                                                 <div class="card-body">
-                                                    <button type="submit" class="btn btn-primary col-md-3" name="updateKurir">Update</button>
+                                                    <button type="submit" class="btn btn-primary col-md-3" name="updateReceived">Update</button>
                                                     <a href="#" class="btn btn-danger col-md-3" name="delete" id="delete-form">Delete</a>
                                                 </div>
                                             </div>
@@ -89,7 +105,7 @@ $timestamp = $dateTime->format('Y-m-d H:i:s');
                 <div class="card">
                     <div class="card-header">
                         <div class="d-sm-flex align-items-center">
-                            <h5 class="card-title flex-grow-1 mb-0">Delivery Status</h5>
+                            <h5 class="card-title flex-grow-1 mb-0">Package Status</h5>
                             <div class="flex-shrink-0 mt-2 mt-sm-0">
                                 <a href="javascript:void(0);" class="btn btn-soft-info btn-sm mt-2 mt-sm-0" data-bs-toggle="modal" data-bs-target="#showModal">Update Delivery</a>
                             </div>
@@ -102,23 +118,15 @@ $timestamp = $dateTime->format('Y-m-d H:i:s');
                                 $sql = "SELECT * FROM rf_riwayat_received_package WHERE id_received = '$id_received'";
                                 $result = mysqli_query($koneksi, $sql);
                                 while ($row2 = mysqli_fetch_assoc($result)) {
-                                    $status = $row2['status_riwayat'];
+                                    $status = $row2['status_riwayat_received'];
                                     $avatar_icon = '';
 
-                                    if ($status === 'Pending') {
+                                    if ($status === 'Received') {
                                         $avatar_icon = '<i class=" las la-clock"></i>';
-                                    } elseif ($status === 'Proses') {
-                                        $avatar_icon = '<i class="las la-hourglass-half"></i>';
-                                    } elseif ($status === 'Delivery') {
-                                        $avatar_icon = '<i class="las la-truck"></i>';
                                     } elseif ($status === 'Delivered') {
                                         $avatar_icon = '<i class="las la-check-circle"></i>';
                                     } elseif ($status === 'Hold') {
                                         $avatar_icon = '<i class="las la-pause-circle"></i>';
-                                    } elseif ($status === 'Rejected') {
-                                        $avatar_icon = '<i class="las la-times-circle"></i>';
-                                    } elseif ($status === 'Returned') {
-                                        $avatar_icon = '<i class="las la-undo-alt"></i>';
                                     }
 
                                 ?>
@@ -133,7 +141,7 @@ $timestamp = $dateTime->format('Y-m-d H:i:s');
                                                     </div>
                                                     <div class="flex-grow-1 ms-3">
                                                         <h6 class="fs-14 mb-0 fw-semibold">
-                                                            <?= $row2['status_riwayat'] ?> -
+                                                            <?= $row2['status_riwayat_received'] ?> -
                                                             <span class="fw-semibold"><?= date('l, j F Y g:i A', strtotime($row2["timestamp"])) ?>
                                                             </span>
                                                         </h6>
@@ -146,7 +154,7 @@ $timestamp = $dateTime->format('Y-m-d H:i:s');
                                                         <span>ID Delivery Ticket</span><span> - <?= $row2["id_received"] ?></span>
                                                     </h6>
                                                     <span style="font-weight: 400;">Description : </span>
-                                                    <span style="display: inline-block; margin-left: 5px;"><?= $row2['deskripsi_riwayat'] ?></span>
+                                                    <span style="display: inline-block; margin-left: 5px;"><?= $row2['deskripsi_riwayat_received'] ?></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -173,7 +181,7 @@ $timestamp = $dateTime->format('Y-m-d H:i:s');
                                         <td><?= $row['id_received'] ?></td>
                                     </tr>
                                     <tr>
-                                        <td class="fw-medium">Client</td>
+                                        <td class="fw-medium">Barang Tujuan</td>
                                         <td><?= $row['nama_request'] ?></td>
                                     </tr>
                                     <tr>
@@ -182,31 +190,27 @@ $timestamp = $dateTime->format('Y-m-d H:i:s');
                                     </tr>
                                     <tr>
                                         <td class="fw-medium">No.Hp</td>
-                                        <td><?= $row['whatsapp'] ?></td>
+                                        <td><?= $row['no_hp'] ?></td>
                                     </tr>
                                     <tr>
                                         <td class="fw-medium">Division</td>
                                         <td><?= $row['divisi'] ?></td>
                                     </tr>
                                     <tr>
-                                        <td class="fw-medium">Office Location</td>
+                                        <td class="fw-medium">Office Location/td>
                                         <td><?= $row['lokasi'] ?></td>
                                     </tr>
                                     <tr>
-                                        <td class="fw-medium">Alamat Pengiriman</td>
-                                        <td><?= $row['alamat_kurir'] ?></td>
+                                        <td class="fw-medium">Items Types</td>
+                                        <td><?= $row['received_jenis_barang'] ?></td>
                                     </tr>
                                     <tr>
-                                        <td class="fw-medium">Delivery Type</td>
-                                        <td><?= $row['tipe_kurir'] ?></td>
+                                        <td class="fw-medium">Delivery Types</td>
+                                        <td><?= $row['nama_ekspedisi'] ?></td>
                                     </tr>
                                     <tr>
-                                        <td class="fw-medium">Item Types</td>
-                                        <td><?= $row['jenis_barang'] ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="fw-medium">Request Date</td>
-                                        <td><?= $row['tanggal_req'] ?></td>
+                                        <td class="fw-medium">Received Date</td>
+                                        <td><?= $row['received_date'] ?></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -223,21 +227,21 @@ $timestamp = $dateTime->format('Y-m-d H:i:s');
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content border-0">
             <div class="modal-header p-3 bg-soft-info">
-                <h5 class="modal-title" id="exampleModalLabel">Update Status Delivery</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Update Status Package Received</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
             </div>
-            <form action="function/update_kurir.php" method="POST" enctype="multipart/form-data">
+            <form action="function/update_received_kurir.php" method="POST" enctype="multipart/form-data">
                 <div class="modal-body">
                     <div class="row g-3">
                         <div class="col-lg-6">
-                            <input type="text" class="form-control" hidden name="id_received" value="<?= $id_received ?>" />
+                            <input type="text" class="form-control" hidden name="id_received" value="<?= $row['id_received'] ?>" />
                             <input type="text" class="form-control" hidden name="timestamp" value="<?= $timestamp ?>" />
                             <div class="col-lg-12">
                                 <div class="col-lg-12">
                                     <label for="choices-single-default" class="form-label fw-semibold"><span>Status Delivery</span></label>
                                     <select class="form-control" data-choices name="statusRiwayat">
                                         <?php
-                                        $statusOptions = ['Proses', 'Hold',  'Delivery', 'Rejected', 'Returned', 'Delivered'];
+                                        $statusOptions = ['Received', 'Hold', 'Delivered'];
 
                                         foreach ($statusOptions as $option) {
                                             $selected = ($option === $row['status_riwayat']) ? 'selected' : '';
@@ -253,7 +257,7 @@ $timestamp = $dateTime->format('Y-m-d H:i:s');
                                 <div>
                                     <label for="tasksTitle-field" class="form-label fw-semibold">Feedback Description</label>
                                     <div class="card-body">
-                                        <textarea class="ckeditor-classic" name="deskripsi" required placeholder="*Isi keterangan secara detail">
+                                        <textarea class="ckeditor-classic" name="deskripsi" placeholder="*Isi keterangan secara detail">
                                         </textarea>
                                     </div>
                                 </div>
