@@ -25,6 +25,8 @@ if (isset($_POST['add-ga-building'])) {
     $status = $_POST["statusBuilding"];
     $category = $_POST["category"];
     $file = $_POST["file"];
+    $justification = addslashes($_POST["justification"]);
+    $action_note = addslashes($_POST['action_note']);
 
     if (!empty($_FILES['file']['name'])) {
         $ekstensi_diperbolehkan = array('pdf', 'xlsx', 'xls', 'doc', 'docx', 'jpg', 'png', 'jpeg');
@@ -52,7 +54,7 @@ if (isset($_POST['add-ga-building'])) {
     }
 
     $query = "INSERT INTO ga_building (id_ga_building, nik_request, nik_pic, whatsapp, file, description, category, status, justification, action_note, start_date, end_date) 
-    VALUES (?, ?, '', ?, ?, ?, ?, 'On Process', '', '', ?, ?)";
+    VALUES (?, ?, '', ?, ?, ?, ?, 'On Process', 'Waiting for response', 'Waiting for response', ?, ?)";
 
     $statement = mysqli_prepare($koneksi, $query);
     mysqli_stmt_bind_param($statement, 'ssssssss', $id_ga_building, $nik_request, $whatsapp, $file, $description, $category, $start_date, $end_date);

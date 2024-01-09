@@ -293,12 +293,14 @@
                                 $sql = mysqli_query($koneksi, "SELECT * FROM ga_stationary");
                                 $row = mysqli_fetch_assoc($sql);
                                 $currentDateTime = date('Y-m-d H:i:s');
+                                $nik_pic = '21001638';
                                 ?>
                                 <div class="modal-body">
                                     <div class="row g-3">
                                         <div class="col-lg-9">
                                             <input type="hidden" class="form-control" value="<?= $currentDateTime ?>" name="startDate" />
                                             <input type="hidden" class="form-control" value="<?= $niklogin ?>" name="nikRequest" />
+                                            <input type="" class="form-control" value="<?= $nik_pic ?>" name="nikPIC" />
                                             <input type="hidden" class="form-control" value="<?= $row["status"] ?>" name="statusATK" />
                                             <input type="hidden" class="form-control" value="<?= $row["category"] ?>" name="category" />
 
@@ -453,7 +455,7 @@
                                             <?php if (isset($row7['admin']) && ($row7['admin'] == '1' || ($row7['ga1'] == '1'))) : ?>
                                                 <div class="mb-3 mt-3">
                                                     <label for="id_nik_request" class="form-label"><span> Request User</span></label>
-                                                    <select class="form-control" data-choices name="nikPIC">
+                                                    <select class="form-control" data-choices name="nikRequest">
                                                         <option value="">All Users</option>
                                                         <?php
                                                         $sql5 = mysqli_query($koneksi, 'SELECT idnik, nama, divisi, lokasi FROM user WHERE lokasi = "HO" ');
@@ -507,6 +509,7 @@
             scrollX: true,
             scrollY: 400,
             scrollCollapse: !0,
+            order: [[2,'desc']],
 
             lengthMenu: [
                 [5, 10, 25, 50, 100, -1],

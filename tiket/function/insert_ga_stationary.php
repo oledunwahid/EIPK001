@@ -25,7 +25,7 @@ if (isset($_POST["add-stationary"])) {
     $totalReq = array($_POST["totalReq1"], $_POST["totalReq2"], $_POST["totalReq3"], $_POST["totalReq4"], $_POST["totalReq5"]);
 
     // Insert ga_stationary
-    $query = "INSERT INTO ga_stationary VALUES ('$id_ga_stationary', '$nik_request', '$nama_pic', '$whatsapp', '$category', '$status', '$start_date', '')";
+    $query = "INSERT INTO ga_stationary VALUES ('$id_ga_stationary', '$nik_request', '$nama_pic', '$whatsapp', '$category', 'Pending', '$start_date', '')";
     $kondisi = mysqli_query($koneksi, $query);
 
     $namaEmployee = 'Bapak/Ibu'; // Ganti dengan nama yang sesuai

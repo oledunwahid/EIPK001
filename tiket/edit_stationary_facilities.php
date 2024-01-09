@@ -3,8 +3,8 @@ $sql = mysqli_query($koneksi, "SELECT ga_stationary.*,user.divisi,user.lokasi,us
 user2.nama AS nama_pic, login.username
 FROM
 ga_stationary
-LEFT JOIN USER AS user1 ON ga_stationary.nik_request = user1.idnik
-LEFT JOIN USER AS user2 ON ga_stationary.nik_pic = user2.idnik
+LEFT JOIN user AS user1 ON ga_stationary.nik_request = user1.idnik
+LEFT JOIN user AS user2 ON ga_stationary.nik_pic = user2.idnik
 INNER JOIN
 	user
 	ON 
@@ -13,7 +13,7 @@ INNER JOIN
 	login
 	ON 
 		user.idnik = login.idnik
-where id_ga_stationary ='" . $_GET['id'] . "' ");
+WHERE id_ga_stationary ='" . $_GET['id'] . "' ");
 $row = mysqli_fetch_assoc($sql);
 
 $id_tiket1 = $_GET['id'];
@@ -138,23 +138,17 @@ $id_tiket1 = $_GET['id'];
                         </thead>
                         <tbody>
                             <?php if (isset($row7['admin']) && ($row7['admin'] == '1' || ($row7['ga1'] == '1'))) {
-                                $sql6 = "SELECT 
-                                ga_stationary.*, 
-                                user1.nama AS nik_request, 
-                                user2.nama AS nik_pic,
-                                description1.description,
-                                atk_detail_request.*
-                            FROM 
-                                ga_stationary
-                            LEFT JOIN 
-                                user AS user1 ON ga_stationary.nik_request = user1.idnik
-                            LEFT JOIN 
-                                user AS user2 ON ga_stationary.nik_pic = user2.idnik
-                            JOIN
-                                atk_detail_request ON ga_stationary.id_ga_stationary = atk_detail_request.id_ga_stationary 
-                            JOIN 
-                                atk AS description1 ON atk_detail_request.id_atk = description1.id_atk
-                            WHERE ga_stationary.nik_request = '$niklogin'";
+                                $sql6 = "SELECT
+                                atk_detail_request.*, 
+                                atk.description
+                            FROM
+                                atk_detail_request
+                                INNER JOIN
+                                atk
+                                ON 
+                                    atk_detail_request.id_atk = atk.id_atk
+                            WHERE
+                                id_ga_stationary = '$id_tiket1'";
                                 $result6 = mysqli_query($koneksi, $sql6);
                                 $rowNumber = 1;
                                 while ($row6 = mysqli_fetch_assoc($result6)) {
@@ -163,7 +157,7 @@ $id_tiket1 = $_GET['id'];
                                         <td><?= $rowNumber ?></td>
                                         <td><?= $row6['id_request_detail'] ?></td>
                                         <td><?= $row6['id_atk'] ?></td>
-                                        <td><?= $row6['description'] ?></td>
+                                        <td><?= $row6['atk.description'] ?></td>
                                         <td><?= $row6['total_request'] ?></td>
                                         <td><?= $row6['total_approve'] ?></td>
                                         <td><?= $row6['feedback'] ?></td>
@@ -177,20 +171,22 @@ $id_tiket1 = $_GET['id'];
                                     $rowNumber++;
                                 }
                             } else {
-                                $sql6 = "SELECT ga_stationary.*, 
-                                user1.nama AS nik_request, 
-                                user2.nama AS nik_pic,
-                                atk_detail_request.*
-                                FROM ga_stationary
-                                LEFT JOIN USER AS user1 ON ga_stationary.nik_request = user1.idnik
-                                LEFT JOIN USER AS user2 ON ga_stationary.nik_pic = user2.idnik
-                                INNER JOIN atk_detail_request ON ga_stationary.id_ga_stationary = atk_detail_request.id_ga_stationary
-                                INNER JOIN USER ON ga_stationary.nik_request = USER.idnik
-                                WHERE ga_stationary.nik_request = '$niklogin'";
+                                $sql6 = "SELECT
+                                atk_detail_request.*, 
+                                atk.description
+                            FROM
+                                atk_detail_request
+                                INNER JOIN
+                                atk
+                                ON 
+                                    atk_detail_request.id_atk = atk.id_atk
+                            WHERE
+                                id_ga_stationary = '$id_tiket1'";
                                 $result6 = mysqli_query($koneksi, $sql6);
                                 $rowNumber = 1;
                                 while ($row6 = mysqli_fetch_assoc($result6)) {
                                 ?>
+
                                     <tr>
                                         <td><?= $rowNumber ?></td>
                                         <td><?= $row6['id_request_detail'] ?></td>
@@ -201,7 +197,7 @@ $id_tiket1 = $_GET['id'];
                                         <td><?= $row6['feedback'] ?></td>
                                         <td>
                                             <div>
-                                                <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#showModal" data-request-id="<?= $row6['id_request_detail'] ?>">Edit</button>
+                                                <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#showModal<?= $row6['id_request_detail'] ?>">Edit</button>
                                             </div>
                                         </td>
                                     </tr>
@@ -264,64 +260,78 @@ $id_tiket1 = $_GET['id'];
         </div>
     </div>
 </div>
+<?php
+$sql_modal = "SELECT
+            atk_detail_request.*, 
+            atk.description
+        FROM
+            atk_detail_request
+            INNER JOIN
+            atk
+            ON 
+                atk_detail_request.id_atk = atk.id_atk
+        WHERE
+            id_ga_stationary = '$id_tiket1' ";
+$result_modal = mysqli_query($koneksi, $sql_modal);
+while ($row_modal = mysqli_fetch_assoc($result_modal)) {
 
-<div class="modal fade zoomIn" id="showModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-sm" style="max-width: 1070px;">
-        <div class="modal-content border-0">
-            <?php
-            $sql_modal = "SELECT * FROM atk_detail_request INNER JOIN atk ";
-            $result_modal = mysqli_query($koneksi, $sql_modal);
-            $row_modal = mysqli_fetch_assoc($result_modal);
-            ?>
-            <div class="modal-header p-3 bg-soft-info">
-                <h5 class="modal-title" id="exampleModalLabel">
-                    Edit Total Approve and Feedback - ATK / Stationary</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
-            </div>
-            <form action="function/insert_ga_stationary.php" method="POST" enctype="multipart/form-data">
-                <div class="modal-body">
-                    <div class="row g-3">
-                        <div class="col-lg-9">
-                            <input type="" class="form-control" value="<?= $row_modal['id_request_detail'] ?>" name="id_request_detail" />
 
-                            <div class="form-group mb-3">
-                                <label for="id_atk">ID ATK:</label>
-                                <input type="" class="form-control" id="id_atk" name="id_atk" value="<?= $row_modal['id_atk'] ?>" readonly>
-                            </div>
+?>
+    <div class="modal fade zoomIn" id="showModal<?= $row_modal['id_request_detail'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm" style="max-width: 1070px;">
+            <div class="modal-content border-0">
 
-                            <div class="form-group mb-3">
-                                <label for="description_atk">Description ATK:</label>
-                                <input type="" class="form-control" id="description_atk" name="description_atk" value="<?= $row_modal['description'] ?>" readonly>
-                            </div>
+                <div class="modal-header p-3 bg-soft-info">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        Edit Total Approve and Feedback - ATK / Stationary</h5>
+                    <?= $row_modal['description'] ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                </div>
+                <form action="function/insert_ga_stationary.php" method="POST" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        <div class="row g-3">
+                            <div class="col-lg-9">
+                                <input type="hidden" class="form-control" value="<?= $row_modal['id_request_detail'] ?>" name="id_request_detail" />
 
-                            <div class="form-group mb-3">
-                                <label for="total_request">Total Request:</label>
-                                <input type="" class="form-control" id="total_request" name="total_request" value="<?= $row_modal['total_request'] ?>" readonly>
-                            </div>
+                                <div class="form-group mb-3">
+                                    <label for="id_atk">ID ATK:</label>
+                                    <input type="" class="form-control" id="id_atk" name="id_atk" value="<?= $row_modal['id_atk'] ?>" readonly>
+                                </div>
 
-                            <div class="form-group mb-3">
-                                <label for="total_approve">Total Approve:</label>
-                                <input type="number" max="10" class="form-control" id="total_approve" name="total_approve" value="<?= $row_modal['total_approve'] ?>">
-                            </div>
+                                <div class="form-group mb-3">
+                                    <label for="description_atk">Description ATK:</label>
+                                    <input type="" class="form-control" id="description_atk" name="description_atk" value="<?= $row_modal['description'] ?>" readonly>
+                                </div>
 
-                            <div class="form-group mb-3">
-                                <label for="feedback">Feedback:</label>
-                                <textarea class="form-control" id="feedback" name="feedback"></textarea>
+                                <div class="form-group mb-3">
+                                    <label for="total_request">Total Request:</label>
+                                    <input type="" class="form-control" id="total_request" name="total_request" value="<?= $row_modal['total_request'] ?>" readonly>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="total_approve">Total Approve:</label>
+                                    <input type="number" max="10" class="form-control" id="total_approve" name="total_approve" value="<?= $row_modal['total_approve'] ?>">
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="feedback">Feedback:</label>
+                                    <textarea class="form-control" id="feedback" name="feedback"></textarea>
+                                </div>
+
                             </div>
 
                         </div>
-
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger waves-effect" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary waves-effect waves-light" name="add-stationary">Create</button>
-                </div>
-            </form>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger waves-effect" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary waves-effect waves-light" name="add-stationary">Create</button>
+                    </div>
+                </form>
+
+            </div>
         </div>
     </div>
-</div>
-
+<?php } ?>
 
 
 

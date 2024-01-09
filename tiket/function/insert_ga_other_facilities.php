@@ -24,8 +24,8 @@ if (isset($_POST['add-ga-other-facilities'])) {
     $status = $_POST["statusOther"];
     $category = $_POST["category"];
     $file = $_POST["file"];
-    $justification = $_POST["justification"];
-    $action_note = $_POST['action_note'];
+    $justification = addslashes($_POST["justification"]);
+    $action_note = addslashes($_POST['action_note']);
 
     if (!empty($_FILES['file']['name'])) {
         $ekstensi_diperbolehkan = array('pdf', 'xlsx', 'xls', 'doc', 'docx', 'jpg', 'png', 'jpeg');

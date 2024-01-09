@@ -202,9 +202,9 @@
                                                         user1.nama AS nama_request,
                                                         user2.nama AS nama_pic 
                                                         FROM ga_building
-                                                        LEFT JOIN USER AS user1 ON ga_building.nik_request = user1.idnik
-                                                        LEFT JOIN USER AS user2 ON ga_building.nik_pic = user2.idnik
-                                                        INNER JOIN USER ON ga_building.nik_request = user.idnik
+                                                        LEFT JOIN user AS user1 ON ga_building.nik_request = user1.idnik
+                                                        LEFT JOIN user AS user2 ON ga_building.nik_pic = user2.idnik
+                                                        INNER JOIN user ON ga_building.nik_request = user.idnik
                                                         ");
 
                                                     while ($row6 = mysqli_fetch_assoc($sql7)) {
@@ -215,17 +215,7 @@
                                                             <td><?= $row6['end_date'] ?></td>
                                                             <td><?= $row6['nama_request'] ?></td>
                                                             <td><?= $row6['description'] ?></td>
-                                                            <td>
-                                                                <?php
-                                                                if ($row6['status'] == 'On Process') {
-                                                                    echo 'On Process';
-                                                                } elseif ($row6['status'] == 'Canceled') {
-                                                                    echo 'Canceled';
-                                                                } else {
-                                                                    echo 'Closed';
-                                                                }
-                                                                ?>
-                                                            </td>
+                                                            <td><?= $row6['status'] ?></td>
                                                             <td><?= $row6['category'] ?></td>
                                                             <td><?= $row6['nama_pic'] ?></td>
                                                             <td>
@@ -249,9 +239,9 @@
                                                         user1.nama AS nama_request,
                                                         user2.nama AS nama_pic 
                                                         FROM ga_building
-                                                        LEFT JOIN USER AS user1 ON ga_building.nik_request = user1.idnik
-                                                        LEFT JOIN USER AS user2 ON ga_building.nik_pic = user2.idnik
-                                                        INNER JOIN USER ON ga_building.nik_request = user.idnik
+                                                        LEFT JOIN user AS user1 ON ga_building.nik_request = user1.idnik
+                                                        LEFT JOIN user AS user2 ON ga_building.nik_pic = user2.idnik
+                                                        INNER JOIN user ON ga_building.nik_request = user.idnik
                                                         WHERE ga_building.nik_request = '$niklogin'");
 
                                                     while ($row6 = mysqli_fetch_assoc($sql7)) {
@@ -262,17 +252,7 @@
                                                             <td><?= $row6['end_date'] ?></td>
                                                             <td><?= $row6['nama_request'] ?></td>
                                                             <td><?= $row6['description'] ?></td>
-                                                            <td>
-                                                                <?php
-                                                                if ($row6['status'] == 'On Process') {
-                                                                    echo 'On Process';
-                                                                } elseif ($row6['status'] == 'Canceled') {
-                                                                    echo 'Canceled';
-                                                                } else {
-                                                                    echo 'Closed';
-                                                                }
-                                                                ?>
-                                                            </td>
+                                                            <td><?= $row6['status'] ?></td>
                                                             <td><?= $row6['category'] ?></td>
                                                             <td><?= $row6['nama_pic'] ?></td>
                                                             <td>
@@ -296,15 +276,15 @@
                                                 $row7 = mysqli_fetch_assoc($sql7);
                                                 ?>
                                                 <?php
-                                                if (isset($row7['admin']) && ($row7['admin'] == '1' || ($row7['ga2'] == '1'))) {
+                                                if (isset($row7['admin']) && ($row7['admin'] == '1' || ($row7['ga3'] == '1'))) {
                                                     $sql7 = mysqli_query($koneksi, "SELECT
                                                     ga_building.*,
                                                     user1.nama AS nama_request,
                                                     user2.nama AS nama_pic 
                                                     FROM ga_building
-                                                    LEFT JOIN USER AS user1 ON ga_building.nik_request = user1.idnik
-                                                    LEFT JOIN USER AS user2 ON ga_building.nik_pic = user2.idnik
-                                                    INNER JOIN USER ON ga_building.nik_request = user.idnik");
+                                                    LEFT JOIN user AS user1 ON ga_building.nik_request = user1.idnik
+                                                    LEFT JOIN user AS user2 ON ga_building.nik_pic = user2.idnik
+                                                    INNER JOIN user ON ga_building.nik_request = user.idnik");
 
                                                     while ($row6 = mysqli_fetch_assoc($sql7)) {
                                                 ?>
@@ -314,17 +294,7 @@
                                                             <td><?= $row6['end_date'] ?></td>
                                                             <td><?= $row6['nama_request'] ?></td>
                                                             <td><?= $row6['description'] ?></td>
-                                                            <td>
-                                                                <?php
-                                                                if ($row6['status'] == 'On Process') {
-                                                                    echo 'On Process';
-                                                                } elseif ($row6['status'] == 'Canceled') {
-                                                                    echo 'Canceled';
-                                                                } else {
-                                                                    echo 'Closed';
-                                                                }
-                                                                ?>
-                                                            </td>
+                                                            <td><?= $row6['status'] ?></td>
                                                             <td><?= $row6['category'] ?></td>
                                                             <td><?= $row6['nama_pic'] ?></td>
                                                             <td>
@@ -348,9 +318,9 @@
                                                     user1.nama AS nama_request,
                                                     user2.nama AS nama_pic 
                                                     FROM ga_building
-                                                    LEFT JOIN USER AS user1 ON ga_building.nik_request = user1.idnik
-                                                    LEFT JOIN USER AS user2 ON ga_building.nik_pic = user2.idnik
-                                                    INNER JOIN USER ON ga_building.nik_request = user.idnik
+                                                    LEFT JOIN user AS user1 ON ga_building.nik_request = user1.idnik
+                                                    LEFT JOIN user AS user2 ON ga_building.nik_pic = user2.idnik
+                                                    INNER JOIN user ON ga_building.nik_request = user.idnik
                                                     WHERE ga_building.nik_request = '$niklogin'");
 
                                                     while ($row6 = mysqli_fetch_assoc($sql7)) {
@@ -361,17 +331,7 @@
                                                             <td><?= $row6['end_date'] ?></td>
                                                             <td><?= $row6['nama_request'] ?></td>
                                                             <td><?= $row6['description'] ?></td>
-                                                            <td>
-                                                                <?php
-                                                                if ($row6['status'] == 'On Process') {
-                                                                    echo 'On Process';
-                                                                } elseif ($row6['status'] == 'Canceled') {
-                                                                    echo 'Canceled';
-                                                                } else {
-                                                                    echo 'Closed';
-                                                                }
-                                                                ?>
-                                                            </td>
+                                                            <td><?= $row6['status'] ?></td>
                                                             <td><?= $row6['category'] ?></td>
                                                             <td><?= $row6['nama_pic'] ?></td>
                                                             <td>
@@ -441,14 +401,14 @@
                         <div class="col-lg-6">
                             <div class="mb-3 mt-1">
                                 <label class="form-label">Building Request Form (if any)</label>
-                                <input type="file" class="form-control" name="file"  />
+                                <input type="file" class="form-control" name="file" />
                             </div>
                             <div>
                                 <label for="wa" class="form-label">No.Whatsapp</label>
                                 <input type="number" class="form-control" placeholder="Insert your active number +(62) " name="wa" required />
                             </div>
                             <div>
-                                <?php if (isset($row7['ga2']) && ($row7['ga2'] == '1' || ($row7['admin'] == '1'))) { ?>
+                                <?php if (isset($row7['ga3']) && ($row7['ga3'] == '1' || ($row7['admin'] == '1'))) { ?>
                                     <div class="mb-3 mt-3">
                                         <label for="tasksTitle-field" class="form-label"><span> Request User</span></label>
                                         <select class="form-control" data-choices name="nik_request">
@@ -494,6 +454,9 @@
             scrollX: true,
             scrollY: 400,
             scrollCollapse: !0,
+            order: [
+                [1, 'desc']
+            ],
 
             lengthMenu: [
                 [5, 10, 25, 50, 100, -1],

@@ -327,7 +327,7 @@ $timestamp = $dateTime->format('Y-m-d H:i:s');
                 confirmButtonText: 'Yes, delete it!',
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = 'function/delete_kurir.php?aksi=delete&id=<?= $_GET['id'] ?>';
+                    window.location.href = 'function/delete_received.php?aksi=delete&id=<?= $_GET['id'] ?>';
                 }
             });
         });

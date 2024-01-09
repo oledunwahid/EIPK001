@@ -12,8 +12,12 @@ if (isset($_POST["updateIT"])) {
     $action_note = $_POST["action_note"];
 
     $queryupdate = mysqli_query($koneksi, "UPDATE ticketing SET 
-                            kategori_tiket = '$kategori_tiket', status_tiket = '$status_tiket',  
-                            nik_pic = '$nik_pic',  justification = '$justification', action_note = '$action_note' WHERE id_tiket = '$id_tiket' ");
+                            kategori_tiket = '$kategori_tiket', 
+                            status_tiket = '$status_tiket',  
+                            nik_pic = '$nik_pic',  
+                            justification = '$justification', 
+                            action_note = '$action_note' 
+                            WHERE id_tiket = '$id_tiket' ");
 
     if ($queryupdate) {
         session_start();
