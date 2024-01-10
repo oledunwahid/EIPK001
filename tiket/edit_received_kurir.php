@@ -44,7 +44,7 @@ $timestamp = $dateTime->format('Y-m-d H:i:s');
 
                                 <div class="col-md">
                                     <form action="function/update_received_kurir.php" method="POST">
-                                        <input type="text" hidden name="id_received" value="<?= $row['id_received'] ?>">
+                                        <input type="text" name="id_received" value="<?= $row['id_received'] ?>">
                                         <h4 class="fw-semibold" id="ticket-title">#<?= $row['id_received'] ?> - Delivery Ticket </h4>
                                         <div class="hstack gap-3 flex-wrap">
                                             <div class="text-muted"><i class="ri-building-line align-bottom me-1"></i><span id="ticket-client">MAA Group</span></div>
@@ -54,16 +54,16 @@ $timestamp = $dateTime->format('Y-m-d H:i:s');
                                                 <select class="form-control" data-choices name="statusReceived">
                                                     <?php
                                                     $statusOptions = [
-                                                        0 => 'Closed',
-                                                        1 => 'Received',
-                                                        2 => 'Canceled',
+                                                        'Closed',
+                                                        'Received',
+                                                        'Canceled',
                                                     ];
 
-                                                    $lastUpdatedStatus = $row['status_Received'];
+                                                    $lastUpdatedStatus = $row['status_received'];
 
-                                                    foreach ($statusOptions as $value => $option) {
-                                                        $selected = ($value == $lastUpdatedStatus) ? 'selected' : '';
-                                                        echo '<option value="' . $value . '" ' . $selected . '>' . $option . '</option>';
+                                                    foreach ($statusOptions as $option) {
+                                                        $selected = ($option === $lastUpdatedStatus) ? 'selected' : '';
+                                                        echo '<option value="' . $option . '" ' . $selected . '>' . $option . '</option>';
                                                     }
                                                     ?>
                                                 </select>
@@ -71,17 +71,17 @@ $timestamp = $dateTime->format('Y-m-d H:i:s');
                                             <div class="vr"></div>
                                             <div class="me-2 text-muted">PIC Package:</div>
                                             <div>
-                                                    <?php
-                                                    $sql5 = mysqli_query($koneksi, "SELECT access_level.idnik, user.nama 
+                                                <?php
+                                                $sql5 = mysqli_query($koneksi, "SELECT access_level.idnik, user.nama 
                                                     FROM access_level 
                                                     INNER JOIN user ON access_level.idnik = user.idnik 
                                                     WHERE access_level.ga4 = 1");
-                                                    while ($row5 = mysqli_fetch_assoc($sql5)) {
-                                                    ?>
-                                                        <option value="<?= $row5['idnik'] ?>"><?= $row5['nama'] ?></option>
-                                                    <?php
-                                                    }
-                                                    ?>
+                                                while ($row5 = mysqli_fetch_assoc($sql5)) {
+                                                ?>
+                                                    <option value="<?= $row5['idnik'] ?>"><?= $row5['nama'] ?></option>
+                                                <?php
+                                                }
+                                                ?>
                                             </div>
                                             <div class="col-md-5">
                                                 <div class="card-body">
@@ -231,6 +231,7 @@ $timestamp = $dateTime->format('Y-m-d H:i:s');
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
             </div>
             <form action="function/update_received_kurir.php" method="POST" enctype="multipart/form-data">
+                <input type="text" name="id_received" value="<?= $row['id_received'] ?>">
                 <div class="modal-body">
                     <div class="row g-3">
                         <div class="col-lg-6">
@@ -266,7 +267,7 @@ $timestamp = $dateTime->format('Y-m-d H:i:s');
                         <div class="modal-footer mt-3">
                             <div class="hstack gap-2 justify-content-end">
                                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-success" name="updateRiwayat">Add Update Delivery</button>
+                                <button type="submit" class="btn btn-success" name="updateRiwayatReceived">Add Update Delivery</button>
                             </div>
                         </div>
                     </div>

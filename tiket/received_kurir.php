@@ -58,6 +58,7 @@
                                         <thead>
                                             <tr>
                                                 <th>ID Received</th>
+                                                <th>Nama PIC</th>
                                                 <th>Tanggal Terima Barang</th>
                                                 <th>Jenis Barang yang diterima</th>
                                                 <th>Nama Pengirim</th>
@@ -82,14 +83,18 @@
                                                 <?php
                                                 if (isset($row7['admin']) && ($row7['admin'] == '1' || ($row7['ga4'] == '1'))) {
                                                     $sql7 = mysqli_query($koneksi, "SELECT
-                                                        rf_received_package.*,
-                                                        user1.nama AS nama_request,
-                                                        FROM rf_received_package
-                                                        LEFT JOIN user AS user1 ON rf_received_package.idnik = user1.idnik");
+                                                    rf_received_package.*,
+                                                    user1.nama AS nama_request,
+                                                    user2.nama AS nama_pic
+                                                FROM
+                                                    rf_received_package
+                                                    LEFT JOIN user AS user1 ON rf_received_package.idnik = user1.idnik
+                                                    LEFT JOIN user AS user2 ON rf_received_package.id_nik_pic = user2.idnik");
                                                     while ($row6 = mysqli_fetch_assoc($sql7)) {
                                                 ?>
                                                         <tr>
                                                             <td><a href="index.php?page=EditReceived&id=<?= $row6['id_received']; ?>"><?= $row6['id_received'] ?></a></td>
+                                                            <td><?= $row6['nama_pic'] ?></td>
                                                             <td><?= $row6['received_date'] ?></td>
                                                             <td><?= $row6['received_jenis_barang'] ?></td>
                                                             <td><?= $row6['nama_pengirim'] ?></td>
@@ -122,17 +127,22 @@
                                                     }
                                                 } else {
                                                     $sql7 = mysqli_query($koneksi, "SELECT
-                                                        rf_received_package.*,
-                                                        user1.nama AS nama_request,
-                                                        FROM rf_received_package
-                                                        LEFT JOIN user AS user1 ON rf_received_package.idnik = user1.idnik
-                                                        INNER JOIN user ON rf_received_package.idnik = user.idnik
-                                                        WHERE rf_received_package.idnik = '$niklogin'");
+                                                    rf_received_package.*,
+                                                    user1.nama AS nama_request,
+                                                    user2.nama AS nama_pic
+                                                    FROM
+                                                    rf_received_package
+                                                    LEFT JOIN user AS user1 ON rf_received_package.idnik = user1.idnik
+                                                    LEFT JOIN user AS user2 ON rf_received_package.id_nik_pic = user2.idnik
+                                                    INNER JOIN user ON rf_received_package.idnik = user.idnik 
+                                                    WHERE
+                                                    rf_received_package.idnik = '$niklogin'");
 
                                                     while ($row6 = mysqli_fetch_assoc($sql7)) {
                                                     ?>
                                                         <tr>
                                                             <td><a href="index.php?page=ViewReceived&id=<?= $row6['id_received']; ?>"><?= $row6['id_received'] ?></a></td>
+                                                            <td><?= $row6['nama_pic'] ?></td>
                                                             <td><?= $row6['received_date'] ?></td>
                                                             <td><?= $row6['received_jenis_barang'] ?></td>
                                                             <td><?= $row6['nama_pengirim'] ?></td>
@@ -164,7 +174,7 @@
                                                 <?php }
                                                 }
                                             } else {
-                                                $sql7 = mysqli_query($koneksi, "SELECT * FROM access_level WHERE idnik =$niklogin ");
+                                                $sql7 = mysqli_query($koneksi, "SELECT * FROM access_level WHERE idnik = $niklogin ");
                                                 $row7 = mysqli_fetch_assoc($sql7);
 
                                                 $tgl1 = date('Y-m-t', strtotime("-2 months"));
@@ -174,15 +184,18 @@
                                                 if (isset($row7['admin']) && ($row7['admin'] == '1' || ($row7['ga4'] == '1'))) {
                                                     $sql7 = mysqli_query($koneksi, "SELECT
                                                     rf_received_package.*,
-                                                    user1.nama AS nama_request
-                                                    FROM rf_received_package
+                                                    user1.nama AS nama_request,
+                                                    user2.nama AS nama_pic
+                                                    FROM
+                                                    rf_received_package
                                                     LEFT JOIN user AS user1 ON rf_received_package.idnik = user1.idnik
-                                                    INNER JOIN user ON rf_received_package.idnik = user.idnik");
-
+                                                    LEFT JOIN user AS user2 ON rf_received_package.id_nik_pic = user2.idnik
+                                                    INNER JOIN user ON rf_received_package.idnik = user.idnik ");
                                                     while ($row6 = mysqli_fetch_assoc($sql7)) {
                                                 ?>
                                                         <tr>
                                                             <td><a href="index.php?page=EditReceived&id=<?= $row6['id_received']; ?>"><?= $row6['id_received'] ?></a></td>
+                                                            <td><?= $row6['nama_pic'] ?></td>
                                                             <td><?= $row6['received_date'] ?></td>
                                                             <td><?= $row6['received_jenis_barang'] ?></td>
                                                             <td><?= $row6['nama_pengirim'] ?></td>
@@ -216,16 +229,21 @@
                                                 } else {
                                                     $sql7 = mysqli_query($koneksi, "SELECT
                                                     rf_received_package.*,
-                                                    user1.nama AS nama_request
-                                                    FROM rf_received_package
-                                                    LEFT JOIN user AS user1 ON rf_received_package.idnik = user1.idnik                                       
-                                                    INNER JOIN user ON rf_received_package.idnik = user.idnik
-                                                    WHERE rf_received_package.idnik = '$niklogin'");
+                                                    user1.nama AS nama_request,
+                                                    user2.nama AS nama_pic
+                                                    FROM
+                                                    rf_received_package
+                                                    LEFT JOIN user AS user1 ON rf_received_package.idnik = user1.idnik
+                                                    LEFT JOIN user AS user2 ON rf_received_package.id_nik_pic = user2.idnik
+                                                    INNER JOIN user ON rf_received_package.idnik = user.idnik 
+                                                    WHERE
+                                                    rf_received_package.idnik = '$niklogin'");
 
                                                     while ($row6 = mysqli_fetch_assoc($sql7)) {
                                                     ?>
                                                         <tr>
                                                             <td><a href="index.php?page=ViewReceived&id=<?= $row6['id_received']; ?>"><?= $row6['id_received'] ?></a></td>
+                                                            <td><?= $row6['nama_pic'] ?></td>
                                                             <td><?= $row6['received_date'] ?></td>
                                                             <td><?= $row6['received_jenis_barang'] ?></td>
                                                             <td><?= $row6['nama_pengirim'] ?></td>
@@ -286,12 +304,16 @@
                     <h5 class="modal-title" id="exampleModalLabel">Create Received Package</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
                 </div>
+                <?php
+                $sql8 = mysqli_query($koneksi, "SELECT * FROM access_level WHERE idnik = '21001638'");
+                $row8 = mysqli_fetch_assoc($sql8);
+                ?>
                 <form action="function/insert_received_kurir.php" method="POST" enctype="multipart/form-data" id="formModalKurir">
                     <div class="modal-body">
                         <div class="row g-3">
                             <div class="col-lg-6">
-                                <input type="text" class="form-control" value="<?= $niklogin ?>" name="idNik" hidden />
-                                <input type="text" class="form-control" value="Diterima PIC" name="status_received" hidden />
+                                <input type="hidden" class="form-control" value="<?= isset($row8['idnik']) ?>" name="idPIC" />
+
                                 <div class="mb-3 mt-3">
                                     <label class="form-label">Tanggal/Jam diterima PIC</label>
                                     <input type="text" class="form-control" data-provider="flatpickr" data-date-format="Y-m-d" data-enable-time placeholder="Input tanggal barang diterima" name="tanggalRequest" required>
@@ -316,7 +338,7 @@
                                     <div class="mb-3 mt-3">
                                         <label for="tasksTitle-field" class="form-label"><span>Tujuan Paket Kepada </span></label>
                                         <select class="form-control" data-choices name="namaTujuan">
-                                            <option value="">All Users</option>
+                                            <option value="">All users</option>
                                             <?php
                                             $sql5 = mysqli_query($koneksi, 'SELECT idnik, nama, divisi, lokasi, company FROM user WHERE lokasi = "HO"');
                                             while ($row5 = mysqli_fetch_assoc($sql5)) {
@@ -324,7 +346,7 @@
                                                 <option value="<?= $row5['idnik'] ?>">PT <?= $row5['company'] ?> | <strong><?= $row5['nama'] ?></strong> | <?= $row5['divisi'] ?></option>
                                             <?php } ?>
                                         </select>
-                                        <input type="text" class="form-control" hidden name="status_input" value="Input by Admin" />
+                                        <input type="hidden" class="form-control" name="status_input" value="Package Received by Admin" />
                                     </div>
                                 <?php } ?>
                             </div>

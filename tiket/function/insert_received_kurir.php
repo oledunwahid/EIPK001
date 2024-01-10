@@ -7,16 +7,16 @@ if (isset($_POST["add-received"])) {
     $counter = 1;
     $RequestNumber = "RK" . $timestamp . str_pad($counter, 1, '0', STR_PAD_LEFT);
 
-    $received_jenis_barang = isset($_POST["jenisBarang"]) ? $_POST["jenisBarang"] : '';
-    $nama_pengirim = isset($_POST["namaPengirim"]) ? $_POST["namaPengirim"] : '';
-    $nama_ekspedisi = isset($_POST["namaEkspedisi"]) ? $_POST["namaEkspedisi"] : '';
-    $no_resi = isset($_POST["noResi"]) ? $_POST["noResi"] : '';
-    $idnik = isset($_POST["idNik"]) ? $_POST["idNik"] : '';
-    $idpic = isset($_POST["idpic"]) ? $_POST["idpic"] : '';
-    $whatsapp = isset($_POST["wa"]) ? $_POST["wa"] : '';
-    $nama_pt = isset($_POST["namaPT"]) ? $_POST["namaPT"] : '';
-    $status_riwayat_received = isset($_POST["statusRiwayat"]) ? $_POST["statusRiwayat"] : '';
-    $status_received = isset($_POST["status_received"]) ? $_POST["status_received"] : '';
+    $id_received = $RequestNumber;
+    $received_jenis_barang = $_POST["jenisBarang"];
+    $nama_pengirim =  $_POST["namaPengirim"];
+    $nama_ekspedisi =  $_POST["namaEkspedisi"];
+    $no_resi =  $_POST["noResi"];
+    $idpic =   $_POST["idPIC"];
+    $idnik =   $_POST["namaTujuan"];
+    $whatsapp =  $_POST["wa"];
+    $nama_pt = $_POST["namaPT"];
+    $status_input = $_POST["status_input"];
 
     if (isset($_FILES['buktiFoto']['name']) && !empty($_FILES['buktiFoto']['name'])) {
         $ekstensi_diperbolehkan = array('pdf', 'xlsx', 'xls', 'doc', 'docx', 'jpg', 'png', 'jpeg');
@@ -50,15 +50,15 @@ if (isset($_POST["add-received"])) {
         $bukti_foto = ''; // Set default value if 'buktiFoto' is not uploaded
     }
 
-    $query = "INSERT INTO rf_received_package (id_received, received_date, received_jenis_barang, nama_pengirim, nama_ekspedisi, no_resi, idnik, no_hp, nama_pt, bukti_foto, status_received) 
-    VALUES ('$RequestNumber',  NOW(), '$received_jenis_barang', '$nama_pengirim', '$nama_ekspedisi', '$no_resi', '$idnik', '$whatsapp', '$nama_pt', '$bukti_foto', 'Received')";
+    $query = "INSERT INTO rf_received_package (id_received, id_nik_pic,received_date, received_jenis_barang, nama_pengirim, nama_ekspedisi, no_resi, idnik, no_hp, nama_pt, bukti_foto, status_received) 
+    VALUES ('$id_received','$idpic',  NOW(), '$received_jenis_barang', '$nama_pengirim', '$nama_ekspedisi', '$no_resi', '$idnik', '$whatsapp', '$nama_pt', '$bukti_foto', 'Received')";
 
     $kondisi = mysqli_query($koneksi, $query);
 
     if ($kondisi) {
         $namaEmployee = 'Bapak/Ibu';
-        $link = 'https://localhost/index.php?page=ViewReceived&id=' . $RequestNumber;
-        $message = "Halo " . $namaEmployee . "!\n\nTicketing dengan ID #" . $RequestNumber . " Anda sudah berhasil dibuat dengan status 'Received'\n\nTerima kasih telah menggunakan layanan kami. Jangan lupa untuk selalu cek Employee Information Portal (EIP) untuk informasi selanjutnya. Jika Anda memiliki pertanyaan lebih lanjut atau membutuhkan bantuan, jangan ragu untuk menghubungi tim IT kami.\n\nTerima kasih!\n\nInfo lebih lanjut tentang tiket ini: " . $link;
+        $link = 'https://localhost/index.php?page=ViewReceived&id=' . $id_received;
+        $message = "Halo " . $namaEmployee . "!\n\nTicketing dengan ID #" . $id_received . " Anda sudah berhasil dibuat dengan status 'Received'\n\nTerima kasih telah menggunakan layanan kami. Jangan lupa untuk selalu cek Employee Information Portal (EIP) untuk informasi selanjutnya. Jika Anda memiliki pertanyaan lebih lanjut atau membutuhkan bantuan, jangan ragu untuk menghubungi tim IT kami.\n\nTerima kasih!\n\nInfo lebih lanjut tentang tiket ini: " . $link;
 
         $curl = curl_init();
 
@@ -84,8 +84,8 @@ if (isset($_POST["add-received"])) {
         $response = curl_exec($curl);
         curl_close($curl);
 
-        $query2 = "INSERT INTO rf_riwayat_received_package (id_riwayat_received,id_received, timestamp, status_riwayat_received, deskripsi_riwayat_received)
-        VALUES ('', '$RequestNumber', '$timestamp','Barang Telah Diterima oleh PIC', '$status_barang')";
+        $query2 = "INSERT INTO rf_riwayat_received_package VALUES
+        ('', '$id_received', '$timestamp', 'Received','$status_input')";
         $kondisi2 = mysqli_query($koneksi, $query2);
 
         if ($kondisi2) {
