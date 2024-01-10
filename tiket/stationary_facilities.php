@@ -300,7 +300,7 @@
                                         <div class="col-lg-9">
                                             <input type="hidden" class="form-control" value="<?= $currentDateTime ?>" name="startDate" />
                                             <input type="hidden" class="form-control" value="<?= $niklogin ?>" name="nikRequest" />
-                                            <input type="" class="form-control" value="<?= $nik_pic ?>" name="nikPIC" />
+                                            <input type="hidden" class="form-control" value="<?= $nik_pic ?>" name="nikPIC" />
                                             <input type="hidden" class="form-control" value="<?= $row["status"] ?>" name="statusATK" />
                                             <input type="hidden" class="form-control" value="<?= $row["category"] ?>" name="category" />
 
