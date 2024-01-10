@@ -12,9 +12,8 @@ function redirectToFacilitiesPage($message, $icon)
 
 if (isset($_POST['add-ga-building'])) {
     $currentDateTime = new DateTime('now', new DateTimeZone('Asia/Jakarta'));
-    $timestamp = $currentDateTime->format('YmdHis');
-    $counter = 1;
-    $ticketNumber = "BDG" . $timestamp . str_pad($counter, 1, '0', STR_PAD_LEFT);
+    $timestamp = $currentDateTime->format('ymdHis');
+    $ticketNumber = "BDG" . $timestamp . str_pad(1, '0', STR_PAD_LEFT);
 
     $id_ga_building = $ticketNumber;
     $start_date = $_POST["startDate"];
@@ -63,7 +62,7 @@ if (isset($_POST['add-ga-building'])) {
     $namaEmployee = 'Bapak/Ibu'; // Ganti dengan nama yang sesuai
     $link = 'https://localhost/index.php?page=ViewTicketIT&id=' . $id_ga_building; // Ganti dengan URL yang valid
 
-    $message = "Halo " . $namaEmployee . "!\n\nTicketing dengan ID #" . $id_ga_building . " Anda sudah berhasil dibuat dengan status 'Process'\n\nTerima kasih telah menggunakan layanan kami. Jangan lupa untuk selalu cek Employee Information Portal (EIP) untuk informasi selanjutnya. Jika Anda memiliki pertanyaan lebih lanjut atau membutuhkan bantuan, jangan ragu untuk menghubungi tim IT kami.\n\nTerima kasih!\n\nInfo lebih lanjut tentang tiket ini: " . $link;
+    $message = "Halo " . $namaEmployee . "!\n\nTicketing dengan ID #" . $id_ga_building . " Anda sudah berhasil dibuat dengan status 'On Process'\n\nTerima kasih telah menggunakan layanan kami. Jangan lupa untuk selalu cek Employee Information Portal (EIP) untuk informasi selanjutnya. Jika Anda memiliki pertanyaan lebih lanjut atau membutuhkan bantuan, jangan ragu untuk menghubungi tim IT kami.\n\nTerima kasih!\n\nInfo lebih lanjut tentang tiket ini: " . $link;
 
     // Pengaturan untuk cURL
     $curl = curl_init();

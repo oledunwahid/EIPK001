@@ -445,12 +445,22 @@
                 </div>
                 <form action="function/insert_kurir.php" method="POST" enctype="multipart/form-data" id="formModalKurir">
                     <div class="modal-body">
-                        <?php $tanggal_req = date('Y-m-d H:i:s'); ?>
+                        <?php
+                        $tanggal_req = date('Y-m-d H:i:s');
+                        $currentDateTime = new DateTime('now', new DateTimeZone('Asia/Jakarta'));
+                        $timestamp = $currentDateTime->format('ymdHis');
+
+                        $RequestNumber = "D" . $timestamp . str_pad(1, '0', STR_PAD_LEFT);
+                        ?>
                         <div class="row g-3">
                             <div class="col-lg-6">
                                 <input class="form-control" value="<?= $tanggal_req ?>" name="tanggalRequest" hidden />
                                 <input type="text" class="form-control" value="<?= $niklogin ?>" name="id_nik_request" hidden />
 
+                                <div class="mb-3 mt-3">
+                                    <input type="text" readonly class="form-control" value="<?= $RequestNumber ?>" name="id_kurir" />
+                                </div>
+                                
                                 <?php if (isset($row7['admin']) && ($row7['admin'] == '1' || ($row7['ga4'] == '1'))) { ?>
                                     <div class="mb-3 mt-3">
                                         <label for="tasksTitle-field" class="form-label"><span>Tujuan Pengiriman Kepada </span></label>

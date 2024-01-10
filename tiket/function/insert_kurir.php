@@ -2,12 +2,7 @@
 require_once("../koneksi.php");
 
 if (isset($_POST["add-request"])) {
-    $currentDateTime = new DateTime('now', new DateTimeZone('Asia/Jakarta'));
-    $timestamp = $currentDateTime->format('YmdHis');
-    $counter = 1;
-    $RequestNumber = "D" . $timestamp . str_pad($counter, 1, '0', STR_PAD_LEFT);
-
-    $id_kurir = $RequestNumber;
+    $id_kurir = $_POST['id_kurir'];
     $tanggal_req = $_POST["tanggalRequest"];
     $jenis_barang = $_POST["jenisBarang"];
     $id_nik_request = $_POST["id_nik_request"];

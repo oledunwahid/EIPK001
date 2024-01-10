@@ -3,9 +3,8 @@ require_once("../koneksi.php");
 
 if (isset($_POST["add-received"])) {
     $currentDateTime = new DateTime('now', new DateTimeZone('Asia/Jakarta'));
-    $timestamp = $currentDateTime->format('YmdHis');
-    $counter = 1;
-    $RequestNumber = "RK" . $timestamp . str_pad($counter, 1, '0', STR_PAD_LEFT);
+    $timestamp = $currentDateTime->format('ymdHis');
+    $RequestNumber = "RK" . $timestamp . str_pad(1, '0', STR_PAD_LEFT);
 
     $id_received = $RequestNumber;
     $received_jenis_barang = $_POST["jenisBarang"];

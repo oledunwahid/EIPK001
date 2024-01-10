@@ -5,8 +5,8 @@ if (isset($_POST["add-stationary"])) {
     function generateTimestampedID($prefix, $counter)
     {
         $currentDateTime = new DateTime('now', new DateTimeZone('Asia/Jakarta'));
-        $timestamp = $currentDateTime->format('YmdHis');
-        return $prefix . $timestamp . str_pad($counter, 3, '0', STR_PAD_LEFT);
+        $timestamp = $currentDateTime->format('ymdHis');
+        return $prefix . $timestamp . str_pad($counter, 1, '0', STR_PAD_LEFT);
     }
 
     // Generate unique IDs based on counters obtained from the database
@@ -31,7 +31,7 @@ if (isset($_POST["add-stationary"])) {
     $namaEmployee = 'Bapak/Ibu'; // Ganti dengan nama yang sesuai
     $link = 'https://localhost/index.php?page=ViewTicketIT&id=' . $id_ga_stationary; // Ganti dengan URL yang valid
 
-    $message = "Halo " . $namaEmployee . "!\n\nTicketing dengan ID #" . $id_ga_stationary . " Anda sudah berhasil dibuat dengan status 'Process'\n\nTerima kasih telah menggunakan layanan kami. Jangan lupa untuk selalu cek Employee Information Portal (EIP) untuk informasi selanjutnya. Jika Anda memiliki pertanyaan lebih lanjut atau membutuhkan bantuan, jangan ragu untuk menghubungi tim IT kami.\n\nTerima kasih!\n\nInfo lebih lanjut tentang tiket ini: " . $link;
+    $message = "Halo " . $namaEmployee . "!\n\nTicketing dengan ID #" . $id_ga_stationary . " Anda sudah berhasil dibuat dengan status 'On Process'\n\nTerima kasih telah menggunakan layanan kami. Jangan lupa untuk selalu cek Employee Information Portal (EIP) untuk informasi selanjutnya. Jika Anda memiliki pertanyaan lebih lanjut atau membutuhkan bantuan, jangan ragu untuk menghubungi tim IT kami.\n\nTerima kasih!\n\nInfo lebih lanjut tentang tiket ini: " . $link;
 
     // Pengaturan untuk cURL
     $curl = curl_init();

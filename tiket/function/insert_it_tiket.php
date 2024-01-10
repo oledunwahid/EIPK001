@@ -3,9 +3,8 @@ require_once("../koneksi.php");
 
 if (isset($_POST["add-tiket-admin"])) {
     $currentDateTime = new DateTime('now', new DateTimeZone('Asia/Jakarta'));
-    $timestamp = $currentDateTime->format('YmdHis');
-    $counter = 1;
-    $ticketNumber = "IT" . $timestamp . str_pad($counter, 1, '0', STR_PAD_LEFT);
+    $timestamp = $currentDateTime->format('ymdHis');
+    $ticketNumber = "IT" . $timestamp . str_pad( 1, '0', STR_PAD_LEFT);
 
     $id_tiket = $ticketNumber;
     $start_date = $_POST["kodok"];
