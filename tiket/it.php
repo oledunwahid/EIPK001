@@ -71,8 +71,12 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
                             <div>
-                                <?php if (isset($row7['admin']) && ($row7['admin'] == '1' || ($row7['it'] == '1'))) {
+                                <?php if (isset($row7['admin']) && ($row7['admin'] == '1')) {
                                     $sql = mysqli_query($koneksi, "SELECT id_tiket FROM ticketing ");
+                                    $totalRequest = mysqli_num_rows($sql);
+                                } elseif (isset($row7['it']) && ($row7['it'] == '1')) {
+                                    $lokasi = $row7['lokasi'];
+                                    $sql = mysqli_query($koneksi, "SELECT ticketing.id_tiket, user.lokasi FROM ticketing INNER JOIN user ON ticketing.id_nik_request = user.idnik WHERE user.lokasi IN ($lokasi) ");
                                     $totalRequest = mysqli_num_rows($sql);
                                 } else {
                                     $sql = mysqli_query($koneksi, "SELECT id_tiket FROM ticketing WHERE id_nik_request='$niklogin' ");
@@ -106,7 +110,7 @@
                                     $sql1 = mysqli_query($koneksi, "SELECT id_tiket FROM ticketing WHERE status_tiket = 'Pending' ");
                                     $PendingTiket = mysqli_num_rows($sql1);
                                 } elseif (isset($row7['it']) && ($row7['it'] == '1')) {
-                                    $sql1 = mysqli_query($koneksi, "SELECT ticketing.id_tiket, user.lokasi FROM ticketing INNER JOIN user ON ticketing.id_nik_request = user.idnik  WHERE status_tiket = 'Pending' AND user.lokasi = '$lokasilogin' ");
+                                    $sql1 = mysqli_query($koneksi, "SELECT ticketing.id_tiket, user.lokasi FROM ticketing INNER JOIN user ON ticketing.id_nik_request = user.idnik  WHERE status_tiket = 'Pending' AND user.lokasi IN ($lokasi) ");
                                     $PendingTiket = mysqli_num_rows($sql1);
                                 } else {
                                     $sql1 = mysqli_query($koneksi, "SELECT id_tiket FROM ticketing WHERE status_tiket = 'Pending' AND id_nik_request='$niklogin' ");
@@ -137,7 +141,7 @@
                                     $sql2 = mysqli_query($koneksi, "SELECT id_tiket FROM ticketing WHERE status_tiket = 'Closed' ");
                                     $ClosedTiket = mysqli_num_rows($sql2);
                                 } elseif (isset($row7['it']) && ($row7['it'] == '1')) {
-                                    $sql2 = mysqli_query($koneksi, "SELECT ticketing.id_tiket, user.lokasi FROM ticketing INNER JOIN user ON ticketing.id_nik_request = user.idnik  WHERE status_tiket = 'Closed' AND user.lokasi = '$lokasilogin' ");
+                                    $sql2 = mysqli_query($koneksi, "SELECT ticketing.id_tiket, user.lokasi FROM ticketing INNER JOIN user ON ticketing.id_nik_request = user.idnik  WHERE status_tiket = 'Closed' AND user.lokasi IN ($lokasi) ");
                                     $ClosedTiket = mysqli_num_rows($sql2);
                                 } else {
                                     $sql2 = mysqli_query($koneksi, "SELECT id_tiket FROM ticketing WHERE status_tiket = 'Closed' AND id_nik_request='$niklogin' ");
@@ -167,7 +171,7 @@
                                     $sql3 = mysqli_query($koneksi, "SELECT id_tiket FROM ticketing WHERE status_tiket = 'Process' ");
                                     $ProcessTiket = mysqli_num_rows($sql3);
                                 } elseif (isset($row7['it']) && ($row7['it'] == '1')) {
-                                    $sql3 = mysqli_query($koneksi, "SELECT ticketing.id_tiket, user.lokasi FROM ticketing INNER JOIN user ON ticketing.id_nik_request = user.idnik  WHERE status_tiket = 'Process' AND user.lokasi = '$lokasilogin' ");
+                                    $sql3 = mysqli_query($koneksi, "SELECT ticketing.id_tiket, user.lokasi FROM ticketing INNER JOIN user ON ticketing.id_nik_request = user.idnik  WHERE status_tiket = 'Process' AND user.lokasi IN ($lokasi) ");
                                     $ProcessTiket = mysqli_num_rows($sql3);
                                 } else {
                                     $sql3 = mysqli_query($koneksi, "SELECT id_tiket FROM ticketing WHERE status_tiket = 'Process' AND id_nik_request='$niklogin' ");
@@ -202,7 +206,7 @@
                                 <h5>IT Support</h5>
                                 <h6>Submit your IT - related issues here. Our IT team will assist you as soon as possible.</h6>
                             </div>
-                            <?php if (isset($row7['it']) && ($row7['it'] == '1') || (isset($row7['it']) && ($row7['admin'] == '1'))) : ?>
+                            <?php if (isset($row7['it']) && ($row7['it'] == '1')) : ?>
                                 <a href="index.php?page=AddSupport" class="btn btn-danger add-btn">
                                     <i class="ri-add-line align-bottom me-1"></i> Create Tickets
                                 </a>
@@ -244,226 +248,62 @@
 
                                             <tbody>
                                                 <?php
-                                                if (isset($_POST["filter"])) {
-                                                    $sql7 = mysqli_query($koneksi, "SELECT * FROM access_level WHERE idnik = $niklogin ");
-                                                    $row7 = mysqli_fetch_assoc($sql7); ?>
+                                                $sql7 = mysqli_query($koneksi, "SELECT * FROM access_level WHERE idnik =$niklogin ");
+                                                $row7 = mysqli_fetch_assoc($sql7);
+                                                ?>
 
-                                                    <?php if (isset($row7['admin']) && ($row7['admin'] == '1')) {
-                                                        $sql4 = mysqli_query($koneksi, "SELECT
+                                                <?php if (isset($row7['admin']) && ($row7['admin'] == '1')) {
+                                                    $sql4 = mysqli_query($koneksi, "SELECT
                                                     ticketing.*, user.lokasi,
                                                     user1.nama AS nama_request,
                                                     user2.nama AS nama_pic 
-                                                    FROM ticketing
+                                                    FROM
+                                                    ticketing
                                                     LEFT JOIN user AS user1 ON ticketing.id_nik_request = user1.idnik
                                                     LEFT JOIN user AS user2 ON ticketing.nik_pic = user2.idnik
                                                     INNER JOIN user ON ticketing.id_nik_request = user.idnik ");
-                                                        while ($row = mysqli_fetch_assoc($sql4)) { ?>
-                                                            <tr>
-                                                                <td>
-                                                                    <a href="index.php?page=EditTicketIT&id=<?= $row['id_tiket']; ?>"><?= $row['id_tiket'] ?>
-                                                                    </a>
-                                                                </td>
-                                                                <td><?= $row['start_date'] ?></td>
-                                                                <td><?= $row['proses_date'] ?></td>
-                                                                <td><?= $row['end_date'] ?></td>
-                                                                <td><?php $waktuawal = new DateTime($row['proses_date']);
-                                                                    $waktuakhir = new DateTime($row['end_date']);
-                                                                    $durasi = $waktuawal->diff($waktuakhir);
-                                                                    $jam = $durasi->h;
-                                                                    $menit = $durasi->i;
-                                                                    $formatted_menit = sprintf("%02d", $menit);
-                                                                    echo "$jam jam $formatted_menit menit";
-                                                                    ?></td>
-                                                                <td><?= $row['lokasi'] ?></td>
-                                                                <td><?= $row['nama_request'] ?></td>
-                                                                <td><?= $row['whatsapp'] ?></td>
-                                                                <td><?= $row['disc_keluhan'] ?></td>
-                                                                <td><?= $row['status_tiket'] ?></td>
-                                                                <td><?= $row['kategori_tiket'] ?></td>
-                                                                <td><?= $row['nama_pic'] ?></td>
-                                                                <td><?= $row['justification'] ?></td>
-                                                                <td><?= $row['action_note'] ?></td>
-                                                                <td>
-                                                                    <div class="dropdown d-inline-block">
-                                                                        <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                            <i class="ri-more-fill align-middle"></i>
-                                                                        </button>
-                                                                        <ul class="dropdown-menu dropdown-menu-end">
-                                                                            <li>
-                                                                                <a href="index.php?page=EditTicketIT&id=<?= $row['id_tiket']; ?>" class="dropdown-item"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                        <?php } ?>
-                                                        <?php
-                                                    } elseif (isset($row7['it']) && ($row7['it'] == '1') || ($row7['admin'] == '1')) {
-                                                        $sql4 = mysqli_query($koneksi, "SELECT
-                                                    ticketing.*, user.lokasi,
-                                                    user1.nama AS nama_request,
-                                                    user2.nama AS nama_pic 
-                                                    FROM
-                                                    ticketing
-                                                    LEFT JOIN user AS user1 ON ticketing.id_nik_request = user1.idnik
-                                                    LEFT JOIN user AS user2 ON ticketing.nik_pic = user2.idnik
-                                                    INNER JOIN user ON ticketing.id_nik_request = user.idnik 
-                                                    WHERE user.lokasi = '$lokasilogin' ");
-                                                        while ($row = mysqli_fetch_assoc($sql4)) {
-                                                        ?>
-                                                            <tr>
-                                                                <td>
-                                                                    <a href="index.php?page=EditTicketIT&id=<?= $row['id_tiket']; ?>"><?= $row['id_tiket'] ?>
-                                                                    </a>
-                                                                </td>
-                                                                <td><?= $row['start_date'] ?></td>
-                                                                <td><?= $row['proses_date'] ?></td>
-                                                                <td><?= $row['end_date'] ?></td>
-                                                                <td><?php $waktuawal = new DateTime($row['proses_date']);
-                                                                    $waktuakhir = new DateTime($row['end_date']);
-                                                                    $durasi = $waktuawal->diff($waktuakhir);
-                                                                    $jam = $durasi->h;
-                                                                    $menit = $durasi->i;
-                                                                    $formatted_menit = sprintf("%02d", $menit);
-                                                                    echo "$jam jam $formatted_menit menit";
-                                                                    ?></td>
-                                                                <td><?= $row['lokasi'] ?></td>
-                                                                <td><?= $row['nama_request'] ?></td>
-                                                                <td><?= $row['whatsapp'] ?></td>
-                                                                <td><?= $row['disc_keluhan'] ?></td>
-                                                                <td><?= $row['status_tiket'] ?></td>
-                                                                <td><?= $row['kategori_tiket'] ?></td>
-                                                                <td><?= $row['nama_pic'] ?></td>
-                                                                <td><?= $row['justification'] ?></td>
-                                                                <td><?= $row['action_note'] ?></td>
-                                                                <td>
-                                                                    <div class="dropdown d-inline-block">
-                                                                        <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                            <i class="ri-more-fill align-middle"></i>
-                                                                        </button>
-                                                                        <ul class="dropdown-menu dropdown-menu-end">
-                                                                            <li>
-                                                                                <a href="index.php?page=EditTicketIT&id=<?= $row['id_tiket']; ?>" class="dropdown-item"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                        <?php }
-                                                    } else {
-                                                        $sql4 = mysqli_query($koneksi, "SELECT
-                                                    ticketing.*, user.lokasi,
-                                                    user1.nama AS nama_request,
-                                                    user2.nama AS nama_pic 
-                                                    FROM
-                                                    ticketing
-                                                    LEFT JOIN user AS user1 ON ticketing.id_nik_request = user1.idnik
-                                                    LEFT JOIN user AS user2 ON ticketing.nik_pic = user2.idnik
-                                                    INNER JOIN user ON ticketing.id_nik_request = user.idnik
-                                                    WHERE user.idnik = $niklogin  ");
-
-                                                        while ($row = mysqli_fetch_assoc($sql4)) {
-
-                                                        ?>
-                                                            <tr>
-
-                                                                <td>
-                                                                    <a href="index.php?page=ViewTicketIT&id=<?= $row['id_tiket']; ?>"><?= $row['id_tiket'] ?>
-                                                                    </a>
-                                                                </td>
-                                                                <td><?= $row['start_date'] ?></td>
-                                                                <td><?= $row['proses_date'] ?></td>
-                                                                <td><?= $row['end_date'] ?></td>
-                                                                <td><?php $waktuawal = new DateTime($row['proses_date']);
-                                                                    $waktuakhir = new DateTime($row['end_date']);
-                                                                    $durasi = $waktuawal->diff($waktuakhir);
-                                                                    $jam = $durasi->h;
-                                                                    $menit = $durasi->i;
-                                                                    $formatted_menit = sprintf("%02d", $menit);
-                                                                    echo "$jam jam $formatted_menit menit";
-                                                                    ?></td>
-                                                                <td><?= $row['lokasi'] ?></td>
-                                                                <td><?= $row['nama_request'] ?></td>
-                                                                <td><?= $row['whatsapp'] ?></td>
-                                                                <td><?= $row['disc_keluhan'] ?></td>
-                                                                <td><?= $row['status_tiket'] ?></td>
-                                                                <td><?= $row['kategori_tiket'] ?></td>
-                                                                <td><?= $row['nama_pic'] ?></td>
-                                                                <td><?= $row['justification'] ?></td>
-                                                                <td><?= $row['action_note'] ?></td>
-                                                                <td>
-                                                                    <div class="dropdown d-inline-block">
-                                                                        <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                            <i class="ri-more-fill align-middle"></i>
-                                                                        </button>
-                                                                        <ul class="dropdown-menu dropdown-menu-end">
-                                                                            <li>
-                                                                                <a href="index.php?page=ViewTicketIT&id=<?= $row['id_tiket']; ?>" class="dropdown-item"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
+                                                    while ($row = mysqli_fetch_assoc($sql4)) { ?>
+                                                        <tr>
+                                                            <td>
+                                                                <a href="index.php?page=ViewTicketIT&id=<?= $row['id_tiket']; ?>"><?= $row['id_tiket'] ?>
+                                                                </a>
+                                                            </td>
+                                                            <td><?= $row['start_date'] ?></td>
+                                                            <td><?= $row['proses_date'] ?></td>
+                                                            <td><?= $row['end_date'] ?></td>
+                                                            <td><?php $waktuawal = new DateTime($row['proses_date']);
+                                                                $waktuakhir = new DateTime($row['end_date']);
+                                                                $durasi = $waktuawal->diff($waktuakhir);
+                                                                $jam = $durasi->h;
+                                                                $menit = $durasi->i;
+                                                                $formatted_menit = sprintf("%02d", $menit);
+                                                                echo "$jam jam $formatted_menit menit";
+                                                                ?></td>
+                                                            <td><?= $row['lokasi'] ?></td>
+                                                            <td><?= $row['nama_request'] ?></td>
+                                                            <td><?= $row['whatsapp'] ?></td>
+                                                            <td><?= $row['disc_keluhan'] ?></td>
+                                                            <td><?= $row['status_tiket'] ?></td>
+                                                            <td><?= $row['kategori_tiket'] ?></td>
+                                                            <td><?= $row['nama_pic'] ?></td>
+                                                            <td><?= $row['justification'] ?></td>
+                                                            <td><?= $row['action_note'] ?></td>
+                                                            <td>
+                                                                <div class="dropdown d-inline-block">
+                                                                    <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                        <i class="ri-more-fill align-middle"></i>
+                                                                    </button>
+                                                                    <ul class="dropdown-menu dropdown-menu-end">
+                                                                        <li>
+                                                                            <a href="index.php?page=ViewTicketIT&id=<?= $row['id_tiket']; ?>" class="dropdown-item"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i>View</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
                                                     <?php }
-                                                    }
-                                                } else {
-                                                    $sql7 = mysqli_query($koneksi, "SELECT * FROM access_level WHERE idnik =$niklogin ");
-                                                    $row7 = mysqli_fetch_assoc($sql7);
-
-                                                    ?>
-
-                                                    <?php if (isset($row7['admin']) && ($row7['admin'] == '1')) {
-                                                        $sql4 = mysqli_query($koneksi, "SELECT
-                                                    ticketing.*, user.lokasi,
-                                                    user1.nama AS nama_request,
-                                                    user2.nama AS nama_pic 
-                                                    FROM
-                                                    ticketing
-                                                    LEFT JOIN user AS user1 ON ticketing.id_nik_request = user1.idnik
-                                                    LEFT JOIN user AS user2 ON ticketing.nik_pic = user2.idnik
-                                                    INNER JOIN user ON ticketing.id_nik_request = user.idnik ");
-                                                        while ($row = mysqli_fetch_assoc($sql4)) { ?>
-                                                            <tr>
-                                                                <td>
-                                                                    <a href="index.php?page=EditTicketIT&id=<?= $row['id_tiket']; ?>"><?= $row['id_tiket'] ?>
-                                                                    </a>
-                                                                </td>
-                                                                <td><?= $row['start_date'] ?></td>
-                                                                <td><?= $row['proses_date'] ?></td>
-                                                                <td><?= $row['end_date'] ?></td>
-                                                                <td><?php $waktuawal = new DateTime($row['proses_date']);
-                                                                    $waktuakhir = new DateTime($row['end_date']);
-                                                                    $durasi = $waktuawal->diff($waktuakhir);
-                                                                    $jam = $durasi->h;
-                                                                    $menit = $durasi->i;
-                                                                    $formatted_menit = sprintf("%02d", $menit);
-                                                                    echo "$jam jam $formatted_menit menit";
-                                                                    ?></td>
-                                                                <td><?= $row['lokasi'] ?></td>
-                                                                <td><?= $row['nama_request'] ?></td>
-                                                                <td><?= $row['whatsapp'] ?></td>
-                                                                <td><?= $row['disc_keluhan'] ?></td>
-                                                                <td><?= $row['status_tiket'] ?></td>
-                                                                <td><?= $row['kategori_tiket'] ?></td>
-                                                                <td><?= $row['nama_pic'] ?></td>
-                                                                <td><?= $row['justification'] ?></td>
-                                                                <td><?= $row['action_note'] ?></td>
-                                                                <td>
-                                                                    <div class="dropdown d-inline-block">
-                                                                        <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                            <i class="ri-more-fill align-middle"></i>
-                                                                        </button>
-                                                                        <ul class="dropdown-menu dropdown-menu-end">
-                                                                            <li>
-                                                                                <a href="index.php?page=EditTicketIT&id=<?= $row['id_tiket']; ?>" class="dropdown-item"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                        <?php }
-                                                    } elseif (isset($row7['it']) && ($row7['it'] == '1') || (isset($row7['admin']) && ($row7['admin'] == '1'))) {
-                                                        $sql4 = mysqli_query($koneksi, "SELECT
+                                                } elseif (isset($row7['it']) && ($row7['it'] == '1')) {
+                                                    $sql4 = mysqli_query($koneksi, "SELECT
                                                     ticketing.*, user.lokasi,
                                                     user1.nama AS nama_request,
                                                     user2.nama AS nama_pic 
@@ -472,53 +312,53 @@
                                                     LEFT JOIN user AS user1 ON ticketing.id_nik_request = user1.idnik
                                                     LEFT JOIN user AS user2 ON ticketing.nik_pic = user2.idnik
                                                     INNER JOIN user ON ticketing.id_nik_request = user.idnik 
-                                                    WHERE user.lokasi = '$lokasilogin' 
+                                                    WHERE user.lokasi IN ($lokasi)
                                                     ");
 
-                                                        while ($row = mysqli_fetch_assoc($sql4)) {
+                                                    while ($row = mysqli_fetch_assoc($sql4)) {
 
-                                                        ?>
-                                                            <tr>
-                                                                <td>
-                                                                    <a href="index.php?page=EditTicketIT&id=<?= $row['id_tiket']; ?>"><?= $row['id_tiket'] ?>
-                                                                    </a>
-                                                                </td>
-                                                                <td><?= $row['start_date'] ?></td>
-                                                                <td><?= $row['proses_date'] ?></td>
-                                                                <td><?= $row['end_date'] ?></td>
-                                                                <td><?php $waktuawal = new DateTime($row['proses_date']);
-                                                                    $waktuakhir = new DateTime($row['end_date']);
-                                                                    $durasi = $waktuawal->diff($waktuakhir);
-                                                                    $jam = $durasi->h;
-                                                                    $menit = $durasi->i;
-                                                                    $formatted_menit = sprintf("%02d", $menit);
-                                                                    echo "$jam jam $formatted_menit menit";
-                                                                    ?></td>
-                                                                <td><?= $row['lokasi'] ?></td>
-                                                                <td><?= $row['nama_request'] ?></td>
-                                                                <td><?= $row['whatsapp'] ?></td>
-                                                                <td><?= $row['disc_keluhan'] ?></td>
-                                                                <td><?= $row['status_tiket'] ?></td>
-                                                                <td><?= $row['kategori_tiket'] ?></td>
-                                                                <td><?= $row['nama_pic'] ?></td>
-                                                                <td><?= $row['justification'] ?></td>
-                                                                <td><?= $row['action_note'] ?></td>
-                                                                <td>
-                                                                    <div class="dropdown d-inline-block">
-                                                                        <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                            <i class="ri-more-fill align-middle"></i>
-                                                                        </button>
-                                                                        <ul class="dropdown-menu dropdown-menu-end">
-                                                                            <li>
-                                                                                <a href="index.php?page=EditTicketIT&id=<?= $row['id_tiket']; ?>" class="dropdown-item"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                        <?php }
-                                                    } else {
-                                                        $sql4 = mysqli_query($koneksi, "SELECT
+                                                    ?>
+                                                        <tr>
+                                                            <td>
+                                                                <a href="index.php?page=EditTicketIT&id=<?= $row['id_tiket']; ?>"><?= $row['id_tiket'] ?>
+                                                                </a>
+                                                            </td>
+                                                            <td><?= $row['start_date'] ?></td>
+                                                            <td><?= $row['proses_date'] ?></td>
+                                                            <td><?= $row['end_date'] ?></td>
+                                                            <td><?php $waktuawal = new DateTime($row['proses_date']);
+                                                                $waktuakhir = new DateTime($row['end_date']);
+                                                                $durasi = $waktuawal->diff($waktuakhir);
+                                                                $jam = $durasi->h;
+                                                                $menit = $durasi->i;
+                                                                $formatted_menit = sprintf("%02d", $menit);
+                                                                echo "$jam jam $formatted_menit menit";
+                                                                ?></td>
+                                                            <td><?= $row['lokasi'] ?></td>
+                                                            <td><?= $row['nama_request'] ?></td>
+                                                            <td><?= $row['whatsapp'] ?></td>
+                                                            <td><?= $row['disc_keluhan'] ?></td>
+                                                            <td><?= $row['status_tiket'] ?></td>
+                                                            <td><?= $row['kategori_tiket'] ?></td>
+                                                            <td><?= $row['nama_pic'] ?></td>
+                                                            <td><?= $row['justification'] ?></td>
+                                                            <td><?= $row['action_note'] ?></td>
+                                                            <td>
+                                                                <div class="dropdown d-inline-block">
+                                                                    <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                        <i class="ri-more-fill align-middle"></i>
+                                                                    </button>
+                                                                    <ul class="dropdown-menu dropdown-menu-end">
+                                                                        <li>
+                                                                            <a href="index.php?page=EditTicketIT&id=<?= $row['id_tiket']; ?>" class="dropdown-item"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    <?php }
+                                                } else {
+                                                    $sql4 = mysqli_query($koneksi, "SELECT
                                                     ticketing.*, user.lokasi,
                                                     user1.nama AS nama_request,
                                                     user2.nama AS nama_pic 
@@ -528,49 +368,49 @@
                                                     LEFT JOIN user AS user2 ON ticketing.nik_pic = user2.idnik
                                                     INNER JOIN user ON ticketing.id_nik_request = user.idnik 
                                                     WHERE user.idnik = $niklogin  ");
-                                                        while ($row = mysqli_fetch_assoc($sql4)) {
-                                                        ?>
-                                                            <tr>
-                                                                <td>
-                                                                    <a href="index.php?page=ViewTicketIT&id=<?= $row['id_tiket']; ?>"><?= $row['id_tiket'] ?>
-                                                                    </a>
-                                                                </td>
-                                                                <td><?= $row['start_date'] ?></td>
-                                                                <td><?= $row['proses_date'] ?></td>
-                                                                <td><?= $row['end_date'] ?></td>
-                                                                <td><?php $waktuawal = new DateTime($row['proses_date']);
-                                                                    $waktuakhir = new DateTime($row['end_date']);
-                                                                    $durasi = $waktuawal->diff($waktuakhir);
-                                                                    $jam = $durasi->h;
-                                                                    $menit = $durasi->i;
-                                                                    $formatted_menit = sprintf("%02d", $menit);
-                                                                    echo "$jam jam $formatted_menit menit";
-                                                                    ?></td>
-                                                                <td><?= $row['lokasi'] ?></td>
-                                                                <td><?= $row['nama_request'] ?></td>
-                                                                <td><?= $row['whatsapp'] ?></td>
-                                                                <td><?= $row['disc_keluhan'] ?></td>
-                                                                <td><?= $row['status_tiket'] ?></td>
-                                                                <td><?= $row['kategori_tiket'] ?></td>
-                                                                <td><?= $row['nama_pic'] ?></td>
-                                                                <td><?= $row['justification'] ?></td>
-                                                                <td><?= $row['action_note'] ?></td>
-                                                                <td>
-                                                                    <div class="dropdown d-inline-block">
-                                                                        <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                            <i class="ri-more-fill align-middle"></i>
-                                                                        </button>
-                                                                        <ul class="dropdown-menu dropdown-menu-end">
-                                                                            <li>
-                                                                                <a href="index.php?page=ViewTicketIT&id=<?= $row['id_tiket']; ?>" class="dropdown-item"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
+                                                    while ($row = mysqli_fetch_assoc($sql4)) {
+                                                    ?>
+                                                        <tr>
+                                                            <td>
+                                                                <a href="index.php?page=ViewTicketIT&id=<?= $row['id_tiket']; ?>"><?= $row['id_tiket'] ?>
+                                                                </a>
+                                                            </td>
+                                                            <td><?= $row['start_date'] ?></td>
+                                                            <td><?= $row['proses_date'] ?></td>
+                                                            <td><?= $row['end_date'] ?></td>
+                                                            <td><?php $waktuawal = new DateTime($row['proses_date']);
+                                                                $waktuakhir = new DateTime($row['end_date']);
+                                                                $durasi = $waktuawal->diff($waktuakhir);
+                                                                $jam = $durasi->h;
+                                                                $menit = $durasi->i;
+                                                                $formatted_menit = sprintf("%02d", $menit);
+                                                                echo "$jam jam $formatted_menit menit";
+                                                                ?></td>
+                                                            <td><?= $row['lokasi'] ?></td>
+                                                            <td><?= $row['nama_request'] ?></td>
+                                                            <td><?= $row['whatsapp'] ?></td>
+                                                            <td><?= $row['disc_keluhan'] ?></td>
+                                                            <td><?= $row['status_tiket'] ?></td>
+                                                            <td><?= $row['kategori_tiket'] ?></td>
+                                                            <td><?= $row['nama_pic'] ?></td>
+                                                            <td><?= $row['justification'] ?></td>
+                                                            <td><?= $row['action_note'] ?></td>
+                                                            <td>
+                                                                <div class="dropdown d-inline-block">
+                                                                    <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                        <i class="ri-more-fill align-middle"></i>
+                                                                    </button>
+                                                                    <ul class="dropdown-menu dropdown-menu-end">
+                                                                        <li>
+                                                                            <a href="index.php?page=ViewTicketIT&id=<?= $row['id_tiket']; ?>" class="dropdown-item"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
                                                 <?php }
-                                                    }
-                                                } ?>
+                                                }
+                                                ?>
 
                                             </tbody>
                                         </table>
@@ -618,7 +458,7 @@
 
                                         <div>
                                             <label for="wa" class="form-label">No.Whatsapp</label>
-                                            <input type="number" class="form-control" placeholder="Insert your active number +(62) " name="wa" required/>
+                                            <input type="number" class="form-control" placeholder="Insert your active number +(62) " name="wa" required />
                                         </div>
 
                                         <!-- Select user -->
@@ -689,7 +529,9 @@
                 scrollX: true,
                 scrollY: 400,
                 scrollCollapse: !0,
-                order: [[1,'desc']],
+                order: [
+                    [1, 'desc']
+                ],
 
                 lengthMenu: [
                     [5, 10, 25, 50, 100, -1],

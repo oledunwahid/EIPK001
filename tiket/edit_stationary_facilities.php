@@ -91,12 +91,16 @@ $id_tiket1 = $_GET['id'];
                                                 </div>
                                                 <div>
                                                     <select class="form-select" name="nik_pic" data-choices id="choices-status-input">
-                                                        <option value="">No Set</option>
-                                                        <?php foreach ($usersGA as $userGA) : ?>
-                                                            <option value="<?= $userGA->idnik ?>" <?= $ticket->nik_pic == $userGA->idnik ? 'selected' : '' ?>>
-                                                                <?= $userGA->nama ?>
-                                                            </option>
-                                                        <?php endforeach; ?>
+                                                        <option value="">Not Set</option>
+                                                        <?php
+                                                        $sql5 = mysqli_query($koneksi, "SELECT access_level.*, nama FROM access_level 
+                                                            INNER JOIN user ON access_level.idnik = user.idnik WHERE access_level.ga4 ='1'  ");
+                                                        while ($row5 = mysqli_fetch_assoc($sql5)) {
+                                                        ?>
+                                                            <option value="<?= $row5['idnik'] ?>"><?= $row5['nama'] ?></option>
+                                                        <?php
+                                                        }
+                                                        ?>
                                                     </select>
                                                 </div>
                                                 <div>

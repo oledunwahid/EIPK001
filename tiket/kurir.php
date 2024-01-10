@@ -210,9 +210,9 @@
                                                         user1.nama AS nama_request,
                                                         user2.nama AS nama_kurir 
                                                         FROM kurir
-                                                        LEFT JOIN USER AS user1 ON kurir.id_nik_request = user1.idnik
-                                                        LEFT JOIN USER AS user2 ON kurir.id_nik_kurir = user2.idnik
-                                                        INNER JOIN USER ON kurir.id_nik_request = user.idnik ");
+                                                        LEFT JOIN user AS user1 ON kurir.id_nik_request = user1.idnik
+                                                        LEFT JOIN user AS user2 ON kurir.id_nik_kurir = user2.idnik
+                                                        INNER JOIN user ON kurir.id_nik_request = user.idnik ");
                                                     while ($row6 = mysqli_fetch_assoc($sql7)) {
                                                 ?>
                                                         <tr>
@@ -259,9 +259,9 @@
                                                         user1.nama AS nama_request,
                                                         user2.nama AS nama_kurir 
                                                         FROM kurir
-                                                        LEFT JOIN USER AS user1 ON kurir.id_nik_request = user1.idnik
-                                                        LEFT JOIN USER AS user2 ON kurir.id_nik_kurir = user2.idnik
-                                                        INNER JOIN USER ON kurir.id_nik_request = user.idnik
+                                                        LEFT JOIN user AS user1 ON kurir.id_nik_request = user1.idnik
+                                                        LEFT JOIN user AS user2 ON kurir.id_nik_kurir = user2.idnik
+                                                        INNER JOIN user ON kurir.id_nik_request = user.idnik
                                                         WHERE kurir.id_nik_request = '$niklogin'");
 
                                                     while ($row6 = mysqli_fetch_assoc($sql7)) {
@@ -318,9 +318,9 @@
                                                     user1.nama AS nama_request,
                                                     user2.nama AS nama_kurir 
                                                     FROM kurir
-                                                    LEFT JOIN USER AS user1 ON kurir.id_nik_request = user1.idnik
-                                                    LEFT JOIN USER AS user2 ON kurir.id_nik_kurir = user2.idnik
-                                                    INNER JOIN USER ON kurir.id_nik_request = user.idnik");
+                                                    LEFT JOIN user AS user1 ON kurir.id_nik_request = user1.idnik
+                                                    LEFT JOIN user AS user2 ON kurir.id_nik_kurir = user2.idnik
+                                                    INNER JOIN user ON kurir.id_nik_request = user.idnik");
 
                                                     while ($row6 = mysqli_fetch_assoc($sql7)) {
                                                 ?>
@@ -368,9 +368,9 @@
                                                     user1.nama AS nama_request,
                                                     user2.nama AS nama_kurir 
                                                     FROM kurir
-                                                    LEFT JOIN USER AS user1 ON kurir.id_nik_request = user1.idnik
-                                                    LEFT JOIN USER AS user2 ON kurir.id_nik_kurir = user2.idnik
-                                                    INNER JOIN USER ON kurir.id_nik_request = user.idnik
+                                                    LEFT JOIN user AS user1 ON kurir.id_nik_request = user1.idnik
+                                                    LEFT JOIN user AS user2 ON kurir.id_nik_kurir = user2.idnik
+                                                    INNER JOIN user ON kurir.id_nik_request = user.idnik
                                                     WHERE kurir.id_nik_request = '$niklogin'");
 
                                                     while ($row6 = mysqli_fetch_assoc($sql7)) {
@@ -541,7 +541,7 @@
                                             <option value="">All PIC Internal Courier</option>
                                             <?php
                                             $sql5 = mysqli_query($koneksi, "SELECT access_level.*, nama FROM access_level 
-                                        INNER JOIN USER ON access_level.idnik = user.idnik WHERE access_level.internal_kurir ='1'  ");
+                                        INNER JOIN user ON access_level.idnik = user.idnik WHERE access_level.internal_kurir ='1'  ");
                                             while ($row5 = mysqli_fetch_assoc($sql5)) {
                                             ?>
                                                 <option value="<?= $row5['idnik'] ?>"><?= $row5['nama'] ?></option>

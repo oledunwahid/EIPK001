@@ -4,7 +4,7 @@ require_once("../koneksi.php");
 if (isset($_POST["add-tiket-admin"])) {
     $currentDateTime = new DateTime('now', new DateTimeZone('Asia/Jakarta'));
     $timestamp = $currentDateTime->format('ymdHis');
-    $ticketNumber = "IT" . $timestamp . str_pad( 1, '0', STR_PAD_LEFT);
+    $ticketNumber = "IT" . $timestamp;
 
     $id_tiket = $ticketNumber;
     $start_date = $_POST["kodok"];
@@ -16,8 +16,8 @@ if (isset($_POST["add-tiket-admin"])) {
     $status_tiket = $_POST['status_tiket'];
     $nik_pic = $_POST["nik_pic"];
     $kategori_tiket = $_POST["kategori_tiket"];
-    $justification = $_POST["justification"];
-    $action_note = $_POST["action_note"];
+    $justification = addslashes($_POST["justification"]);
+    $action_note = addslashes($_POST["action_note"]);
 
 
     $ekstensi_diperbolehkan = array('pdf', 'xlsx', 'xls', 'doc', 'docx', 'jpg', 'png', 'jpeg');
@@ -37,10 +37,11 @@ if (isset($_POST["add-tiket-admin"])) {
         ('$id_tiket', '$id_nik_request', '$whatsapp', '$start_date', '$proses_date', '$end_date','$description', '', '', '$kategori_tiket', '$status_tiket', '$nik_pic', '$justification', '$action_note')";
         $kondisi = mysqli_query($koneksi, $query);
 
-        $namaEmployee = 'Bapak/Ibu'; // Ganti dengan nama yang sesuai
-        $link = 'https://localhost/index.php?page=ViewTicketIT&id=' . $id_tiket; // Ganti dengan URL yang valid
+        $namaEmployee = 'Bapak/Ibu' . $id_nik_request; // Ganti dengan nama yang sesuai
+        $link = 'https://eip.maagroup.co.id/tiket/index.php?page=ViewTicketIT&id=' . $id_tiket; // Ganti dengan URL yang valid
 
-        $message = "Halo " . $namaEmployee . "!\n\nTicketing dengan ID #" . $id_tiket . " Anda sudah berhasil dibuat dengan status 'Process'\n\nTerima kasih telah menggunakan layanan kami. Jangan lupa untuk selalu cek Employee Information Portal (EIP) untuk informasi selanjutnya. Jika Anda memiliki pertanyaan lebih lanjut atau membutuhkan bantuan, jangan ragu untuk menghubungi tim IT kami.\n\nTerima kasih!\n\nInfo lebih lanjut tentang tiket ini: " . $link;
+        $message = "Halo " . $namaEmployee . "!\n\nTicketing dengan ID #" . $id_tiket . "Anda sudah berhasil dibuat dengan status 'Process'\n\nTerima kasih telah menggunakan layanan kami. Jangan lupa untuk selalu cek Employee Information Portal (EIP) untuk informasi selanjutnya. Jika Anda memiliki pertanyaan lebih lanjut atau membutuhkan bantuan, jangan ragu untuk menghubungi tim IT kami.\n\nTerima kasih!\n\nInfo lebih lanjut tentang tiket ini:" 
+        . $link;
 
         // Pengaturan untuk cURL
         $curl = curl_init();
@@ -63,10 +64,8 @@ if (isset($_POST["add-tiket-admin"])) {
                 'Authorization: SuQ7o9ufuZ89LqrLjN9N' // Ganti TOKEN dengan token Anda
             ),
         ));
-
         // Melakukan request pengiriman pesan WhatsApp
         $response = curl_exec($curl);
-
         // Menutup koneksi cURL
         curl_close($curl);
 
@@ -94,7 +93,7 @@ if (isset($_POST["add-tiket-admin"])) {
                 $kondisi = mysqli_query($koneksi, $query);
 
                 $namaEmployee = 'Bapak/Ibu'; // Ganti dengan nama yang sesuai
-                $link = 'https://localhost/index.php?page=ViewTicketIT&id=' . $id_tiket; // Ganti dengan URL yang valid
+                $link = 'https://eip.maagroup.co.id/tiket/index.php?page=ViewTicketIT&id=' . $id_tiket; // Ganti dengan URL yang valid
 
                 $message = "Halo " . $namaEmployee . "!\n\nTicketing dengan ID #" . $id_tiket . " Anda sudah berhasil dibuat dengan status 'Process'\n\nTerima kasih telah menggunakan layanan kami. Jangan lupa untuk selalu cek Employee Information Portal (EIP) untuk informasi selanjutnya. Jika Anda memiliki pertanyaan lebih lanjut atau membutuhkan bantuan, jangan ragu untuk menghubungi tim IT kami.\n\nTerima kasih!\n\nInfo lebih lanjut tentang tiket ini: " . $link;
 
@@ -156,9 +155,8 @@ if (isset($_POST["add-tiket-admin"])) {
     }
 } elseif (isset($_POST["add-tiket-user"])) {
     $currentDateTime = new DateTime('now', new DateTimeZone('Asia/Jakarta'));
-    $timestamp = $currentDateTime->format('YmdHis');
-    $counter = 1;
-    $ticketNumber = "IT" . $timestamp . str_pad($counter, 1, '0', STR_PAD_LEFT);
+    $timestamp = $currentDateTime->format('ymdHis');
+    $ticketNumber = "IT" . $timestamp;
 
     $id_tiket = $ticketNumber;
     $start_date = $_POST["kodok"];
@@ -185,7 +183,7 @@ if (isset($_POST["add-tiket-admin"])) {
         $kondisi = mysqli_query($koneksi, $query);
 
         $namaEmployee = 'Bapak/Ibu'; // Ganti dengan nama yang sesuai
-        $link = 'https://localhost/index.php?page=ViewTicketIT&id=' . $id_tiket; // Ganti dengan URL yang valid
+        $link = 'https://eip.maagroup.co.id/tiket/index.php?page=ViewTicketIT&id=' . $id_tiket; // Ganti dengan URL yang valid
 
         $message = "Halo " . $namaEmployee . "!\n\nTicketing dengan ID #" . $id_tiket . " Anda sudah berhasil dibuat dengan status 'Process'\n\nTerima kasih telah menggunakan layanan kami. Jangan lupa untuk selalu cek Employee Information Portal (EIP) untuk informasi selanjutnya. Jika Anda memiliki pertanyaan lebih lanjut atau membutuhkan bantuan, jangan ragu untuk menghubungi tim IT kami.\n\nTerima kasih!\n\nInfo lebih lanjut tentang tiket ini: " . $link;
 
@@ -241,7 +239,7 @@ if (isset($_POST["add-tiket-admin"])) {
                 $kondisi = mysqli_query($koneksi, $query);
 
                 $namaEmployee = 'Bapak/Ibu'; // Ganti dengan nama yang sesuai
-                $link = 'https://localhost/index.php?page=ViewTicketIT&id=' . $id_tiket; // Ganti dengan URL yang valid
+                $link = 'https://eip.maagroup.co.id/tiket/index.php?page=ViewTicketIT&id=' . $id_tiket; // Ganti dengan URL yang valid
 
                 $message = "Halo " . $namaEmployee . "!\n\nTicketing dengan ID #" . $id_tiket . " Anda sudah berhasil dibuat dengan status 'Process'\n\nTerima kasih telah menggunakan layanan kami. Jangan lupa untuk selalu cek Employee Information Portal (EIP) untuk informasi selanjutnya. Jika Anda memiliki pertanyaan lebih lanjut atau membutuhkan bantuan, jangan ragu untuk menghubungi tim IT kami.\n\nTerima kasih!\n\nInfo lebih lanjut tentang tiket ini: " . $link;
 

@@ -3,8 +3,8 @@ $sql = mysqli_query($koneksi, "SELECT ga_other_facilities.*,user.divisi,user.lok
 user2.nama AS nama_pic, login.username
 FROM
 ga_other_facilities
-LEFT JOIN USER AS user1 ON ga_other_facilities.nik_request = user1.idnik
-LEFT JOIN USER AS user2 ON ga_other_facilities.nik_pic = user2.idnik
+LEFT JOIN user AS user1 ON ga_other_facilities.nik_request = user1.idnik
+LEFT JOIN user AS user2 ON ga_other_facilities.nik_pic = user2.idnik
 INNER JOIN
 	user
 	ON 

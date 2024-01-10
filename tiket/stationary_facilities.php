@@ -199,9 +199,9 @@
                                                 user1.nama AS nik_request,
                                                 user2.nama AS nik_pic
                                                 FROM ga_stationary
-                                                LEFT JOIN USER AS user1 ON ga_stationary.nik_request = user1.idnik
-                                                LEFT JOIN USER AS user2 ON ga_stationary.nik_pic = user2.idnik
-                                                INNER JOIN USER ON ga_stationary.nik_request = user.idnik");
+                                                LEFT JOIN user AS user1 ON ga_stationary.nik_request = user1.idnik
+                                                LEFT JOIN user AS user2 ON ga_stationary.nik_pic = user2.idnik
+                                                INNER JOIN user ON ga_stationary.nik_request = user.idnik");
                                                 $rowNumber = 1;
                                                 while ($row6 = mysqli_fetch_assoc($sql6)) {
                                             ?>
@@ -235,9 +235,9 @@
                                             user1.nama AS nik_request,
                                             user2.nama AS nik_pic
                                             FROM ga_stationary
-                                            LEFT JOIN USER AS user1 ON ga_stationary.nik_request = user1.idnik
-                                            LEFT JOIN USER AS user2 ON ga_stationary.nik_pic = user2.idnik
-                                            INNER JOIN USER ON ga_stationary.nik_request = user.idnik
+                                            LEFT JOIN user AS user1 ON ga_stationary.nik_request = user1.idnik
+                                            LEFT JOIN user AS user2 ON ga_stationary.nik_pic = user2.idnik
+                                            INNER JOIN user ON ga_stationary.nik_request = user.idnik
                                             WHERE ga_stationary.nik_request = '$niklogin'");
                                                 $rowNumber = 1;
                                                 while ($row6 = mysqli_fetch_assoc($sql6)) {

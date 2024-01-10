@@ -6,11 +6,10 @@ if (isset($_POST["updateBuilding"])) {
     $timestamp = $currentDateTime->format('YmdHis');
 
     $id_ga_building = $_POST["id_ga_building"];
-    $end_date = $_POST['endDate'];
     $status = $_POST["statusBuilding"];
     $nik_pic = $_POST["nik_pic"];
-    $justification = $_POST["justification"];
-    $action_note = $_POST["action_note"];
+    $justification = addslashes($_POST["justification"]);
+    $action_note = addslashes($_POST["action_note"]);
 
     $queryupdate = mysqli_query($koneksi, "UPDATE ga_building SET 
                             status = '$status',  

@@ -3,8 +3,8 @@ $sql = mysqli_query($koneksi, "SELECT ticketing.*,user.divisi,user.lokasi,user1.
 user2.nama AS nama_pic, login.username
 FROM
 ticketing
-LEFT JOIN USER AS user1 ON ticketing.id_nik_request = user1.idnik
-LEFT JOIN USER AS user2 ON ticketing.nik_pic = user2.idnik
+LEFT JOIN user AS user1 ON ticketing.id_nik_request = user1.idnik
+LEFT JOIN user AS user2 ON ticketing.nik_pic = user2.idnik
 INNER JOIN
 	user
 	ON 
@@ -17,6 +17,10 @@ where id_tiket ='" . $_GET['id'] . "' ");
 $row = mysqli_fetch_assoc($sql);
 
 $id_tiket1 = $_GET['id'];
+
+$sql7 = mysqli_query($koneksi, "SELECT * FROM access_level WHERE idnik = $niklogin");
+$row7 = mysqli_fetch_assoc($sql7);
+$lokasi = $row7['lokasi'] ;
 
 ?>
 <div class="row">
@@ -38,7 +42,7 @@ $id_tiket1 = $_GET['id'];
                                     <!--end col-->
                                     <div class="col-md">
                                         <input type="text" hidden name="id_tiket" value="<?= $row['id_tiket'] ?>">
-
+                                        <input type="text" hidden name="wa" value="<?= $row['whatsapp'] ?>">
 
                                         <h4 class="fw-semibold" id="ticket-title">#<?= $row['id_tiket'] ?> - Request Ticketing</h4>
                                         <div class="hstack gap-3 flex-wrap">
@@ -64,7 +68,7 @@ $id_tiket1 = $_GET['id'];
 
                                             <div class="row-lg-4 col-md-6">
                                                 <div class="mb-6">
-                                                    <div class="me-2 form-label text-muted"><span>Status :</span></div>
+                                                    <div class="me-2 form-label text-muted"><span>Status:</span></div>
                                                     <div>
                                                         <select class="form-control" data-choices name="status_tiket">
                                                             <?php
@@ -102,7 +106,20 @@ $id_tiket1 = $_GET['id'];
                                                     <select class="form-control" data-choices name="nik_pic">
                                                         <option value="<?= $row['nik_pic'] ?>"><?= $row['nama_pic'] ?></option>
                                                         <?php
-                                                        $sql5 = mysqli_query($koneksi, "SELECT access_level.idnik, user.nama FROM access_level INNER JOIN USER ON access_level.idnik = user.idnik WHERE user.lokasi = '$lokasilogin' AND it = 1 ");
+
+                                                        $sql5 = mysqli_query($koneksi, "SELECT
+                                                            user.idnik, 
+                                                            user.nama, 
+                                                            access_level.lokasi
+                                                        FROM
+                                                            user
+                                                            INNER JOIN
+                                                            access_level
+                                                            ON 
+                                                                user.idnik = access_level.idnik
+                                                        WHERE
+                                                            user.lokasi IN ($lokasi) AND
+                                                            it = 1 ");
                                                         while ($row5 = mysqli_fetch_assoc($sql5)) {
                                                         ?>
                                                             <option value="<?= $row5['idnik'] ?>"><?= $row5['nama'] ?> </option>

@@ -3,8 +3,8 @@ $sql = mysqli_query($koneksi, "SELECT ga_building.*,user.divisi,user.lokasi,user
 user2.nama AS nama_pic, login.username
 FROM
 ga_building
-LEFT JOIN USER AS user1 ON ga_building.nik_request = user1.idnik
-LEFT JOIN USER AS user2 ON ga_building.nik_pic = user2.idnik
+LEFT JOIN user AS user1 ON ga_building.nik_request = user1.idnik
+LEFT JOIN user AS user2 ON ga_building.nik_pic = user2.idnik
 INNER JOIN
 	user
 	ON 
@@ -95,7 +95,7 @@ $id_ga_building = $_GET['id'];
                         </div>
                     </div>
                 </div>
-            
+
     </form>
     <!--end col-->
 
@@ -197,36 +197,6 @@ $id_ga_building = $_GET['id'];
             </div>
         </div>
     </div>
-
-
-
-    <!-- <div class="card">
-        <div class="card-header">
-            <h6 class="card-title fw-semibold mb-0">Other Files Attachment</h6>
-        </div>
-        <div class="card-body">
-            <div class="d-flex align-items-center border border-dashed p-2 rounded mt-2">
-                <?php if (!empty($lampiran2)) : ?>
-                    <div class="flex-shrink-0 avatar-sm">
-                        <a href="#" data-toggle="modal" data-target="#lampiran2Modal">
-                            <img src="../files/lampiran2/<?php echo $lampiran2; ?>" alt="Lampiran 2" />
-                        </a>
-                    </div>
-                <?php else : ?>
-                    <div class="alert alert-info mt-3 d-flex align-items-center">
-                        <i class="fa fa-info-circle me-2"></i>
-                        <div>
-                            No files uploaded.
-                        </div>
-                    </div>
-                <?php endif; ?>
-            </div>
-        </div>
-    </div> -->
-
-
-
-
 </div>
 
 

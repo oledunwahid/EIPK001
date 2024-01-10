@@ -1,3 +1,7 @@
+<?php
+$sql7 = mysqli_query($koneksi, "SELECT * FROM access_level WHERE idnik = $niklogin");
+$row7 = mysqli_fetch_assoc($sql7);
+$lokasi = $row7['lokasi']; ?>
 <div class="container-fluid">
     <form action="function/insert_it_tiket.php" method="POST" enctype="multipart/form-data">
         <div class="card">
@@ -6,7 +10,7 @@
                     <div class="col-lg-6">
                         <!-- Masukkan label untuk elemen input -->
                         <label for="id_nik_request" class="form-label" hidden>ID Nik Request</label>
-                        <input type="text" class="form-control" value="<?= $niklogin ?>" hidden id="id_nik_request" name="id_nik_request" />
+                        <input type="text" class="form-control" value="<?= $niklogin ?>" hidden id="nik_pic" name="nik_pic" />
 
                         <div class="mb-3 mt-4">
                             <label for="lampiran1" class="form-label">Material Request Form (if any)</label>
@@ -16,7 +20,7 @@
                         <!-- Tambahkan placeholder pada input tanggal -->
                         <div class="mb-3 mt-3">
                             <label class="form-label mb-0">Create date:</label>
-                            <input type="text" class="form-control" data-provider="flatpickr" data-date-format="Y-m-d" placeholder="YYYY-MM-DD" name="kodok" required>
+                            <input type="text" class="form-control" data-provider="flatpickr" data-date-format="Y-m-d" data-enable-time placeholder="YYYY-MM-DD" name="kodok" required>
                         </div>
 
                         <!-- Tambahkan placeholder pada input tanggal -->
@@ -58,7 +62,10 @@
                             <select class="form-control" data-choices name="id_nik_request">
                                 <option value="">All Users</option>
                                 <?php
-                                $sql5 = mysqli_query($koneksi, 'SELECT idnik, nama, lokasi FROM user');
+                                $sql5 = mysqli_query($koneksi, "SELECT user.idnik, user.nama, user.lokasi, login.status_login FROM user INNER JOIN
+                                login
+                                ON 
+                                    user.idnik = login.idnik WHERE lokasi IN ($lokasi) AND login.status_login = 'Aktif'");
                                 while ($row5 = mysqli_fetch_assoc($sql5)) {
                                 ?>
                                     <option value="<?= $row5['idnik'] ?>"><?= $row5['nama'] ?> | <?= $row5['lokasi'] ?></option>

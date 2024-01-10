@@ -131,7 +131,7 @@ $timestamp = $dateTime->format('Y-m-d H:i:s');
                                                     </div>
                                                     <div class="flex-grow-1 ms-3">
                                                         <h6 class="fs-14 mb-0 fw-semibold">
-                                                            <?= $row2['status_riwayat'] ?> -
+                                                            <?= isset($row2['status_riwayat']) ?> -
                                                             <span class="fw-semibold"><?= date('l, j F Y g:i A', strtotime($row2["timestamp"])) ?>
                                                             </span>
                                                         </h6>
