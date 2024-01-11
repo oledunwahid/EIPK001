@@ -40,11 +40,12 @@
             <div class="card" id="ticketsList">
                 <div class="card-header border-0">
                     <div class="d-flex align-items-center">
-                        <h5 class="card-title mb-0 flex-grow-1">List Delivery</h5>
+                        <h5 class="card-title mb-0 flex-grow-1">List Received Items/Package</h5>
+                        <?php if (isset($row7['admin']) && ($row7['admin'] == '1' || ($row7['ga4'] == '1'))) { ?>
                         <div class="flex-shrink-0">
-                            <button class="btn btn-danger add-btn" data-bs-toggle="modal" data-bs-target="#showModal"><i class="ri-add-line align-bottom me-1"></i> Create Delivery</button>
-
+                            <button class="btn btn-danger add-btn" data-bs-toggle="modal" data-bs-target="#showModal"><i class="ri-add-line align-bottom me-1"></i> Create Received</button>
                         </div>
+                        <?php }?>
                     </div>
                 </div>
 
@@ -410,6 +411,7 @@
             scrollX: true,
             scrollY: 400,
             scrollCollapse: !0,
+            order: [2, 'desc'],
 
             lengthMenu: [
                 [5, 10, 25, 50, 100, -1],

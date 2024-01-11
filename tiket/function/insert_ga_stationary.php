@@ -29,7 +29,7 @@ if (isset($_POST["add-stationary"])) {
     $kondisi = mysqli_query($koneksi, $query);
 
     $namaEmployee = 'Bapak/Ibu'; // Ganti dengan nama yang sesuai
-    $link = 'https://localhost/index.php?page=ViewTicketIT&id=' . $id_ga_stationary; // Ganti dengan URL yang valid
+    $link = 'https://eip.maagroup.co.id/tiket/index.php?page=ViewATK/Stationary&id=' . $id_ga_stationary; // Ganti dengan URL yang valid
 
     $message = "Halo " . $namaEmployee . "!\n\nTicketing dengan ID #" . $id_ga_stationary . " Anda sudah berhasil dibuat dengan status 'On Process'\n\nTerima kasih telah menggunakan layanan kami. Jangan lupa untuk selalu cek Employee Information Portal (EIP) untuk informasi selanjutnya. Jika Anda memiliki pertanyaan lebih lanjut atau membutuhkan bantuan, jangan ragu untuk menghubungi tim IT kami.\n\nTerima kasih!\n\nInfo lebih lanjut tentang tiket ini: " . $link;
 

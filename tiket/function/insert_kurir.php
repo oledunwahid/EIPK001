@@ -19,9 +19,9 @@ if (isset($_POST["add-request"])) {
     $kondisi = mysqli_query($koneksi, $query);
 
     $namaEmployee = 'Bapak/Ibu'; // Ganti dengan nama yang sesuai
-    $link = 'https://localhost/index.php?page=ViewKurir&id=' . $id_kurir; // Ganti dengan URL yang valid
+    $link = 'https://eip.maagroup.co.id/tiket/index.php?page=ViewKurir&id=' . $id_kurir; // Ganti dengan URL yang valid
 
-    $message = "Halo " . $namaEmployee . "!\n\nTicketing dengan ID #" . $id_kurir . " Anda sudah berhasil dibuat dengan status 'Process'\n\nTerima kasih telah menggunakan layanan kami. Jangan lupa untuk selalu cek Employee Information Portal (EIP) untuk informasi selanjutnya. Jika Anda memiliki pertanyaan lebih lanjut atau membutuhkan bantuan, jangan ragu untuk menghubungi tim IT kami.\n\nTerima kasih!\n\nInfo lebih lanjut tentang tiket ini: " . $link;
+    $message = "Halo " . $namaEmployee . "!\n\nPackage dengan ID #" . $id_kurir . " Anda sudah berhasil dibuat dengan status 'Pending'\n\nTerima kasih telah menggunakan layanan kami. Jangan lupa untuk selalu cek Employee Information Portal (EIP) untuk informasi selanjutnya. Jika Anda memiliki pertanyaan lebih lanjut atau membutuhkan bantuan, jangan ragu untuk menghubungi tim IT kami.\n\nTerima kasih!\n\nInfo lebih lanjut tentang tiket ini: " . $link;
 
     // Pengaturan untuk cURL
     $curl = curl_init();
@@ -50,6 +50,10 @@ if (isset($_POST["add-request"])) {
 
     // Menutup koneksi cURL
     curl_close($curl);
+
+    $tanggal_req = date('Y-m-d H:i:s');
+    $currentDateTime = new DateTime('now', new DateTimeZone('Asia/Jakarta'));
+    $timestamp = $currentDateTime->format('YmdHis');
 
     $query2 = "INSERT INTO riwayat_kurir VALUES
     ('', '$id_kurir', '$timestamp', 'Pending','$status_input')";

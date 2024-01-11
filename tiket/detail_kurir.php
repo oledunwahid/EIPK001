@@ -49,27 +49,17 @@ $timestamp = $dateTime->format('Y-m-d H:i:s');
                                         <div class="hstack gap-3 flex-wrap">
                                             <div class="text-muted"><i class="ri-building-line align-bottom me-1"></i><span id="ticket-client">MAA Group</span></div>
                                             <div class="vr"></div>
-                                            <div class="me-2 text-muted">Status : </div>
-                                            <div>
-                                                <span class="form-control"><?= isset($row['status_kurir']) ?></span>
-                                            </div>
 
-                                            <!-- <div class="vr"></div>
-                                            <div class="me-2 text-muted">PIC Courier:</div>
-                                            <div>
-                                                <option value="<?= $row['id_nik_kurir'] ?>"><?= $row['nama_pic'] ?></option>
+                                            <div class="me-2 text-muted">Status :
                                                 <?php
-                                                $sql5 = mysqli_query($koneksi, "SELECT access_level.idnik, user.nama 
-                                                    FROM access_level 
-                                                    INNER JOIN user ON access_level.idnik = user.idnik 
-                                                    WHERE access_level.internal_kurir = 1");
-                                                while ($row5 = mysqli_fetch_assoc($sql5)) {
-                                                ?>
-                                                    <option value="<?= $row5['idnik'] ?>"><?= $row5['nama'] ?></option>
-                                                <?php
+                                                if (isset($row['status_kurir'])) {
+                                                    echo ($row['status_kurir'] == 1) ? 'On Process' : (($row['status_kurir'] == 2) ? 'Canceled' : (($row['status_kurir'] == 0) ? 'Closed' : $row['status_kurir']));
                                                 }
                                                 ?>
-                                            </div> -->
+                                            </div>
+
+                                            <div class="vr"></div>
+                                            <div class="me-2 text-muted">PIC Courier: <?= $row['nama_pic'] ?> </div>
                                             <!-- <div class="col-md-5">
                                                 <div class="card-body">
                                                     <button type="submit" class="btn btn-primary col-md-3" name="updateKurir">Update</button>

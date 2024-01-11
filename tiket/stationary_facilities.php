@@ -324,7 +324,7 @@
                                                             <h5 class="fs-13 fw-medium text-muted">Qty</h5>
                                                             <div class="input-step light">
                                                                 <button type="button" class="minus">–</button>
-                                                                <input type="number" class="product-quantity" value="0" min="0" max="10" name="totalReq1" readonly>
+                                                                <input type="number" class="product-quantity" value="0" min="0" max="100" name="totalReq1" readonly>
                                                                 <button type="button" class="plus">+</button>
                                                             </div>
                                                         </div>
@@ -352,7 +352,7 @@
                                                             <h5 class="fs-13 fw-medium text-muted">Qty</h5>
                                                             <div class="input-step light">
                                                                 <button type="button" class="minus">–</button>
-                                                                <input type="number" class="product-quantity" value="0" min="0" max="10" name="totalReq2" readonly>
+                                                                <input type="number" class="product-quantity" value="0" min="0" max="100" name="totalReq2" readonly>
                                                                 <button type="button" class="plus">+</button>
                                                             </div>
                                                         </div>
@@ -380,7 +380,7 @@
                                                             <h5 class="fs-13 fw-medium text-muted">Qty</h5>
                                                             <div class="input-step light">
                                                                 <button type="button" class="minus">–</button>
-                                                                <input type="number" class="product-quantity" value="0" min="0" max="10" name="totalReq3" readonly>
+                                                                <input type="number" class="product-quantity" value="0" min="0" max="100" name="totalReq3" readonly>
                                                                 <button type="button" class="plus">+</button>
                                                             </div>
                                                         </div>
@@ -408,7 +408,7 @@
                                                             <h5 class="fs-13 fw-medium text-muted">Qty</h5>
                                                             <div class="input-step light">
                                                                 <button type="button" class="minus">–</button>
-                                                                <input type="number" class="product-quantity" value="0" min="0" max="10" name="totalReq4" readonly>
+                                                                <input type="number" class="product-quantity" value="0" min="0" max="100" name="totalReq4" readonly>
                                                                 <button type="button" class="plus">+</button>
                                                             </div>
                                                         </div>
@@ -436,7 +436,7 @@
                                                             <h5 class="fs-13 fw-medium text-muted">Qty</h5>
                                                             <div class="input-step light">
                                                                 <button type="button" class="minus">–</button>
-                                                                <input type="number" class="product-quantity" value="0" min="0" max="10" name="totalReq5" readonly>
+                                                                <input type="number" class="product-quantity" value="0" min="0" max="100" name="totalReq5" readonly>
                                                                 <button type="button" class="plus">+</button>
                                                             </div>
                                                         </div>

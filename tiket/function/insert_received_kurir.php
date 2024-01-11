@@ -55,9 +55,10 @@ if (isset($_POST["add-received"])) {
     $kondisi = mysqli_query($koneksi, $query);
 
     if ($kondisi) {
-        $namaEmployee = 'Bapak/Ibu';
-        $link = 'https://localhost/index.php?page=ViewReceived&id=' . $id_received;
-        $message = "Halo " . $namaEmployee . "!\n\nTicketing dengan ID #" . $id_received . " Anda sudah berhasil dibuat dengan status 'Received'\n\nTerima kasih telah menggunakan layanan kami. Jangan lupa untuk selalu cek Employee Information Portal (EIP) untuk informasi selanjutnya. Jika Anda memiliki pertanyaan lebih lanjut atau membutuhkan bantuan, jangan ragu untuk menghubungi tim IT kami.\n\nTerima kasih!\n\nInfo lebih lanjut tentang tiket ini: " . $link;
+        $namaEmployee = 'Dear Mr/Ms' . $id_nik_request;
+        $link = 'https://eip.maagroup.co.id/tiket/index.php?page=ViewReceived&id=' . $id_received;
+        $message = "Hello! " . $namaEmployee . "!\n\nPackage with ID #" . $id_received . "\n\n Kindly be informed that you have incoming "  . $received_jenis_barang . "from"  . $nama_pengirim . "to" . $idnik .
+        "\n\nIt is available to be collected at Front Desk from Monday to Friday at 09.00 hrs to 17.00 hrs. \n\n Don't forget to check Employee Information Portal (EIP) for more information updates. Please do not hesitate to contact us should you need further information or assistance.\n\nThank you for your kind attention and have a pleasant day.\n\n For more information : \n\n" . $link;
 
         $curl = curl_init();
 

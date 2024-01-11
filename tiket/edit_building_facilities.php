@@ -42,6 +42,7 @@ $timestamp = $dateTime->format('Y-m-d H:i:s');
 
                                 <div class="col-md">
                                     <input type="text" hidden name="id_ga_building" value="<?= $row['id_ga_building'] ?>">
+                                    <input type="text" hidden name="wa" value="<?= $row['whatsapp'] ?>">
                                     <h4 class="fw-semibold" id="ticket-title">#<?= $row['id_ga_building'] ?> - Building Facilities Ticket </h4>
                                     <div class="hstack gap-3 flex-wrap">
                                         <div class="text-muted"><i class="ri-building-line align-bottom me-1"></i><span id="ticket-client">MAA Group</span></div>

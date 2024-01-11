@@ -54,12 +54,10 @@ if (isset($_POST["updateIT"])) {
 
         if ($status_tiket === 'Closed') {
             $updateEndDate = mysqli_query($koneksi, "UPDATE ticketing SET end_date = '$timestamp', whatsapp = '$whatsapp' WHERE id_tiket = '$id_tiket'");
-            $namaEmployee = 'Bapak/Ibu'; // Ganti dengan nama yang sesuai
+            $namaEmployee = 'Bapak/Ibu'; 
             $link = 'https://eip.maagroup.co.id/tiket/index.php?page=ViewTicketIT&id=' . $id_tiket; // Ganti dengan URL yang valid
             $message = "Halo " . $namaEmployee . "!\n\nTicketing dengan ID #" . $id_tiket . " Anda sudah selesai dengan status 'Closed'\n\nTerima kasih telah menggunakan layanan kami. Jangan lupa untuk selalu cek Employee Information Portal (EIP) untuk informasi selanjutnya. Jika Anda memiliki pertanyaan lebih lanjut atau membutuhkan bantuan, jangan ragu untuk menghubungi tim IT kami.\n\nTerima kasih!\n\nInfo lebih lanjut tentang tiket ini: " . $link;
-            // Pengaturan untuk cURL
             $curl = curl_init();
-
             curl_setopt_array($curl, array(
                 CURLOPT_URL => 'https://api.fonnte.com/send',
                 CURLOPT_RETURNTRANSFER => true,

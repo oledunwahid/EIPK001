@@ -165,7 +165,7 @@
             <div class="card" id="ticketsList">
                 <div class="card-header border-0">
                     <div class="d-flex align-items-center">
-                        <h5 class="card-title mb-0 flex-grow-1">List Delivery</h5>
+                        <h5 class="card-title mb-0 flex-grow-1">List Sent Package</h5>
                         <div class="flex-shrink-0">
                             <button class="btn btn-danger add-btn" data-bs-toggle="modal" data-bs-target="#showModal"><i class="ri-add-line align-bottom me-1"></i> Create Delivery</button>
 
@@ -440,7 +440,7 @@
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content border-0">
                 <div class="modal-header p-3 bg-soft-info">
-                    <h5 class="modal-title" id="exampleModalLabel">Create Delivery</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Create Sent Package</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
                 </div>
                 <form action="function/insert_kurir.php" method="POST" enctype="multipart/form-data" id="formModalKurir">
@@ -460,7 +460,7 @@
                                 <div class="mb-3 mt-3">
                                     <input type="text" readonly class="form-control" value="<?= $RequestNumber ?>" name="id_kurir" />
                                 </div>
-                                
+
                                 <?php if (isset($row7['admin']) && ($row7['admin'] == '1' || ($row7['ga4'] == '1'))) { ?>
                                     <div class="mb-3 mt-3">
                                         <label for="tasksTitle-field" class="form-label"><span>Tujuan Pengiriman Kepada </span></label>
@@ -501,37 +501,16 @@
                                         <input type="number" class="form-control" placeholder="Insert your active number +(62) " name="wa" />
                                     </div>
 
-                                    <?php if (isset($row7['admin']) && ($row7['admin'] == '1' || ($row7['ga4'] == '1'))) { ?>
-                                        <div class="mb-3 mt-3">
-                                            <label for="tasksTitle-field" class="form-label"><span> Select Courier External or Internal </span></label>
-                                            <select class="form-control" data-choices name="tipe_kurir">
-                                                <option value="">Select Kurir</option>
-                                                <option value="Internal Kurir"></option>
-                                                <option value="Ekspedisi Coorporate Reguler"></option>
-                                                <option value="Ekspedisi Coorporate Express"></option>
-                                                <option value="Grab Express Instant Courier"></option>
-                                            </select>
-                                        </div>
-                                    <?php } else { ?>
-                                        <div class="mb-3 mt-3">
-                                            <label for="tasksTitle-field" class="form-label"><span> Select Courier External or Internal </span></label>
-                                            <select class="form-control" data-choices name="tipe_kurir">
-                                                <option value="">Select Kurir</option>
-                                                <option value="Internal Kurir"></option>
-                                                <option value="JNE"></option>
-                                                <option value="J&T"></option>
-                                                <option value="SiCepat"></option>
-                                                <option value="TIKI"></option>
-                                                <option value="Gojek"></option>
-                                                <option value="Grab"></option>
-                                                <option value="Lion Parcel"></option>
-                                                <option value="Pos Indonesia"></option>
-                                                <option value="DHL Express"></option>
-                                                <option value="Lalamove"></option>
-                                                <option value="Wahana Express"></option>
-                                            </select>
-                                        </div>
-                                    <?php } ?>
+                                    <div class="mb-3 mt-3">
+                                        <label for="tasksTitle-field" class="form-label"><span> Select Courier External or Internal </span></label>
+                                        <select class="form-control" data-choices name="tipe_kurir">
+                                            <option value="">Select Courier</option>
+                                            <option value="Internal Courier"></option>
+                                            <option value="Ekspedisi Coorporate Reguler"></option>
+                                            <option value="Ekspedisi Coorporate Express"></option>
+                                            <option value="Grab Express Instant Courier"></option>
+                                        </select>
+                                    </div>
                                 </div>
 
                                 <?php if (isset($row7['admin']) && ($row7['admin'] == '1' || ($row7['ga4'] == '1'))) { ?>
@@ -602,6 +581,7 @@
             scrollX: true,
             scrollY: 400,
             scrollCollapse: !0,
+            order: [2, 'desc'],
 
             lengthMenu: [
                 [5, 10, 25, 50, 100, -1],

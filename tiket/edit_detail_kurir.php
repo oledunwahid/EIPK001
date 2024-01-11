@@ -79,7 +79,7 @@ $timestamp = $dateTime->format('Y-m-d H:i:s');
                                                     $sql5 = mysqli_query($koneksi, "SELECT access_level.idnik, user.nama 
                                                     FROM access_level 
                                                     INNER JOIN user ON access_level.idnik = user.idnik 
-                                                    WHERE access_level.internal_kurir = 1"); 
+                                                    WHERE access_level.internal_kurir = 1");
                                                     while ($row5 = mysqli_fetch_assoc($sql5)) {
                                                     ?>
                                                         <option value="<?= $row5['idnik'] ?>"><?= $row5['nama'] ?></option>
@@ -263,8 +263,9 @@ $timestamp = $dateTime->format('Y-m-d H:i:s');
                 <div class="modal-body">
                     <div class="row g-3">
                         <div class="col-lg-6">
-                            <input type="text" class="form-control" hidden name="id_kurir" value="<?= $id_kurir ?>" />
-                            <input type="text" class="form-control" hidden name="timestamp" value="<?= $timestamp ?>" />
+                            <input type="hidden"  name="id_kurir" value="<?= $id_kurir ?>" />
+                            <input type="hidden"  name="wa" value="<?= $row['whatsapp'] ?>">
+                            <input type="hidden"  name="timestamp" value="<?= $timestamp ?>" />
                             <div class="col-lg-12">
                                 <div class="col-lg-12">
                                     <label for="choices-single-default" class="form-label fw-semibold"><span>Status Delivery</span></label>

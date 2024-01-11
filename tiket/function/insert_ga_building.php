@@ -60,7 +60,7 @@ if (isset($_POST['add-ga-building'])) {
     $result = mysqli_stmt_execute($statement);
 
     $namaEmployee = 'Bapak/Ibu'; // Ganti dengan nama yang sesuai
-    $link = 'https://localhost/index.php?page=ViewTicketIT&id=' . $id_ga_building; // Ganti dengan URL yang valid
+    $link = 'https://eip.maagroup.co.id/tiket/index.php?page=View%20Building%20Facilities&id=' . $id_ga_building; // Ganti dengan URL yang valid
 
     $message = "Halo " . $namaEmployee . "!\n\nTicketing dengan ID #" . $id_ga_building . " Anda sudah berhasil dibuat dengan status 'On Process'\n\nTerima kasih telah menggunakan layanan kami. Jangan lupa untuk selalu cek Employee Information Portal (EIP) untuk informasi selanjutnya. Jika Anda memiliki pertanyaan lebih lanjut atau membutuhkan bantuan, jangan ragu untuk menghubungi tim IT kami.\n\nTerima kasih!\n\nInfo lebih lanjut tentang tiket ini: " . $link;
 

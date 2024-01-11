@@ -44,8 +44,8 @@ $timestamp = $dateTime->format('Y-m-d H:i:s');
 
                                 <div class="col-md">
                                     <form action="function/update_received_kurir.php" method="POST">
-                                        <input type="text" name="id_received" value="<?= $row['id_received'] ?>">
-                                        <h4 class="fw-semibold" id="ticket-title">#<?= $row['id_received'] ?> - Delivery Ticket </h4>
+                                        <input type="hidden" name="id_received" value="<?= $row['id_received'] ?>">
+                                        <h4 class="fw-semibold" id="ticket-title">#<?= $row['id_received'] ?> - Received Ticket </h4>
                                         <div class="hstack gap-3 flex-wrap">
                                             <div class="text-muted"><i class="ri-building-line align-bottom me-1"></i><span id="ticket-client">MAA Group</span></div>
                                             <div class="vr"></div>
@@ -231,7 +231,7 @@ $timestamp = $dateTime->format('Y-m-d H:i:s');
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
             </div>
             <form action="function/update_received_kurir.php" method="POST" enctype="multipart/form-data">
-                <input type="text" name="id_received" value="<?= $row['id_received'] ?>">
+                <input type="hidden" name="id_received" value="<?= $row['id_received'] ?>">
                 <div class="modal-body">
                     <div class="row g-3">
                         <div class="col-lg-6">

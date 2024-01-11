@@ -111,23 +111,17 @@ $id_tiket1 = $_GET['id'];
                         </thead>
                         <tbody>
                             <?php
-                            $sql6 = "SELECT 
-                            ga_stationary.*, 
-                            user1.nama AS nik_request, 
-                            user2.nama AS nik_pic,
-                            description1.description,
-                            atk_detail_request.*
-                        FROM 
-                            ga_stationary
-                        LEFT JOIN 
-                            user AS user1 ON ga_stationary.nik_request = user1.idnik
-                        LEFT JOIN 
-                            user AS user2 ON ga_stationary.nik_pic = user2.idnik
-                        JOIN
-                            atk_detail_request ON ga_stationary.id_ga_stationary = atk_detail_request.id_ga_stationary 
-                        JOIN 
-                            atk AS description1 ON atk_detail_request.id_atk = description1.id_atk
-                        WHERE ga_stationary.nik_request = '$niklogin'";
+                            $sql6 = "SELECT
+                            atk_detail_request.*, 
+                            atk.description
+                        FROM
+                            atk_detail_request
+                            INNER JOIN
+                            atk
+                            ON 
+                                atk_detail_request.id_atk = atk.id_atk
+                        WHERE
+                            id_ga_stationary = '$id_tiket1'";
                             $result6 = mysqli_query($koneksi, $sql6);
                             $rowNumber = 1;
                             while ($row6 = mysqli_fetch_assoc($result6)) {
